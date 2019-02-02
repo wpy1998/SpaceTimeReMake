@@ -25,6 +25,7 @@ public class StartActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_start);
 
+        activityList0.add(this);
         ARouter.getInstance()
                 .build("/spaceTime/login")
                 .withString("path", "loginBegin")

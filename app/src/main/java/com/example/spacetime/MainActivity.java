@@ -17,6 +17,7 @@ public class MainActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
+        closeL_R_W();
         Intent intentFront=getIntent();
         String path=intentFront.getStringExtra("path");
         Toast.makeText(MainActivity.this,path,Toast.LENGTH_SHORT).show();

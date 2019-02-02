@@ -21,13 +21,12 @@ import com.example.spacetime.databinding.ActivityLoginBinding;
 public class LoginActivity extends BasicActivity {
     ActivityLoginBinding binding;
 
-    private String[] allpermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    private String[] allPermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
             Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.INTERNET,
             Manifest.permission.CAMERA,
-            Manifest.permission.INTERNET,
             Manifest.permission.GET_ACCOUNTS,
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.MODIFY_AUDIO_SETTINGS};
@@ -36,6 +35,7 @@ public class LoginActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=DataBindingUtil.setContentView(this,R.layout.activity_login);
+        activityList0.add(this);
         Intent intentFront = getIntent();
         choosePath(intentFront.getStringExtra("path"));
     }

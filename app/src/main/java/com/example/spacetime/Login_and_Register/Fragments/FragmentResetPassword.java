@@ -1,11 +1,7 @@
 package com.example.spacetime.Login_and_Register.Fragments;
 
-import android.content.Intent;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +13,8 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentResetPasswordBinding;
+
+import static com.example.spacetime.BasicActivity.closeL_R_W;
 
 public class FragmentResetPassword extends Fragment implements View.OnClickListener {
     private FragmentResetPasswordBinding binding;

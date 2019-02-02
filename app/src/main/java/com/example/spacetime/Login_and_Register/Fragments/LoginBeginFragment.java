@@ -17,6 +17,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentLoginBeginBinding;
 
+import static com.example.spacetime.BasicActivity.closeL_R_W;
+
 public class LoginBeginFragment extends Fragment implements View.OnClickListener {
     private FragmentLoginBeginBinding binding;
     private int areaWhich;

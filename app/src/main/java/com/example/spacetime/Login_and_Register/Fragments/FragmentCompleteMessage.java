@@ -55,7 +55,6 @@ public class FragmentCompleteMessage extends Fragment implements View.OnClickLis
                 ARouter.getInstance()
                         .build("/spaceTime/main")
                         .navigation();
-                closeL_R_W();
                 break;
             case R.id.fragment_complete_message_gender:
                 new AlertDialog.Builder(getContext()).setTitle("请选择您的性别").setIcon(

@@ -20,6 +20,7 @@ public class RegisterActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        activityList0.add(this);
         Intent intentFront = getIntent();
         choosePath(intentFront.getStringExtra("path"));
     }
