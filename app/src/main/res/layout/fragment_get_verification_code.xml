@@ -5,7 +5,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
         <TextView
-            android:text="输入手机号"
+            android:text="请输入验证码"
             android:textColor="@color/colorBlack"
             android:textSize="30dp"
             android:layout_width="match_parent"
@@ -17,51 +17,21 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/linearlayout_style">
-            <TextView
-                android:text="+86"
-                android:id="@+id/getTelephone_chooseArea"
-                android:textSize="18dp"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:layout_margin="5dp"
-                android:background="@color/colorLoginTextView"/>
-            <LinearLayout
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:background="#ebe7e7" />
+            android:layout_marginTop="20dp">
             <EditText
-                android:hint="请输入手机号码"
-                android:textSize="18dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:id="@+id/getTelephone_telephoneNumber"
+                android:id="@+id/verificationCode_content"
                 android:inputType="number"
+                android:maxLines="1"
+                android:textSize="25dp"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="5dp"
-                android:background="@color/colorLoginTextView"/>
+                android:layout_height="50dp"
+                android:background="@drawable/linearlayout_style"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"/>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/getTelephone_next"
-            android:text="下一步"
-            android:textColor="@color/colorWhite"
-            android:layout_margin="30dp"
-            android:background="@drawable/buttonstyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </layout>

@@ -1,0 +1,31 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="创造时间和空间上的相遇开启场景社交新时代"
+            android:id="@+id/welcome3_content"
+            android:textSize="35dp"
+            android:textColor="@color/colorBlack"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/welcome3_mainView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp">
+            <Button
+                android:text="立即开启"
+                android:id="@+id/welcome3_next"
+                android:textColor="#ffffff"
+                android:background="@drawable/buttonstyle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

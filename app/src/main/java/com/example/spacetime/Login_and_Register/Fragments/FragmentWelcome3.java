@@ -12,29 +12,28 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.R;
-import com.example.spacetime.databinding.FragmentResetPasswordBinding;
+import com.example.spacetime.databinding.FragmentWelcome3Binding;
 
-public class FragmentResetPassword extends Fragment implements View.OnClickListener {
-    private FragmentResetPasswordBinding binding;
+public class FragmentWelcome3 extends Fragment implements View.OnClickListener {
+    private FragmentWelcome3Binding binding;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reset_password, null, false);
-        binding.resetPasswordNextPage.setOnClickListener(this);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome3, null, false);
+        binding.welcome3Next.setOnClickListener(this);
         return binding.getRoot();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.reset_password_nextPage:
+            case R.id.welcome3_next:
                 ARouter.getInstance()
                         .build("/spaceTime/main")
-                        .withString("path", "completeMessage")
                         .navigation();
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "waiting for coming true",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

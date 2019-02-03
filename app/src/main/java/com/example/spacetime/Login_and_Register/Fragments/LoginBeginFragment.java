@@ -17,8 +17,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentLoginBeginBinding;
 
-import static com.example.spacetime.BasicActivity.closeL_R_W;
-
 public class LoginBeginFragment extends Fragment implements View.OnClickListener {
     private FragmentLoginBeginBinding binding;
     private int areaWhich;
@@ -84,7 +82,13 @@ public class LoginBeginFragment extends Fragment implements View.OnClickListener
             case R.id.login_forgetPassword:
                 ARouter.getInstance()
                         .build("/spaceTime/login")
-                        .withString("path", "getVerificationCode")
+                        .withString("path", "getTelephone")
+                        .navigation();
+                break;
+            case R.id.login_getVerificationCode:
+                ARouter.getInstance()
+                        .build("/spaceTime/login")
+                        .withString("path", "getTelephone")
                         .navigation();
                 break;
             default:

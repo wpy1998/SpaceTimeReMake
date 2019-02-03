@@ -26,8 +26,6 @@ import com.example.spacetime.databinding.FragmentCompleteMessageBinding;
 
 import java.util.Calendar;
 
-import static com.example.spacetime.BasicActivity.closeL_R_W;
-
 public class FragmentCompleteMessage extends Fragment implements View.OnClickListener {
     private FragmentCompleteMessageBinding binding;
     private int genderWhich;
@@ -53,7 +51,7 @@ public class FragmentCompleteMessage extends Fragment implements View.OnClickLis
         switch (v.getId()){
             case R.id.fragment_complete_message_nextPage:
                 ARouter.getInstance()
-                        .build("/spaceTime/main")
+                        .build("/spaceTime/welcome")
                         .navigation();
                 break;
             case R.id.fragment_complete_message_gender:
