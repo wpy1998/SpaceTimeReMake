@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.example.spacetime.BasicActivity;
+import com.example.spacetime.Components.BasicActivity;
 import com.example.spacetime.Login_and_Register.Adapter.FragmentAdapter;
 import com.example.spacetime.Login_and_Register.Fragments.FragmentWelcome1;
 import com.example.spacetime.Login_and_Register.Fragments.FragmentWelcome2;

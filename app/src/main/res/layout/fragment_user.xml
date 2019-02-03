@@ -1,0 +1,43 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/title_user" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp">
+                <LinearLayout
+                    android:id="@+id/fragment_user_function"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                </LinearLayout>
+                <Button
+                    android:id="@+id/fragment_user_exit"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/fragment_user_buttonstyle"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="退出登录"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorWhite"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

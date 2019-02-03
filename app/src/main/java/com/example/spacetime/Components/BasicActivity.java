@@ -1,4 +1,4 @@
-package com.example.spacetime;
+package com.example.spacetime.Components;
 
 import android.Manifest;
 import android.app.Activity;
@@ -13,6 +13,7 @@ import java.util.List;
 
 public class BasicActivity extends AppCompatActivity {
     public static List<Activity> activityList0 = new ArrayList<Activity>();
+    public static List<Activity> activityList1 = new ArrayList<Activity>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,13 @@ public class BasicActivity extends AppCompatActivity {
     public static void closeL_R_W(){
         if (activityList0.size() == 0) return;
         for (Activity activity: activityList0){
+            activity.finish();
+        }
+    }
+
+    public static void closeCUT(){
+        if (activityList1.size() == 0) return;
+        for (Activity activity: activityList1){
             activity.finish();
         }
     }

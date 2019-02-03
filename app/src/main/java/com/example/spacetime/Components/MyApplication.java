@@ -1,4 +1,4 @@
-package com.example.spacetime;
+package com.example.spacetime.Components;
 
 import android.app.Application;
 
