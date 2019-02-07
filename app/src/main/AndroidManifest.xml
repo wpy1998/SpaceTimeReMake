@@ -23,18 +23,19 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserModel.UserActivity"></activity>
+        <activity android:name=".TopicModel.TopicActivity"></activity>
+        <activity android:name=".UserModel.UserActivity" />
         <activity android:name=".Login_and_Register.WelcomeActivity" />
-        <activity android:name=".Login_and_Register.StartActivity">
+        <activity android:name=".Login_and_Register.StartActivity"></activity>
+        <activity android:name=".Login_and_Register.RegisterActivity" />
+        <activity android:name=".Login_and_Register.LoginActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login_and_Register.RegisterActivity" />
-        <activity android:name=".Login_and_Register.LoginActivity" />
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

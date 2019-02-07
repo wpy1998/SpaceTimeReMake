@@ -39,7 +39,8 @@ public class FragmentGetVerificationCode extends Fragment{
                 String content = chooseArea.getText().toString();
                 if (content.length() == 4){
                     ARouter.getInstance()
-                            .build("/spaceTime/main")
+                            .build("/spaceTime/login")
+                            .withString("path", "resetPassword")
                             .navigation();
                 }
             }

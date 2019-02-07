@@ -8,6 +8,11 @@ import android.widget.LinearLayout;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.OptionLayoutChooseBinding;
 
+import static com.example.spacetime.Components.Settings.adaptView;
+import static com.example.spacetime.Components.Settings.getPx;
+import static com.example.spacetime.Components.Settings.setHW;
+import static com.example.spacetime.Components.Settings.setTextSize;
+
 public class OptionLayoutChoose extends LinearLayout {
     private Context context;
     private boolean isAllowed = false;
@@ -27,5 +32,13 @@ public class OptionLayoutChoose extends LinearLayout {
         }else {
             binding.optionLayoutChooseGetNotification.performClick();
         }
+    }
+
+    public void drawView(){
+        getLayoutParams().height = getPx(60);
+        adaptView(this, 20, 24, 18, 10, true);
+        setTextSize(binding.optionLayoutChooseText,18);
+
+        setHW(binding.optionLayoutChooseGetNotification, 30, 50);
     }
 }

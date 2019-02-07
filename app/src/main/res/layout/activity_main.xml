@@ -1,7 +1,5 @@
-<layout>
-    <data>
-    </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,6 +10,7 @@
             android:layout_weight="1">
         </FrameLayout>
         <LinearLayout
+            android:id="@+id/main_partView"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="1dp"
@@ -25,7 +24,7 @@
                 android:layout_weight="1">
                 <ImageView
                     android:id="@+id/main_conversation"
-                    android:src="@drawable/conversation"
+                    android:src="@drawable/ic_talk"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_margin="12.5dp"
@@ -36,19 +35,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/circle_style"
-                    android:layout_gravity="center">
-                    <ImageView
-                        android:id="@+id/main_function"
-                        android:src="@drawable/function"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_margin="7.5dp"/>
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/main_browser"
+                    android:src="@drawable/ic_earth_lighting"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="12.5dp"
+                    android:layout_gravity="center"/>
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"

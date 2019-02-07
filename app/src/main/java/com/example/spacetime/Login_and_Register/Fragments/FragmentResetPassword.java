@@ -30,7 +30,6 @@ public class FragmentResetPassword extends Fragment implements View.OnClickListe
             case R.id.reset_password_nextPage:
                 ARouter.getInstance()
                         .build("/spaceTime/main")
-                        .withString("path", "completeMessage")
                         .navigation();
                 break;
             default:

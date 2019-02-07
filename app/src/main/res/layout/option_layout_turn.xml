@@ -13,6 +13,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"/>
         <ImageView
+            android:id="@+id/option_layout_turn_image"
             android:src="@drawable/next"
             android:layout_width="30dp"
             android:layout_height="25dp"

@@ -4,12 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.spacetime.Components.Settings.update;
 
 public class BasicActivity extends AppCompatActivity {
     public static List<Activity> activityList0 = new ArrayList<Activity>();
@@ -22,6 +23,8 @@ public class BasicActivity extends AppCompatActivity {
         if (actionBar.isShowing()){
             actionBar.hide();
         }
+
+        update(this);
     }
 
     public static void closeL_R_W(){
