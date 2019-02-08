@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.spacetime.Components.BasicActivity;
+import com.example.spacetime.Others.BasicActivity;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.ActivityStartBinding;
 

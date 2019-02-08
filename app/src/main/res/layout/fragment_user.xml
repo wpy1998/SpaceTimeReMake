@@ -8,12 +8,11 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackGround">
         <include layout="@layout/title_fragment_user"/>
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/fragment_user_topicView"
+        <RelativeLayout
+            android:id="@+id/fragment_user_mainView"
             android:layout_width="match_parent"
-            android:layout_height="500dp">
-        </LinearLayout>
+            android:layout_height="wrap_content">
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>
 </layout>

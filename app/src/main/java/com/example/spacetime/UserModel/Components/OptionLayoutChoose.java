@@ -8,14 +8,14 @@ import android.widget.LinearLayout;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.OptionLayoutChooseBinding;
 
-import static com.example.spacetime.Components.Settings.adaptView;
-import static com.example.spacetime.Components.Settings.getPx;
-import static com.example.spacetime.Components.Settings.setHW;
-import static com.example.spacetime.Components.Settings.setTextSize;
+import static com.example.spacetime.Others.Settings.adaptView;
+import static com.example.spacetime.Others.Settings.getPx;
+import static com.example.spacetime.Others.Settings.setHW;
+import static com.example.spacetime.Others.Settings.setTextSize;
 
 public class OptionLayoutChoose extends LinearLayout {
     private Context context;
-    private boolean isAllowed = false;
+    public boolean isAllowed;
 
     public OptionLayoutChooseBinding binding;
     public OptionLayoutChoose(Context context, String text) {
@@ -24,14 +24,7 @@ public class OptionLayoutChoose extends LinearLayout {
         binding = DataBindingUtil.inflate(LayoutInflater.from(this.context),
                 R.layout.option_layout_choose, this, true);
         binding.optionLayoutChooseText.setText(text + "");
-    }
-
-    public void refresh(boolean isAllowed){
-        if (isAllowed == this.isAllowed){
-            return;
-        }else {
-            binding.optionLayoutChooseGetNotification.performClick();
-        }
+        isAllowed = false;
     }
 
     public void drawView(){

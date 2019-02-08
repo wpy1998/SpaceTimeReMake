@@ -8,15 +8,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentEditSignBinding;
 
-import static com.example.spacetime.Components.Settings.adaptView;
-import static com.example.spacetime.Components.Settings.getPx;
-import static com.example.spacetime.Components.Settings.setHW;
+import static com.example.spacetime.Others.Settings.adaptView;
+import static com.example.spacetime.Others.Settings.getPx;
+import static com.example.spacetime.Others.Settings.setHW;
+import static com.example.spacetime.Others.Settings.setTextSize;
 
 public class FragmentEditSign extends Fragment implements View.OnClickListener {
     private FragmentEditSignBinding binding;
@@ -35,16 +35,21 @@ public class FragmentEditSign extends Fragment implements View.OnClickListener {
         binding.editSignTitleView.getLayoutParams().height = getPx(58);
 
         setHW(binding.editSignBack, 24, 24);
-        adaptView(binding.editSignBack,13, 10, 0, 0, false);
+        adaptView(binding.editSignBack,13, 10, 0, 24,
+                false);
 
         binding.editSignTitle.getLayoutParams().height = getPx(29);
-        adaptView(binding.editSignTitle, 0, 8, 0, 0, false);
+        adaptView(binding.editSignTitle, 0, 8, 0, 21,
+                false);
+        setTextSize(binding.editSignTitle, 20);
 
         setHW(binding.editSignSave,29, 37);
-        adaptView(binding.editSignSave, 0, 8, 0, 0, false);
+        adaptView(binding.editSignSave, 0, 8, 28, 21,
+                false);
+        setTextSize(binding.editSignSave, 18);
 
-        binding.editSignContent.getLayoutParams().height = getPx(160);
-        adaptView(binding.editSignContent, 20, 0, 20, 0, false);
+        adaptView(binding.editSignContent, 20, 0, 20, 0,
+                false);
     }
 
     @Override

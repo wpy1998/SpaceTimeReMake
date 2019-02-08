@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.spacetime.Fragments.FragmentDynamic;
 import com.example.spacetime.R;
-import com.example.spacetime.UserModel.Components.OptionLayoutChoose;
-import com.example.spacetime.UserModel.Components.OptionLayoutTurn;
 import com.example.spacetime.databinding.FragmentUserBinding;
 
-import static com.example.spacetime.Components.Settings.adaptView;
-import static com.example.spacetime.Components.Settings.getPx;
-import static com.example.spacetime.Components.Settings.setHW;
-import static com.example.spacetime.Components.Settings.setTextSize;
+import static com.example.spacetime.Others.Settings.adaptView;
+import static com.example.spacetime.Others.Settings.getPx;
+import static com.example.spacetime.Others.Settings.setHW;
+import static com.example.spacetime.Others.Settings.setTextSize;
 
 public class FragmentUser extends Fragment implements View.OnClickListener {
     private FragmentUserBinding binding;
@@ -34,46 +34,81 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     private TextView dynamic, message, name, ageLocation;
     private LinearLayout userView, chooseView;
     private ImageView image, gender;
+
+    private FragmentDynamic userDynamic;
+    private FragmentMessage userMessage;
+    private int tag = 0;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user, null, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
+            ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user,
+                null, false);
         setting = binding.getRoot().findViewById(R.id.fragment_user_setting);
         dynamic = binding.getRoot().findViewById(R.id.fragment_user_dynamic);
         message = binding.getRoot().findViewById(R.id.fragment_user_message);
         name = binding.getRoot().findViewById(R.id.fragment_user_name);
-        ageLocation = binding.getRoot().findViewById(R.id.fragment_user_age_and_loaction);
+        ageLocation = binding.getRoot().findViewById(R.id.
+                fragment_user_age_and_loaction);
         userView = binding.getRoot().findViewById(R.id.fragment_user_userView);
         chooseView = binding.getRoot().findViewById(R.id.fragment_user_choose);
         image = binding.getRoot().findViewById(R.id.fragment_user_image);
         gender = binding.getRoot().findViewById(R.id.fragment_user_gender);
 
+        userDynamic = new FragmentDynamic();
+        userMessage = new FragmentMessage();
+        tag = 0;
+
         init();
         setting.setOnClickListener(this);
         dynamic.setOnClickListener(this);
         message.setOnClickListener(this);
+
+        dynamic.performClick();
         return binding.getRoot();
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_user_mainView,fragment);
+        transaction.commit();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_user_setting:
-                ARouter.getInstance()
-                        .build("/spaceTime/user")
-                        .withString("path", "setting")
-                        .navigation();
+                if (tag == 0){
+                    ARouter.getInstance()
+                            .build("/spaceTime/user")
+                            .withString("path", "setting")
+                            .navigation();
+                }else if(tag == 1){
+                    setting.setText("已关注");
+                    tag = 2;
+                }else {
+                    setting.setText("关注");
+                    tag = 1;
+                }
                 break;
             case R.id.fragment_user_dynamic:
                 dynamic.setTextColor(Color.parseColor("#3E66FB"));
                 message.setTextColor(Color.parseColor("#000000"));
+                replaceFragment(userDynamic);
+                setting.setText("设置");
+                tag = 0;
                 break;
             case R.id.fragment_user_message:
                 dynamic.setTextColor(Color.parseColor("#000000"));
                 message.setTextColor(Color.parseColor("#3E66FB"));
+                replaceFragment(userMessage);
+                setting.setText("关注");
+                tag = 1;
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "waiting for coming true",
+                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -86,15 +121,17 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         adaptView(image, 20, 17, 21, 0, false);
 
         name.getLayoutParams().height = getPx(41);
-        setTextSize(name, 16);
+        setTextSize(name, 24);
+        adaptView(name, 0, 17, 6, 7, false);
 
         setHW(gender, 24, 24);
-        adaptView(gender, 0, 25, 0, 0, false);
+        adaptView(gender, 0, 25, 0, 69, false);
 
         setHW(ageLocation, 22, 73);
         adaptView(ageLocation, 0, 0, 0, 31, false);
+        setTextSize(ageLocation, 16);
 
-        setHW(setting, 33, 57);
+        setting.getLayoutParams().height = getPx(33);
         adaptView(setting, 0, 21, 22, 3, false);
 
         dynamic.getLayoutParams().height = getPx(41);

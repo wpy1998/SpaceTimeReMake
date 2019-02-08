@@ -5,19 +5,23 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.example.spacetime.Others.BasicActivity;
 import com.example.spacetime.R;
-import com.example.spacetime.databinding.ActivityUserBinding;
+import com.example.spacetime.TopicModel.Fragments.FragmentAddDynamic;
+import com.example.spacetime.databinding.ActivityTopicBinding;
 
-public class TopicActivity extends AppCompatActivity {
-    private ActivityUserBinding binding;
+@Route(path = "/spaceTime/topic")
+public class TopicActivity extends BasicActivity {
+    private ActivityTopicBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_topic);
+        binding = DataBindingUtil.setContentView(this,
+                R.layout.activity_topic);
 
         Intent intentFront = getIntent();
         String path = intentFront.getStringExtra("path");
@@ -27,15 +31,18 @@ public class TopicActivity extends AppCompatActivity {
 
     private void replaceFragment(Fragment fragment){
         FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction()
-                .setCustomAnimations(R.anim.fragment_change_animation, 0, 0, 0);
+        FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.topic_frameLayout,fragment);
         transaction.commit();
     }
 
     private void choosePath(String path){
         switch (path){
+            case "addDynamic":
+                replaceFragment(new FragmentAddDynamic());
+                break;
             default:
+                replaceFragment(new Fragment());
                 break;
         }
     }

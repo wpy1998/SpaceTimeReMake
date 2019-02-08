@@ -1,6 +1,5 @@
-package com.example.spacetime.Components;
+package com.example.spacetime.Others;
 
-import android.Manifest;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.spacetime.Components.Settings.update;
+import static com.example.spacetime.Others.Settings.update;
 
 public class BasicActivity extends AppCompatActivity {
     public static List<Activity> activityList0 = new ArrayList<Activity>();

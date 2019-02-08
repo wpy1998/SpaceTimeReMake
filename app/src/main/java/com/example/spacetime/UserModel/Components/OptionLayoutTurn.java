@@ -8,10 +8,10 @@ import android.widget.LinearLayout;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.OptionLayoutTurnBinding;
 
-import static com.example.spacetime.Components.Settings.adaptView;
-import static com.example.spacetime.Components.Settings.getPx;
-import static com.example.spacetime.Components.Settings.setHW;
-import static com.example.spacetime.Components.Settings.setTextSize;
+import static com.example.spacetime.Others.Settings.adaptView;
+import static com.example.spacetime.Others.Settings.getPx;
+import static com.example.spacetime.Others.Settings.setHW;
+import static com.example.spacetime.Others.Settings.setTextSize;
 
 public class OptionLayoutTurn extends LinearLayout {
     public OptionLayoutTurnBinding binding;

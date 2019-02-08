@@ -5,11 +5,10 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.example.spacetime.Components.BasicActivity;
+import com.example.spacetime.Others.BasicActivity;
 import com.example.spacetime.R;
 import com.example.spacetime.UserModel.Fragments.FragmentEditName;
 import com.example.spacetime.UserModel.Fragments.FragmentEditSign;
@@ -38,7 +37,7 @@ public class UserActivity extends BasicActivity {
             case "changeUserMessage":
                 replaceFragment(new Fragment());
                 break;
-            case "feedBack":
+            case "feedback":
                 replaceFragment(new FragmentFeedback());
                 break;
             case "setting":

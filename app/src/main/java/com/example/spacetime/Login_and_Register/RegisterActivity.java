@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.example.spacetime.Components.BasicActivity;
+import com.example.spacetime.Others.BasicActivity;
 import com.example.spacetime.Login_and_Register.Fragments.FragmentCompleteMessage;
 import com.example.spacetime.Login_and_Register.Fragments.RegisterBeginFragment;
 import com.example.spacetime.R;

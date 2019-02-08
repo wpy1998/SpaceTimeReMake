@@ -1,4 +1,4 @@
-package com.example.spacetime.Components;
+package com.example.spacetime.Others;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

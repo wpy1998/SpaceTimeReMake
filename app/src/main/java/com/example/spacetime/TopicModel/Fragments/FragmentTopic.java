@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.spacetime.Fragments.FragmentDynamic;
 import com.example.spacetime.Login_and_Register.Adapter.FragmentAdapter;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentTopicBinding;
@@ -22,8 +23,8 @@ import com.example.spacetime.databinding.FragmentTopicBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.spacetime.Components.Settings.getPx;
-import static com.example.spacetime.Components.Settings.setTextSize;
+import static com.example.spacetime.Others.Settings.getPx;
+import static com.example.spacetime.Others.Settings.setTextSize;
 
 public class FragmentTopic extends Fragment implements View.OnClickListener {
     private FragmentTopicBinding binding;
@@ -31,7 +32,8 @@ public class FragmentTopic extends Fragment implements View.OnClickListener {
     private FragmentAdapter fragmentAdapter;
     private List<Fragment> fragments;
     private ViewPager viewPager;
-    private Fragment recommendF, collectionF;
+    private Fragment collectionF;
+    private FragmentDynamic recommendF;
     private TextView socialCircle, follow;
     @Nullable
     @Override
@@ -39,12 +41,13 @@ public class FragmentTopic extends Fragment implements View.OnClickListener {
             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_topic,
                 null, false);
-        socialCircle = binding.getRoot().findViewById(R.id.fragment_topic_socialCircle);
+        socialCircle = binding.getRoot().findViewById(
+                R.id.fragment_topic_socialCircle);
         follow = binding.getRoot().findViewById(R.id.fragment_topic_follow);
 
         viewPager = binding.getRoot().findViewById(R.id.fragment_topic_viewPager);
         fragments = new ArrayList<Fragment>();
-        recommendF = new Fragment();
+        recommendF = new FragmentDynamic(true);
         collectionF = new Fragment();
         fragments.add(recommendF);
         fragments.add(collectionF);
@@ -73,10 +76,12 @@ public class FragmentTopic extends Fragment implements View.OnClickListener {
             public void onPageScrollStateChanged(int state) {
             }
         });
-        init();
+
+        drawView();
         socialCircle.setOnClickListener(this);
         follow.setOnClickListener(this);
-        binding.getRoot().findViewById(R.id.fragment_topic_add).setOnClickListener(this);
+        binding.getRoot().findViewById(R.id.fragment_topic_add).
+                setOnClickListener(this);
 
         socialCircle.performClick();
 
@@ -96,6 +101,11 @@ public class FragmentTopic extends Fragment implements View.OnClickListener {
                 follow.setTextColor(Color.parseColor("#000000"));
                 viewPager.setCurrentItem(1);
                 break;
+            case R.id.fragment_topic_add:
+                ARouter.getInstance()
+                        .build("/spaceTime/topic")
+                        .withString("path", "addDynamic")
+                        .navigation();
             default:
                 Toast.makeText(getContext(), "waiting for coming true",
                         Toast.LENGTH_SHORT).show();
@@ -103,11 +113,11 @@ public class FragmentTopic extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void init(){
+    private void drawView(){
         socialCircle.getLayoutParams().height = getPx(41);
         setTextSize(socialCircle, 20);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(socialCircle
-                .getLayoutParams());
+        LinearLayout.LayoutParams params = new LinearLayout.
+                LayoutParams(socialCircle.getLayoutParams());
         params.setMargins(getPx(18), 0, getPx(19), getPx(2));
         socialCircle.setLayoutParams(params);
 

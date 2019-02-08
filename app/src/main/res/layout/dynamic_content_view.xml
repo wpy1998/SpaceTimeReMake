@@ -1,0 +1,76 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:id="@+id/dynamicContentView_mainView"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="4.5dp"
+        android:layout_marginBottom="4.5dp">
+        <include layout="@layout/title_dynamic_content_view"/>
+
+        <TextView
+            android:id="@+id/dynamicContentView_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:id="@+id/dynamic_content_view_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </RelativeLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/dynamicContentView_horizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/dynamic_content_view_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_like"
+                android:id="@+id/dynamicContentView_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="0"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:id="@+id/dynamicContentView_likeNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/ic_comment"
+                android:id="@+id/dynamicContentView_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="0"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:id="@+id/dynamicContentView_commentNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/dynamicContentView_time"
+                android:text="2019-01-03"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

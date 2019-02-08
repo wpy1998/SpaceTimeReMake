@@ -1,4 +1,4 @@
-package com.example.spacetime.Components;
+package com.example.spacetime.Others;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 public class Settings {
     private static int dpi;
     private static int dpiToDp;
-    private static int windowsWidth;
-    private static int windowsHeight;
+    public static int windowsWidth;
+    public static int windowsHeight;
 
     public static int getPx(int input){
         return input * dpiToDp;

@@ -5,19 +5,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.example.spacetime.Components.BasicActivity;
+import com.example.spacetime.Others.BasicActivity;
 import com.example.spacetime.TopicModel.Fragments.FragmentTopic;
 import com.example.spacetime.UserModel.Fragments.FragmentUser;
 import com.example.spacetime.databinding.ActivityMainBinding;
 
-import static com.example.spacetime.Components.Settings.adaptView;
-import static com.example.spacetime.Components.Settings.getPx;
-import static com.example.spacetime.Components.Settings.setHW;
+import static com.example.spacetime.Others.Settings.adaptView;
+import static com.example.spacetime.Others.Settings.getPx;
+import static com.example.spacetime.Others.Settings.setHW;
 
 @Route(path = "/spaceTime/main")
 public class MainActivity extends BasicActivity implements View.OnClickListener {

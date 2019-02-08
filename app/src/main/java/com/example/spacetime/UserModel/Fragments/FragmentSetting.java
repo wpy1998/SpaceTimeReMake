@@ -1,17 +1,14 @@
 package com.example.spacetime.UserModel.Fragments;
 
 import android.databinding.DataBindingUtil;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +18,12 @@ import com.example.spacetime.UserModel.Components.OptionLayoutChoose;
 import com.example.spacetime.UserModel.Components.OptionLayoutTurn;
 import com.example.spacetime.databinding.FragmentSettingBinding;
 
-import static com.example.spacetime.Components.BasicActivity.closeCUT;
-import static com.example.spacetime.Components.Settings.adaptView;
-import static com.example.spacetime.Components.Settings.getPx;
-import static com.example.spacetime.Components.Settings.setHW;
+import static com.example.spacetime.Others.BasicActivity.closeCUT;
+import static com.example.spacetime.Others.Settings.adaptView;
+import static com.example.spacetime.Others.Settings.setHW;
 
-public class FragmentSetting extends Fragment implements View.OnClickListener {
+public class FragmentSetting extends Fragment implements
+        View.OnClickListener {
     private FragmentSettingBinding binding;
 
     private TextView title;
@@ -35,7 +32,8 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
     private OptionLayoutChoose openNotification;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
+            container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting,
                 null, false);
         title = binding.getRoot().findViewById(R.id.fragment_setting_title);
@@ -55,11 +53,43 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         init();
         binding.fragmentSettingExit.setOnClickListener(this);
         back.setOnClickListener(this);
-        editUserMessage.setOnClickListener(this);
+        editUserMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build("/spaceTime/user")
+                        .withString("path", "editUserMessage")
+                        .navigation();
+            }
+        });
+
         accountAndSafety.setOnClickListener(this);
+
         openNotification.binding.optionLayoutChooseGetNotification.
-                setOnClickListener(this);
-        feedback.setOnClickListener(this);
+                setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (openNotification.isAllowed){
+                            openNotification.isAllowed = false;
+                            Toast.makeText(getContext(), "推送已关闭",
+                                    Toast.LENGTH_SHORT).show();
+                        }else {
+                            openNotification.isAllowed = true;
+                            Toast.makeText(getContext(), "推送已开启",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build("/spaceTime/user")
+                        .withString("path", "feedback")
+                        .navigation();
+            }
+        });
         aboutUs.setOnClickListener(this);
         return binding.getRoot();
     }
@@ -93,7 +123,8 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         setHW(binding.fragmentSettingExit, 50, 160);
 
         setHW(binding.fragmentSettingVersion, 23, 85);
-        adaptView(binding.fragmentSettingVersion, 0, 10, 0, 19, true);
+        adaptView(binding.fragmentSettingVersion, 0, 10, 0,
+                19, true);
 
         editUserMessage.drawView();
         aboutUs.drawView();

@@ -1,4 +1,4 @@
-package com.example.spacetime.Components;
+package com.example.spacetime.Others;
 
 import android.content.Context;
 import android.graphics.Bitmap;
