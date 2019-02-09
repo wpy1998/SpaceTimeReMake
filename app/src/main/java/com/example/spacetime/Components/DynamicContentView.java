@@ -57,7 +57,7 @@ public class DynamicContentView extends LinearLayout
         publishTime = binding.getRoot()
                 .findViewById(R.id.dynamicContentView_publishTime);
         drawView();
-        addTag("大联社");
+        addTag("大社联");
         binding.dynamicContentViewLike.setOnClickListener(this);
         binding.dynamicContentViewComment.setOnClickListener(this);
     }

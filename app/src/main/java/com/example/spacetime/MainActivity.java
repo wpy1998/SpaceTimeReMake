@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.example.spacetime.InterestModel.Fragments.FragmentInterest;
 import com.example.spacetime.Others.BasicActivity;
 import com.example.spacetime.TopicModel.Fragments.FragmentTopic;
 import com.example.spacetime.UserModel.Fragments.FragmentUser;
@@ -50,7 +51,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainConversation.setImageResource(R.drawable.ic_talk_lighting);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                replaceFragment(new Fragment());
+                replaceFragment(new FragmentInterest());
                 break;
             case R.id.main_personal:
                 binding.mainConversation.setImageResource(R.drawable.ic_talk);
