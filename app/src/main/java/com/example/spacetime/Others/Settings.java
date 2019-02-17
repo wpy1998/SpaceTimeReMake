@@ -13,6 +13,7 @@ public class Settings {
     private static int dpiToDp;
     public static int windowsWidth;
     public static int windowsHeight;
+    public static int ownerId = 0;
 
     public static int getPx(int input){
         return input * dpiToDp;

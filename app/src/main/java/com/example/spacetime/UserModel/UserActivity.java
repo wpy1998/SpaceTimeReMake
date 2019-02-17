@@ -12,6 +12,7 @@ import com.example.spacetime.Others.BasicActivity;
 import com.example.spacetime.R;
 import com.example.spacetime.UserModel.Fragments.FragmentEditName;
 import com.example.spacetime.UserModel.Fragments.FragmentEditSign;
+import com.example.spacetime.UserModel.Fragments.FragmentEditUser;
 import com.example.spacetime.UserModel.Fragments.FragmentFeedback;
 import com.example.spacetime.UserModel.Fragments.FragmentSetting;
 import com.example.spacetime.databinding.ActivityUserBinding;
@@ -34,8 +35,8 @@ public class UserActivity extends BasicActivity {
 
     private void choosePath(String path) {
         switch (path){
-            case "changeUserMessage":
-                replaceFragment(new Fragment());
+            case "editUserMessage":
+                replaceFragment(new FragmentEditUser());
                 break;
             case "feedback":
                 replaceFragment(new FragmentFeedback());

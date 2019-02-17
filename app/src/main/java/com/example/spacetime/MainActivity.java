@@ -77,9 +77,11 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         adaptView(binding.mainBrowser, 5, 5, 5, 5, true);
 
         setHW(binding.mainConversation, 30, 30);
-        adaptView(binding.mainConversation, 5, 5, 5, 5, true);
+        adaptView(binding.mainConversation, 5, 5, 5, 5,
+                true);
 
         setHW(binding.mainPersonal, 30, 30);
-        adaptView(binding.mainPersonal, 5, 5, 5, 5, true);
+        adaptView(binding.mainPersonal, 5, 5, 5, 5,
+                true);
     }
 }

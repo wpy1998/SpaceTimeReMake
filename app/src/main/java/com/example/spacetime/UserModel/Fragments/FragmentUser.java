@@ -24,6 +24,7 @@ import com.example.spacetime.databinding.FragmentUserBinding;
 
 import static com.example.spacetime.Others.Settings.adaptView;
 import static com.example.spacetime.Others.Settings.getPx;
+import static com.example.spacetime.Others.Settings.ownerId;
 import static com.example.spacetime.Others.Settings.setHW;
 import static com.example.spacetime.Others.Settings.setTextSize;
 
@@ -34,10 +35,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     private TextView dynamic, message, name, ageLocation;
     private LinearLayout userView, chooseView;
     private ImageView image, gender;
-
     private FragmentDynamic userDynamic;
     private FragmentMessage userMessage;
-    private int tag = 0;
+
+    private int userId = 0;
+    private boolean isFollow;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
@@ -57,7 +59,10 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
 
         userDynamic = new FragmentDynamic();
         userMessage = new FragmentMessage();
-        tag = 0;
+        if (userId != ownerId){
+            setting.setText("关注");
+            isFollow = false;
+        }
 
         init();
         setting.setOnClickListener(this);
@@ -79,17 +84,17 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_user_setting:
-                if (tag == 0){
+                if (userId == ownerId){
                     ARouter.getInstance()
                             .build("/spaceTime/user")
                             .withString("path", "setting")
                             .navigation();
-                }else if(tag == 1){
+                }else if(!isFollow){
                     setting.setText("已关注");
-                    tag = 2;
+                    isFollow = true;
                 }else {
                     setting.setText("关注");
-                    tag = 1;
+                    isFollow = false;
                 }
                 break;
             case R.id.fragment_user_dynamic:
@@ -97,14 +102,15 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 message.setTextColor(Color.parseColor("#000000"));
                 replaceFragment(userDynamic);
                 setting.setText("设置");
-                tag = 0;
                 break;
             case R.id.fragment_user_message:
                 dynamic.setTextColor(Color.parseColor("#000000"));
                 message.setTextColor(Color.parseColor("#3E66FB"));
                 replaceFragment(userMessage);
-                setting.setText("关注");
-                tag = 1;
+                if (userId != ownerId){
+                    setting.setText("关注");
+                    isFollow = false;
+                }
                 break;
             default:
                 Toast.makeText(getContext(), "waiting for coming true",
