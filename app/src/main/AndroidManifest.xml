@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".InterestModel.InterestActivity"></activity>
-        <activity android:name=".TopicModel.TopicActivity" />
+        <activity android:name=".SocialCircleModel.SocialCircleActivity" />
         <activity android:name=".UserModel.UserActivity" />
         <activity android:name=".Login_and_Register.WelcomeActivity" />
         <activity android:name=".Login_and_Register.StartActivity" />
