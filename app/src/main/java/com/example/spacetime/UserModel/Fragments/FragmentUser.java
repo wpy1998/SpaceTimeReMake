@@ -24,7 +24,7 @@ import com.example.spacetime.databinding.FragmentUserBinding;
 
 import static com.example.spacetime.Others.Settings.adaptView;
 import static com.example.spacetime.Others.Settings.getPx;
-import static com.example.spacetime.Others.Settings.ownerId;
+import static com.example.spacetime.Others.Owner.ownerId;
 import static com.example.spacetime.Others.Settings.setHW;
 import static com.example.spacetime.Others.Settings.setTextSize;
 
@@ -38,7 +38,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     private FragmentDynamic userDynamic;
     private FragmentMessage userMessage;
 
-    private int userId = 0;
+    private String userId = "0";
     private boolean isFollow;
     @Nullable
     @Override
