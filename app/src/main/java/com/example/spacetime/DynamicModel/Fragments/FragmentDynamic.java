@@ -1,4 +1,4 @@
-package com.example.spacetime.SocialCircleModel.Fragments;
+package com.example.spacetime.DynamicModel.Fragments;
 
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -15,10 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.spacetime.Fragments.FragmentDynamic;
 import com.example.spacetime.Login_and_Register.Adapter.FragmentAdapter;
 import com.example.spacetime.R;
-import com.example.spacetime.databinding.FragmentSocialCircleBinding;
+import com.example.spacetime.databinding.FragmentDynamicBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,20 +25,20 @@ import java.util.List;
 import static com.example.spacetime.Others.Settings.getPx;
 import static com.example.spacetime.Others.Settings.setTextSize;
 
-public class FragmentSocialCircle extends Fragment implements View.OnClickListener {
-    private FragmentSocialCircleBinding binding;
+public class FragmentDynamic extends Fragment implements View.OnClickListener {
+    private FragmentDynamicBinding binding;
 
     private FragmentAdapter fragmentAdapter;
     private List<Fragment> fragments;
     private ViewPager viewPager;
     private Fragment collectionF;
-    private FragmentDynamic recommendF;
+    private FragmentDynamic2 recommendF;
     private TextView socialCircle, follow;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_social_circle,
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dynamic,
                 null, false);
         socialCircle = binding.getRoot().findViewById(
                 R.id.fragment_topic_socialCircle);
@@ -47,7 +46,7 @@ public class FragmentSocialCircle extends Fragment implements View.OnClickListen
 
         viewPager = binding.getRoot().findViewById(R.id.fragment_topic_viewPager);
         fragments = new ArrayList<Fragment>();
-        recommendF = new FragmentDynamic(true);
+        recommendF = new FragmentDynamic2(true);
         collectionF = new Fragment();
         fragments.add(recommendF);
         fragments.add(collectionF);

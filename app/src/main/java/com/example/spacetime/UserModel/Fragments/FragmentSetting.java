@@ -121,6 +121,7 @@ public class FragmentSetting extends Fragment implements
         adaptView(title, 20, 0, 0, 3, false);
 
         setHW(binding.fragmentSettingExit, 50, 160);
+        adaptView(binding.fragmentSettingExit, 0, 50, 0, 0, true);
 
         setHW(binding.fragmentSettingVersion, 23, 85);
         adaptView(binding.fragmentSettingVersion, 0, 10, 0,

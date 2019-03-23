@@ -29,19 +29,19 @@
             android:resource="@xml/network_security_config" />
 
         <activity android:name=".InterestModel.InterestActivity" />
-        <activity android:name=".SocialCircleModel.SocialCircleActivity" />
+        <activity android:name=".DynamicModel.DynamicActivity" />
         <activity android:name=".UserModel.UserActivity" />
         <activity android:name=".Login_and_Register.WelcomeActivity" />
-        <activity android:name=".Login_and_Register.StartActivity">
+        <activity android:name=".Login_and_Register.StartActivity"></activity>
+        <activity android:name=".Login_and_Register.RegisterActivity" />
+        <activity android:name=".Login_and_Register.LoginActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login_and_Register.RegisterActivity" />
-        <activity android:name=".Login_and_Register.LoginActivity" />
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

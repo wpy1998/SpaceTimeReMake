@@ -1,4 +1,4 @@
-package com.example.spacetime.SocialCircleModel.Fragments;
+package com.example.spacetime.DynamicModel.Fragments;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,15 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.spacetime.R;
-import com.example.spacetime.databinding.FragmentAddCircleBinding;
+import com.example.spacetime.databinding.FragmentAddDynamicBinding;
 
 import static com.example.spacetime.Others.Settings.adaptView;
 import static com.example.spacetime.Others.Settings.getPx;
 import static com.example.spacetime.Others.Settings.setHW;
 import static com.example.spacetime.Others.Settings.setTextSize;
 
-public class FragmentAddCircle extends Fragment implements View.OnClickListener {
-    private FragmentAddCircleBinding binding;
+public class FragmentAddDynamic extends Fragment implements View.OnClickListener {
+    private FragmentAddDynamicBinding binding;
 
     private ImageView back;
     private TextView save;
@@ -29,7 +29,7 @@ public class FragmentAddCircle extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_circle,
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_dynamic,
                 null, false);
         save = binding.getRoot().findViewById(R.id.fragmentAddDynamic_save);
         back = binding.getRoot().findViewById(R.id.fragmentAddDynamic_back);
@@ -47,6 +47,15 @@ public class FragmentAddCircle extends Fragment implements View.OnClickListener 
         save.getLayoutParams().height = getPx(25);
         adaptView(save, 0, 16, 35, 25, false);
         setTextSize(save, 18);
+
+        adaptView(binding.fragmentAddDynamicContent, 29, 25, 29, 25, false);
+        setTextSize(binding.fragmentAddDynamicContent,16);
+
+        setHW(binding.fragmentAddDynamicImage, 80, 80);
+        adaptView(binding.fragmentAddDynamicImage,29, 0, 0, 10, false);
+
+        binding.fragmentAddDynamicChoose.getLayoutParams().height = getPx(22);
+        adaptView(binding.fragmentAddDynamicChoose, 29, 0,0,0,false);
     }
 
     @Override

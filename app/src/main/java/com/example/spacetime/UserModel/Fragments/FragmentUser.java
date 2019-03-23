@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.spacetime.Fragments.FragmentDynamic;
+import com.example.spacetime.DynamicModel.Fragments.FragmentDynamic2;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentUserBinding;
 
@@ -35,7 +35,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     private TextView dynamic, message, name, ageLocation;
     private LinearLayout userView, chooseView;
     private ImageView image, gender;
-    private FragmentDynamic userDynamic;
+    private FragmentDynamic2 userDynamic;
     private FragmentMessage userMessage;
 
     private String userId = "0";
@@ -57,7 +57,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         image = binding.getRoot().findViewById(R.id.fragment_user_image);
         gender = binding.getRoot().findViewById(R.id.fragment_user_gender);
 
-        userDynamic = new FragmentDynamic();
+        userDynamic = new FragmentDynamic2();
         userMessage = new FragmentMessage();
         if (userId != ownerId){
             setting.setText("关注");

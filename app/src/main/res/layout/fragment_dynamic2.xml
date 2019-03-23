@@ -1,13 +1,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackGround">
+        android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
+            android:id="@+id/fragmentDynamic_mainView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <include layout="@layout/title_fragment_add_circle"/>
         </LinearLayout>
     </ScrollView>
 </layout>

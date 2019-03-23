@@ -1,4 +1,4 @@
-package com.example.spacetime.Fragments;
+package com.example.spacetime.DynamicModel.Fragments;
 
 import android.annotation.SuppressLint;
 import android.databinding.DataBindingUtil;
@@ -12,18 +12,18 @@ import android.view.ViewGroup;
 
 import com.example.spacetime.R;
 import com.example.spacetime.Components.DynamicContentView;
-import com.example.spacetime.databinding.FragmentDynamicBinding;
+import com.example.spacetime.databinding.FragmentDynamic2Binding;
 
 @SuppressLint("ValidFragment")
-public class FragmentDynamic extends Fragment {
-    private FragmentDynamicBinding binding;
+public class FragmentDynamic2 extends Fragment {
+    private FragmentDynamic2Binding binding;
     private boolean isUserView;
 
-    public FragmentDynamic(){
+    public FragmentDynamic2(){
         isUserView = false;
     }
 
-    public FragmentDynamic(boolean isUserView){
+    public FragmentDynamic2(boolean isUserView){
         this.isUserView = isUserView;
     }
 
@@ -31,7 +31,7 @@ public class FragmentDynamic extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dynamic,
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dynamic2,
                 null, false);
         binding.fragmentDynamicMainView.addView(new DynamicContentView(getContext(),
                 isUserView));

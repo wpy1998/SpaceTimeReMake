@@ -1,20 +1,26 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="5dp">
-        <TextView
-            android:id="@+id/option_layout_choose_text"
-            android:textColor="@color/colorBlack"
-            android:textSize="18dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"/>
-        <Switch
-            android:id="@+id/option_layout_choose_getNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp" />
+        android:layout_height="55dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp">
+            <TextView
+                android:id="@+id/option_layout_choose_text"
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+            <Switch
+                android:id="@+id/option_layout_choose_getNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+        </LinearLayout>
+        <include layout="@layout/xml_line"/>
     </LinearLayout>
 </layout>

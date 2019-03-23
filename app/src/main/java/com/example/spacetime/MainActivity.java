@@ -10,7 +10,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.spacetime.InterestModel.Fragments.FragmentInterest;
 import com.example.spacetime.Others.BasicActivity;
-import com.example.spacetime.SocialCircleModel.Fragments.FragmentSocialCircle;
+import com.example.spacetime.DynamicModel.Fragments.FragmentDynamic;
 import com.example.spacetime.UserModel.Fragments.FragmentUser;
 import com.example.spacetime.databinding.ActivityMainBinding;
 
@@ -63,7 +63,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainConversation.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth_lighting);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                replaceFragment(new FragmentSocialCircle());
+                replaceFragment(new FragmentDynamic());
                 break;
             default:
                 break;

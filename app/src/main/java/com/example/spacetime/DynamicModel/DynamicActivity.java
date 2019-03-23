@@ -1,4 +1,4 @@
-package com.example.spacetime.SocialCircleModel;
+package com.example.spacetime.DynamicModel;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -10,18 +10,18 @@ import android.os.Bundle;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.spacetime.Others.BasicActivity;
 import com.example.spacetime.R;
-import com.example.spacetime.SocialCircleModel.Fragments.FragmentAddCircle;
-import com.example.spacetime.databinding.ActivitySocialCircleBinding;
+import com.example.spacetime.DynamicModel.Fragments.FragmentAddDynamic;
+import com.example.spacetime.databinding.ActivityDynamicBinding;
 
 @Route(path = "/spaceTime/topic")
-public class SocialCircleActivity extends BasicActivity {
-    private ActivitySocialCircleBinding binding;
+public class DynamicActivity extends BasicActivity {
+    private ActivityDynamicBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,
-                R.layout.activity_social_circle);
+                R.layout.activity_dynamic);
 
         Intent intentFront = getIntent();
         String path = intentFront.getStringExtra("path");
@@ -39,7 +39,7 @@ public class SocialCircleActivity extends BasicActivity {
     private void choosePath(String path){
         switch (path){
             case "addDynamic":
-                replaceFragment(new FragmentAddCircle());
+                replaceFragment(new FragmentAddDynamic());
                 break;
             default:
                 replaceFragment(new Fragment());
