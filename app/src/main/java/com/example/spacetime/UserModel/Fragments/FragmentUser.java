@@ -38,7 +38,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     private FragmentDynamic2 userDynamic;
     private FragmentMessage userMessage;
 
-    private String userId = "0";
+    private int userId = 0;
     private boolean isFollow;
     @Nullable
     @Override

@@ -18,20 +18,37 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.spacetime.Others.OkHttpActionLG;
+import com.example.spacetime.Others.OkHttpAction;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentRegisterBeginBinding;
 
 import org.json.JSONObject;
 
+import static com.example.spacetime.Others.Owner.avatar;
+import static com.example.spacetime.Others.Owner.birthday;
+import static com.example.spacetime.Others.Owner.comeFrom;
+import static com.example.spacetime.Others.Owner.gender;
+import static com.example.spacetime.Others.Owner.interests;
+import static com.example.spacetime.Others.Owner.labels;
+import static com.example.spacetime.Others.Owner.major;
+import static com.example.spacetime.Others.Owner.ownerId;
+import static com.example.spacetime.Others.Owner.password;
+import static com.example.spacetime.Others.Owner.phoneNumber;
+import static com.example.spacetime.Others.Owner.profession;
+import static com.example.spacetime.Others.Owner.school;
+import static com.example.spacetime.Others.Owner.token;
+import static com.example.spacetime.Others.Owner.userName;
+
 public class RegisterBeginFragment extends Fragment implements View.OnClickListener {
     private FragmentRegisterBeginBinding binding;
     private int areaWhich;
-    private String intentAction = "com.example.spacetime." +
-            "Login_and_Register.Fragments.RegisterBeginFragment";
-    private final int intentAction_GetVerification = 1, intentAction_Login = 2;
-    OkHttpActionLG okHttpActionLG;
+    private String intentAction = "com.example.spacetime.Login_and_Register.Fragments." +
+            "RegisterBeginFragment";
+    private final int intentAction_CheckExistence = 1, intentAction_CheckSmsCode = 2,
+            intentAction_Register = 3, intentAction_getToken = 4;
+    OkHttpAction okHttpAction;
     private IntentFilter intentFilter;
+    private LGBroadCastReceiver lgBroadCastReceiver;
 
     private TextView areaCode;
     @Nullable
@@ -41,9 +58,9 @@ public class RegisterBeginFragment extends Fragment implements View.OnClickListe
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register_begin,
                 null, false);
 
-        okHttpActionLG = new OkHttpActionLG(getContext());
+        okHttpAction = new OkHttpAction(getContext());
         intentFilter = new IntentFilter();
-        LGBroadCastReceiver lgBroadCastReceiver = new LGBroadCastReceiver();
+        lgBroadCastReceiver = new LGBroadCastReceiver();
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(lgBroadCastReceiver, intentFilter);
 
@@ -56,6 +73,24 @@ public class RegisterBeginFragment extends Fragment implements View.OnClickListe
 
         areaCode=binding.registerBeginAreaCode;
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        getContext().unregisterReceiver(lgBroadCastReceiver);
+        super.onDestroyView();
+    }
+
+    private static final int MIN_DELAY_TIME = 1000;
+    private static long lastClickTime;
+    public static boolean isFastClick() {
+        boolean flag = true;
+        long currentClickTime = System.currentTimeMillis();
+        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
+            flag = false;
+        }
+        lastClickTime = currentClickTime;
+        return flag;
     }
 
     @Override
@@ -95,24 +130,27 @@ public class RegisterBeginFragment extends Fragment implements View.OnClickListe
                 binding.registerBeginChooseArea.performClick();
                 break;
             case R.id.register_begin_nextPage:
-                ARouter.getInstance()
-                        .build("/spaceTime/register")
-                        .withString("path", "completeMessage")
-                        .navigation();
+                String password = binding.registerBeginSetPassword.getText().toString();
+                if (password.equals("")){
+                    Toast.makeText(getContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (isFastClick()) return;
+                okHttpAction.checkSmsCode(binding.registerBeginTelephoneNumber.getText().toString(),
+                        binding.registerBeginVerificationCode.getText().toString(),
+                        intentAction_CheckSmsCode, intentAction);
             case R.id.register_begin_getVerificationCode:
                 String phoneNumber = binding.registerBeginTelephoneNumber
                         .getText().toString();
                 if (phoneNumber.length() != 11){
                     Toast.makeText(getContext(), "请输入正确号码", Toast.LENGTH_SHORT)
                             .show();
-                }else {
-                    okHttpActionLG.checkExistence(phoneNumber, intentAction_GetVerification,
-                            intentAction);
+                    return;
                 }
+                if (isFastClick()) return;
+                okHttpAction.checkExistence(phoneNumber, intentAction_CheckExistence, intentAction);
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true",
-                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -121,41 +159,100 @@ public class RegisterBeginFragment extends Fragment implements View.OnClickListe
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
+            String action = intent.getAction(), data;
             int type = intent.getIntExtra("type", 0);
             switch (type){
-                case intentAction_GetVerification:
-                    String data = intent.getStringExtra("data");
+                case intentAction_CheckExistence:
+                    data = intent.getStringExtra("data");
                     try {
                         JSONObject object = new JSONObject(data);
-                        String message = object.getString("message");
-                        if (message.equals("success")){
-                            String data1 = object.getString("data");
-                            JSONObject object1 = new JSONObject(data1);
-                            boolean isExist = object1.getBoolean("existence");
+                        String data1 = object.getString("data");
+                        JSONObject object1 = new JSONObject(data1);
+                        boolean isExist = object1.getBoolean("existence");
 
-                            if (isExist){
-                                Toast.makeText(getContext(), "该号码已被使用，请重新输入",
-                                        Toast.LENGTH_LONG).show();
-                            }else {
-                                Toast.makeText(getContext(), "检测成功，请设置您的密码",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }else {
-                            Toast.makeText(getContext(), "网络请求错误",
+                        if (isExist){
+                            Toast.makeText(getContext(), "该号码已被使用，请重新输入手机号码",
                                     Toast.LENGTH_LONG).show();
+                        }else {
+                            Toast.makeText(getContext(), "验证码已发送",
+                                    Toast.LENGTH_LONG).show();
+                            okHttpAction.getSmsCode(binding.registerBeginTelephoneNumber.getText()
+                                    .toString(), 0, intentAction);
                         }
                     }catch (Exception e){
                         e.printStackTrace();
                     }
                     break;
 
-                case intentAction_Login:
+                case intentAction_CheckSmsCode:
+                    data = intent.getStringExtra("data");
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        JSONObject jsonObject = new JSONObject(data1);
+                        if (jsonObject.getBoolean("correction") == false){
+                            Toast.makeText(getContext(), "验证码错误，请重新输入",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        okHttpAction.registerUsers(binding.registerBeginVerificationCode.getText()
+                                .toString(), binding.registerBeginTelephoneNumber.getText().toString(),
+                                binding.registerBeginSetPassword.getText().toString(),
+                                intentAction_Register, intentAction);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case intentAction_Register:
+                    data = intent.getStringExtra("data");
+                    System.out.println(data);
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        int status = object.getInt("status");
+                        if (status >= 300){
+                            Toast.makeText(getContext(), "发生异常，可能号码已被注册",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        JSONObject object1 = new JSONObject(data1);
+                        ownerId = object1.getInt("id");
+                        birthday = object1.getString("birthday");
+                        comeFrom = object1.getString("comeFrom");
+                        gender = object1.getString("gender");
+                        interests = object1.getString("interests");
+                        labels = object1.getString("labels");
+                        major = object1.getString("major");
+                        phoneNumber = object1.getString("phoneNumber");
+                        profession = object1.getString("profession");
+                        school = object1.getString("school");
+                        userName = object1.getString("username");
+                        password = binding.registerBeginSetPassword.getText().toString();
+                        okHttpAction.authorizeWithPassword(phoneNumber, password, intentAction_getToken,
+                                intentAction);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case intentAction_getToken:
+                    data = intent.getStringExtra("data");
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        JSONObject object1 = new JSONObject(data1);
+                        token = object1.getString("token");
+                        ARouter.getInstance()
+                                .build("/spaceTime/register")
+                                .withString("path", "completeMessage")
+                                .navigation();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
 
                 default:
-                    Toast.makeText(getContext(), "网络请求错误",
-                            Toast.LENGTH_LONG).show();
                     break;
             }
         }

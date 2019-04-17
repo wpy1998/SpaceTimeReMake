@@ -2,8 +2,11 @@ package com.example.spacetime.Login_and_Register.Fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -21,21 +24,53 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.Others.FileOperation;
+import com.example.spacetime.Others.OkHttpAction;
+import com.example.spacetime.Others.Owner;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentCompleteMessageBinding;
 
+import org.json.JSONObject;
+
 import java.util.Calendar;
+
+import static com.example.spacetime.Others.Owner.avatar;
+import static com.example.spacetime.Others.Owner.birthday;
+import static com.example.spacetime.Others.Owner.comeFrom;
+import static com.example.spacetime.Others.Owner.gender;
+import static com.example.spacetime.Others.Owner.interests;
+import static com.example.spacetime.Others.Owner.labels;
+import static com.example.spacetime.Others.Owner.major;
+import static com.example.spacetime.Others.Owner.ownerId;
+import static com.example.spacetime.Others.Owner.phoneNumber;
+import static com.example.spacetime.Others.Owner.profession;
+import static com.example.spacetime.Others.Owner.school;
+import static com.example.spacetime.Others.Owner.token;
+import static com.example.spacetime.Others.Owner.userName;
 
 public class FragmentCompleteMessage extends Fragment implements View.OnClickListener {
     private FragmentCompleteMessageBinding binding;
     private int genderWhich;
     private Calendar calendar;
+    private final String intentAction = "com.example.spacetime.Login_and_Register.Fragments." +
+            "FragmentCompleteMessage";
+    private final int intentAction_EditUserMessage = 1, intentAction_unRegisterBroadcast = 2;
+    OkHttpAction okHttpAction;
+    private MyBroadcastReceiver myBroadcastReceiver;
 
     private TextView gender, time;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_complete_message, null, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        IntentFilter intentFilter = new IntentFilter();
+        myBroadcastReceiver = new MyBroadcastReceiver();
+        intentFilter.addAction(intentAction);
+        getContext().registerReceiver(myBroadcastReceiver, intentFilter);
+
+        okHttpAction = new OkHttpAction(getContext());
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_complete_message,
+                null, false);
         binding.fragmentCompleteMessageImage.setOnClickListener(this);
         binding.fragmentCompleteMessageNextPage.setOnClickListener(this);
         binding.fragmentCompleteMessageGender.setOnClickListener(this);
@@ -47,12 +82,31 @@ public class FragmentCompleteMessage extends Fragment implements View.OnClickLis
     }
 
     @Override
+    public void onDestroyView() {
+        getContext().unregisterReceiver(myBroadcastReceiver);
+        super.onDestroyView();
+    }
+
+    private static final int MIN_DELAY_TIME = 1000;
+    private static long lastClickTime;
+    public static boolean isFastClick() {
+        boolean flag = true;
+        long currentClickTime = System.currentTimeMillis();
+        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
+            flag = false;
+        }
+        lastClickTime = currentClickTime;
+        return flag;
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_complete_message_nextPage:
-                ARouter.getInstance()
-                        .build("/spaceTime/welcome")
-                        .navigation();
+                okHttpAction.editUserMessage(token, phoneNumber, binding.fragmentCompleteMessageName.
+                                getText().toString(), gender.getText().toString(), birthday, comeFrom,
+                        profession, school, major, interests, labels, intentAction_EditUserMessage,
+                        intentAction);
                 break;
             case R.id.fragment_complete_message_gender:
                 new AlertDialog.Builder(getContext()).setTitle("请选择您的性别").setIcon(
@@ -85,7 +139,8 @@ public class FragmentCompleteMessage extends Fragment implements View.OnClickLis
                                 dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
                                 time.setText(year + "年" + (month + 1) + "月" + dayOfMonth + "日");
                             }
-                        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
                 break;
             case R.id.fragment_complete_message_image:
@@ -96,7 +151,6 @@ public class FragmentCompleteMessage extends Fragment implements View.OnClickLis
                 startActivityForResult(i, 1);
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -118,6 +172,47 @@ public class FragmentCompleteMessage extends Fragment implements View.OnClickLis
             cursor.close();
             FileOperation.setBitmap(picturePath);
             binding.fragmentCompleteMessageImage.setImageBitmap(FileOperation.bitmap);
+        }
+    }
+
+    private class MyBroadcastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int type = intent.getIntExtra("type", 0);
+            switch (type){
+                case intentAction_EditUserMessage:
+                    String data = intent.getStringExtra("data");
+                    System.out.println(token + "**********************" + data);
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        JSONObject object1 = new JSONObject(data1);
+                        ownerId = object1.getInt("id");
+                        avatar = object1.getString("avatar");
+                        birthday = object1.getString("birthday");
+                        comeFrom = object1.getString("comeFrom");
+                        Owner.gender = object1.getString("gender");
+                        interests = object1.getString("interests");
+                        labels = object1.getString("labels");
+                        major = object1.getString("major");
+                        phoneNumber = object1.getString("phoneNumber");
+                        profession = object1.getString("profession");
+                        school = object1.getString("school");
+                        userName = object1.getString("username");
+                        ARouter.getInstance()
+                                .build("/spaceTime/welcome")
+                                .navigation();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                case intentAction_unRegisterBroadcast:
+                    getContext().unregisterReceiver(this);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

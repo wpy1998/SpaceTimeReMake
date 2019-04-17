@@ -17,6 +17,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentLoginBeginBinding;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class LoginBeginFragment extends Fragment implements View.OnClickListener {
     private FragmentLoginBeginBinding binding;
     private int areaWhich;
@@ -37,8 +39,23 @@ public class LoginBeginFragment extends Fragment implements View.OnClickListener
         return binding.getRoot();
     }
 
+    private static final int MIN_DELAY_TIME = 1000;
+    private static long lastClickTime;
+    public static boolean isFastClick() {
+        boolean flag = true;
+        long currentClickTime = System.currentTimeMillis();
+        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
+            flag = false;
+        }
+        lastClickTime = currentClickTime;
+        return flag;
+    }
+
     @Override
     public void onClick(View v) {
+        if (isFastClick()){
+            return;
+        }
         switch (v.getId()){
             case R.id.login_login:
                 ARouter.getInstance()
