@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.Others.OkHttpAction;
 import com.example.spacetime.R;
+import com.example.spacetime.UserModel.Components.BasicFragment;
 import com.example.spacetime.databinding.FragmentRegisterBeginBinding;
 
 import org.json.JSONObject;
@@ -36,10 +37,11 @@ import static com.example.spacetime.Others.Owner.password;
 import static com.example.spacetime.Others.Owner.phoneNumber;
 import static com.example.spacetime.Others.Owner.profession;
 import static com.example.spacetime.Others.Owner.school;
+import static com.example.spacetime.Others.Owner.setMessage;
 import static com.example.spacetime.Others.Owner.token;
 import static com.example.spacetime.Others.Owner.userName;
 
-public class RegisterBeginFragment extends Fragment implements View.OnClickListener {
+public class RegisterBeginFragment extends BasicFragment implements View.OnClickListener {
     private FragmentRegisterBeginBinding binding;
     private int areaWhich;
     private String intentAction = "com.example.spacetime.Login_and_Register.Fragments." +
@@ -79,18 +81,6 @@ public class RegisterBeginFragment extends Fragment implements View.OnClickListe
     public void onDestroyView() {
         getContext().unregisterReceiver(lgBroadCastReceiver);
         super.onDestroyView();
-    }
-
-    private static final int MIN_DELAY_TIME = 1000;
-    private static long lastClickTime;
-    public static boolean isFastClick() {
-        boolean flag = true;
-        long currentClickTime = System.currentTimeMillis();
-        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
-            flag = false;
-        }
-        lastClickTime = currentClickTime;
-        return flag;
     }
 
     @Override
@@ -216,18 +206,7 @@ public class RegisterBeginFragment extends Fragment implements View.OnClickListe
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        JSONObject object1 = new JSONObject(data1);
-                        ownerId = object1.getInt("id");
-                        birthday = object1.getString("birthday");
-                        comeFrom = object1.getString("comeFrom");
-                        gender = object1.getString("gender");
-                        interests = object1.getString("interests");
-                        labels = object1.getString("labels");
-                        major = object1.getString("major");
-                        phoneNumber = object1.getString("phoneNumber");
-                        profession = object1.getString("profession");
-                        school = object1.getString("school");
-                        userName = object1.getString("username");
+                        setMessage(data1);
                         password = binding.registerBeginSetPassword.getText().toString();
                         okHttpAction.authorizeWithPassword(phoneNumber, password, intentAction_getToken,
                                 intentAction);

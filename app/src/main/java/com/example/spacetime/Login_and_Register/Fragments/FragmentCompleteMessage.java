@@ -27,6 +27,7 @@ import com.example.spacetime.Others.FileOperation;
 import com.example.spacetime.Others.OkHttpAction;
 import com.example.spacetime.Others.Owner;
 import com.example.spacetime.R;
+import com.example.spacetime.UserModel.Components.BasicFragment;
 import com.example.spacetime.databinding.FragmentCompleteMessageBinding;
 
 import org.json.JSONObject;
@@ -47,7 +48,7 @@ import static com.example.spacetime.Others.Owner.school;
 import static com.example.spacetime.Others.Owner.token;
 import static com.example.spacetime.Others.Owner.userName;
 
-public class FragmentCompleteMessage extends Fragment implements View.OnClickListener {
+public class FragmentCompleteMessage extends BasicFragment implements View.OnClickListener {
     private FragmentCompleteMessageBinding binding;
     private int genderWhich;
     private Calendar calendar;
@@ -85,18 +86,6 @@ public class FragmentCompleteMessage extends Fragment implements View.OnClickLis
     public void onDestroyView() {
         getContext().unregisterReceiver(myBroadcastReceiver);
         super.onDestroyView();
-    }
-
-    private static final int MIN_DELAY_TIME = 1000;
-    private static long lastClickTime;
-    public static boolean isFastClick() {
-        boolean flag = true;
-        long currentClickTime = System.currentTimeMillis();
-        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
-            flag = false;
-        }
-        lastClickTime = currentClickTime;
-        return flag;
     }
 
     @Override

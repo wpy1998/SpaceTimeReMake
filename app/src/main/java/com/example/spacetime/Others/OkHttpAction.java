@@ -196,6 +196,7 @@ public class OkHttpAction {
                             .add("labels", labels).build();
                     Request request = new Request.Builder().url(web + "/users/" + phoneNumber)
                             .addHeader("Authorization", token).put(body).build();
+                    System.out.println(body.toString());
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
                     System.out.println("************************" + action);
