@@ -144,7 +144,7 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
                         .navigation();
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
