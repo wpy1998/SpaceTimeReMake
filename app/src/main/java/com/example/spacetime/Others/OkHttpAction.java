@@ -11,6 +11,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.example.spacetime.Others.ForbiddenActivity.logout;
+
 public class OkHttpAction {
     public final String web = "http://59.110.172.61";
     private static final MediaType JSON= MediaType.parse("application/json;charset=utf-8");
@@ -37,10 +39,7 @@ public class OkHttpAction {
                             .post(body).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
-                    Intent intent = new Intent(intentAction);
-                    intent.putExtra("type", type);
-                    intent.putExtra("data", action);
-                    context.sendBroadcast(intent);
+                    sendBroadcast(action, type, intentAction);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -61,10 +60,7 @@ public class OkHttpAction {
                     Request request = new Request.Builder().url(url).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
-                    Intent intent = new Intent(intentAction);
-                    intent.putExtra("type", type);
-                    intent.putExtra("data", action);
-                    context.sendBroadcast(intent);
+                    sendBroadcast(action, type, intentAction);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -72,7 +68,7 @@ public class OkHttpAction {
         }).start();
     }
 
-    //post 使用密码验证登陆
+    //post 使用密码登陆
     public void authorizeWithPassword(final String phoneNumber, final String password, final int type,
                                 final String intentAction){
         new Thread(new Runnable() {
@@ -87,10 +83,7 @@ public class OkHttpAction {
                             .url(web + "/auth/token/authorize-with-password").post(body).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
-                    Intent intent = new Intent(intentAction);
-                    intent.putExtra("type", type);
-                    intent.putExtra("data", action);
-                    context.sendBroadcast(intent);
+                    sendBroadcast(action, type, intentAction);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -98,6 +91,27 @@ public class OkHttpAction {
         }).start();
     }
 
+    //post 使用验证码登陆
+    public void authorizeWithSmsCode(final String phoneNumber, final String smsCode, final int type,
+                                     final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder().add("phoneNumber", phoneNumber)
+                            .add("smsCode", smsCode).build();
+                    Request request = new Request.Builder()
+                            .url(web + "/auth/token/authorize-with-sms-code").post(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 
     //authorization-controller************************
     //post 注册用户
@@ -115,10 +129,7 @@ public class OkHttpAction {
                             .post(body).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
-                    Intent intent = new Intent(intentAction);
-                    intent.putExtra("data", action);
-                    intent.putExtra("type", type);
-                    context.sendBroadcast(intent);
+                    sendBroadcast(action, type, intentAction);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -138,10 +149,7 @@ public class OkHttpAction {
                     Request request = new Request.Builder().url(url).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
-                    Intent intent = new Intent(intentAction);
-                    intent.putExtra("type", type);
-                    intent.putExtra("data", action);
-                    context.sendBroadcast(intent);
+                    sendBroadcast(action, type, intentAction);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -162,10 +170,7 @@ public class OkHttpAction {
                     Request request = new Request.Builder().url(url).put(body).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
-                    Intent intent = new Intent(intentAction);
-                    intent.putExtra("type", type);
-                    intent.putExtra("data", action);
-                    context.sendBroadcast(intent);
+                    sendBroadcast(action, type, intentAction);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -200,14 +205,19 @@ public class OkHttpAction {
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
                     System.out.println("************************" + action);
-                    Intent intent = new Intent(intentAction);
-                    intent.putExtra("data", action);
-                    intent.putExtra("type", type);
-                    context.sendBroadcast(intent);
+                    sendBroadcast(action, type, intentAction);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
         }).start();
+    }
+
+    public void sendBroadcast(String data, int type, String intentAction){
+        Intent intent = new Intent(intentAction);
+        intent.putExtra("type", type);
+        intent.putExtra("data", data);
+        context.sendBroadcast(intent);
+        logout = logout + data + "\n";
     }
 }

@@ -14,40 +14,33 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.Others.FileOperation;
 import com.example.spacetime.Others.OkHttpAction;
-import com.example.spacetime.Others.Owner;
 import com.example.spacetime.R;
-import com.example.spacetime.UserModel.Components.BasicFragment;
+import com.example.spacetime.Others.BasicFragment;
 import com.example.spacetime.databinding.FragmentCompleteMessageBinding;
 
 import org.json.JSONObject;
 
 import java.util.Calendar;
 
-import static com.example.spacetime.Others.Owner.avatar;
 import static com.example.spacetime.Others.Owner.birthday;
 import static com.example.spacetime.Others.Owner.comeFrom;
-import static com.example.spacetime.Others.Owner.gender;
 import static com.example.spacetime.Others.Owner.interests;
 import static com.example.spacetime.Others.Owner.labels;
 import static com.example.spacetime.Others.Owner.major;
-import static com.example.spacetime.Others.Owner.ownerId;
 import static com.example.spacetime.Others.Owner.phoneNumber;
 import static com.example.spacetime.Others.Owner.profession;
 import static com.example.spacetime.Others.Owner.school;
 import static com.example.spacetime.Others.Owner.setMessage;
 import static com.example.spacetime.Others.Owner.token;
-import static com.example.spacetime.Others.Owner.userName;
 
 public class FragmentCompleteMessage extends BasicFragment implements View.OnClickListener {
     private FragmentCompleteMessageBinding binding;
@@ -55,7 +48,7 @@ public class FragmentCompleteMessage extends BasicFragment implements View.OnCli
     private Calendar calendar;
     private final String intentAction = "com.example.spacetime.Login_and_Register.Fragments." +
             "FragmentCompleteMessage";
-    private final int intentAction_EditUserMessage = 1, intentAction_unRegisterBroadcast = 2;
+    private final int intentAction_EditUserMessage = 1;
     OkHttpAction okHttpAction;
     private MyBroadcastReceiver myBroadcastReceiver;
 
@@ -177,7 +170,6 @@ public class FragmentCompleteMessage extends BasicFragment implements View.OnCli
                     try {
                         JSONObject object = new JSONObject(data);
                         String data1 = object.getString("data");
-                        JSONObject object1 = new JSONObject(data1);
                         setMessage(data1);
                         ARouter.getInstance()
                                 .build("/spaceTime/welcome")
@@ -185,9 +177,6 @@ public class FragmentCompleteMessage extends BasicFragment implements View.OnCli
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-                    break;
-                case intentAction_unRegisterBroadcast:
-                    getContext().unregisterReceiver(this);
                     break;
                 default:
                     break;
