@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.spacetime.Others.BasicActivity;
@@ -29,15 +28,8 @@ public class InterestActivity extends BasicActivity {
     private void choosePath(String path) {
         switch (path){
             default:
-                replaceFragment(new Fragment());
+                replaceFragment(R.id.interest_frameLayout);
                 break;
         }
-    }
-
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.interest_frameLayout, fragment);
-        transaction.commit();
     }
 }

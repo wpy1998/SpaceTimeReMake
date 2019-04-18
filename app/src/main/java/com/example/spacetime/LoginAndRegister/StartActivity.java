@@ -1,4 +1,4 @@
-package com.example.spacetime.Login_and_Register;
+package com.example.spacetime.LoginAndRegister;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;

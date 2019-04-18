@@ -29,20 +29,14 @@ public class DynamicActivity extends BasicActivity {
         choosePath(path);
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.topic_frameLayout,fragment);
-        transaction.commit();
-    }
-
     private void choosePath(String path){
         switch (path){
             case "addDynamic":
-                replaceFragment(new FragmentAddDynamic());
+                originFragment = new FragmentAddDynamic();
+                replaceFragment(R.id.topic_frameLayout);
                 break;
             default:
-                replaceFragment(new Fragment());
+                replaceFragment(R.id.topic_frameLayout);
                 break;
         }
     }

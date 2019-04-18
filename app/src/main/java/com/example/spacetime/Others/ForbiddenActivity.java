@@ -11,7 +11,7 @@ import com.example.spacetime.databinding.ActivityForbiddenBinding;
 @Route(path = "/spaceTime/forbidden")
 public class ForbiddenActivity extends BasicActivity {
     ActivityForbiddenBinding binding;
-    public static String logout = "logout:\n";
+    public static String logout = "logout:\n\n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

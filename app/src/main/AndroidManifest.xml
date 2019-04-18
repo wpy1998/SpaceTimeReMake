@@ -33,15 +33,15 @@
         <activity android:name=".InterestModel.InterestActivity" />
         <activity android:name=".DynamicModel.DynamicActivity" />
         <activity android:name=".UserModel.UserActivity" />
-        <activity android:name=".Login_and_Register.StartActivity">
+        <activity android:name=".LoginAndRegister.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login_and_Register.RegisterActivity" />
-        <activity android:name=".Login_and_Register.LoginActivity" />
+        <activity android:name=".LoginAndRegister.RegisterActivity" />
+        <activity android:name=".LoginAndRegister.LoginActivity" />
         <activity android:name=".MainActivity" />
     </application>
 

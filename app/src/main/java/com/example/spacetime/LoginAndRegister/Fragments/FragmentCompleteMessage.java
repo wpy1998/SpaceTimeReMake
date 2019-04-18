@@ -1,4 +1,4 @@
-package com.example.spacetime.Login_and_Register.Fragments;
+package com.example.spacetime.LoginAndRegister.Fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;

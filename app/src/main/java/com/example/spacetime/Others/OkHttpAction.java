@@ -213,11 +213,11 @@ public class OkHttpAction {
         }).start();
     }
 
-    public void sendBroadcast(String data, int type, String intentAction){
+    public synchronized void sendBroadcast(String data, int type, String intentAction){
         Intent intent = new Intent(intentAction);
         intent.putExtra("type", type);
         intent.putExtra("data", data);
         context.sendBroadcast(intent);
-        logout = logout + data + "\n";
+        logout = logout + data + "\n\n";
     }
 }

@@ -1,7 +1,5 @@
-package com.example.spacetime.Login_and_Register.Fragments;
+package com.example.spacetime.LoginAndRegister.Fragments;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,8 +22,10 @@ public class FragmentGetVerificationCode extends Fragment{
     private TextView chooseArea;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_verification_code, null, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_verification_code,
+                null, false);
 
         chooseArea = binding.verificationCodeContent;
         chooseArea.addTextChangedListener(new TextWatcher() {

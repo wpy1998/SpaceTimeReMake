@@ -36,29 +36,27 @@ public class UserActivity extends BasicActivity {
     private void choosePath(String path) {
         switch (path){
             case "editUserMessage":
-                replaceFragment(new FragmentEditUser());
+                originFragment = new FragmentEditUser();
+                replaceFragment(R.id.user_frameLayout);
                 break;
             case "feedback":
-                replaceFragment(new FragmentFeedback());
+                originFragment = new FragmentFeedback();
+                replaceFragment(R.id.user_frameLayout);
                 break;
             case "setting":
-                replaceFragment(new FragmentSetting());
+                originFragment = new FragmentSetting();
+                replaceFragment(R.id.user_frameLayout);
                 break;
             case "editName":
-                replaceFragment(new FragmentEditName());
+                originFragment = new FragmentEditName();
+                replaceFragment(R.id.user_frameLayout);
                 break;
             case "editSign":
-                replaceFragment(new FragmentEditSign());
+                originFragment = new FragmentEditSign();
+                replaceFragment(R.id.user_frameLayout);
                 break;
             default:
                 break;
         }
-    }
-
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.user_frameLayout, fragment);
-        transaction.commit();
     }
 }

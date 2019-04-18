@@ -1,4 +1,4 @@
-package com.example.spacetime.Login_and_Register;
+package com.example.spacetime.LoginAndRegister;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -8,8 +8,8 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.spacetime.Others.BasicActivity;
-import com.example.spacetime.Login_and_Register.Fragments.FragmentCompleteMessage;
-import com.example.spacetime.Login_and_Register.Fragments.RegisterBeginFragment;
+import com.example.spacetime.LoginAndRegister.Fragments.FragmentCompleteMessage;
+import com.example.spacetime.LoginAndRegister.Fragments.RegisterBeginFragment;
 import com.example.spacetime.R;
 
 @Route(path = "/spaceTime/register")
@@ -24,23 +24,18 @@ public class RegisterActivity extends BasicActivity {
         choosePath(intentFront.getStringExtra("path"));
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.register_frameLayout, fragment);
-        transaction.commit();
-    }
-
     private void choosePath(String path){
         switch (path){
             case "registerBegin":
-                replaceFragment(new RegisterBeginFragment());
+                originFragment = new RegisterBeginFragment();
+                replaceFragment(R.id.register_frameLayout);
                 break;
             case "completeMessage":
-                replaceFragment(new FragmentCompleteMessage());
+                originFragment = new FragmentCompleteMessage();
+                replaceFragment(R.id.register_frameLayout);
                 break;
             default:
-                replaceFragment(new Fragment());
+                replaceFragment(R.id.register_frameLayout);
                 break;
         }
     }

@@ -1,4 +1,4 @@
-package com.example.spacetime.Login_and_Register;
+package com.example.spacetime.LoginAndRegister;
 
 import android.Manifest;
 import android.content.Intent;
@@ -10,10 +10,10 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.spacetime.Others.BasicActivity;
-import com.example.spacetime.Login_and_Register.Fragments.FragmentGetTelephone;
-import com.example.spacetime.Login_and_Register.Fragments.FragmentGetVerificationCode;
-import com.example.spacetime.Login_and_Register.Fragments.FragmentResetPassword;
-import com.example.spacetime.Login_and_Register.Fragments.LoginBeginFragment;
+import com.example.spacetime.LoginAndRegister.Fragments.FragmentGetTelephone;
+import com.example.spacetime.LoginAndRegister.Fragments.FragmentGetVerificationCode;
+import com.example.spacetime.LoginAndRegister.Fragments.FragmentResetPassword;
+import com.example.spacetime.LoginAndRegister.Fragments.LoginBeginFragment;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.ActivityLoginBinding;
 
@@ -40,29 +40,26 @@ public class LoginActivity extends BasicActivity {
         choosePath(intentFront.getStringExtra("path"));
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.login_frameLayout, fragment);
-        transaction.commit();
-    }
-
     private void choosePath(String path){
         switch (path){
             case "loginBegin":
-                replaceFragment(new LoginBeginFragment());
+                originFragment = new LoginBeginFragment();
+                replaceFragment(R.id.login_frameLayout);
                 break;
             case "getTelephone":
-                replaceFragment(new FragmentGetTelephone());
+                originFragment = new FragmentGetTelephone();
+                replaceFragment(R.id.login_frameLayout);
                 break;
             case "getVerificationCode":
-                replaceFragment(new FragmentGetVerificationCode());
+                originFragment = new FragmentGetVerificationCode();
+                replaceFragment(R.id.login_frameLayout);
                 break;
             case "resetPassword":
-                replaceFragment(new FragmentResetPassword());
+                originFragment = new FragmentResetPassword();
+                replaceFragment(R.id.login_frameLayout);
                 break;
             default:
-                replaceFragment(new Fragment());
+                replaceFragment(R.id.login_frameLayout);
                 break;
         }
     }

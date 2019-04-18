@@ -2,7 +2,6 @@ package com.example.spacetime;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -37,13 +36,6 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         binding.mainBrowser.performClick();
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.commit();
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -51,19 +43,22 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainConversation.setImageResource(R.drawable.ic_talk_lighting);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                replaceFragment(new FragmentInterest());
+                originFragment = new FragmentInterest();
+                replaceFragment(R.id.main_fragment);
                 break;
             case R.id.main_personal:
                 binding.mainConversation.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person_lighting);
-                replaceFragment(new FragmentUser());
+                originFragment = new FragmentUser();
+                replaceFragment(R.id.main_fragment);
                 break;
             case R.id.main_browser:
                 binding.mainConversation.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth_lighting);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                replaceFragment(new FragmentDynamic());
+                originFragment = new FragmentDynamic();
+                replaceFragment(R.id.main_fragment);
                 break;
             default:
                 break;
