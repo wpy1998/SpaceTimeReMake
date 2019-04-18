@@ -153,32 +153,37 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction(), data;
-            int type = intent.getIntExtra("type", 0);
-            switch (type){
-                case intentAction_AuthorizationWithPassword:
-                    data = intent.getStringExtra("data");
-                    System.out.println(data);
-                    try {
-                        JSONObject object = new JSONObject(data);
-                        String data1 = object.getString("data");
-                        int status = object.getInt("status");
-                        if (status >= 300){
-                            Toast.makeText(getContext(), "发生异常，可能号码已被注册",
-                                    Toast.LENGTH_SHORT).show();
-                            return;
+            if(action.equals(intentAction)){
+
+                int type = intent.getIntExtra("type", 0);
+                switch (type){
+                    case intentAction_AuthorizationWithPassword:
+                        data = intent.getStringExtra("data");
+                        System.out.println(data);
+                        try {
+                            JSONObject object = new JSONObject(data);
+                            String data1 = object.getString("data");
+                            int status = object.getInt("status");
+                            if (status >= 300){
+                                Toast.makeText(getContext(), "发生异常，可能号码已被注册",
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            setMessage(data1);
+                            password = binding.loginPassword.getText().toString();
+                            ARouter.getInstance()
+                                    .build("/spaceTime/main")
+                                    .withString("path", "loginBegin")
+                                    .navigation();
+                            break;
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
-                        setMessage(data1);
-                        password = binding.loginPassword.getText().toString();
-                        ARouter.getInstance()
-                                .build("/spaceTime/main")
-                                .withString("path", "loginBegin")
-                                .navigation();
+                    default:
                         break;
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                default:
-                    break;
+                }
+            }else {
+                return;
             }
         }
     }

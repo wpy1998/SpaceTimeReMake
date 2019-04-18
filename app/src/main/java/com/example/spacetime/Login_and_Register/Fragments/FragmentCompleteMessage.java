@@ -45,6 +45,7 @@ import static com.example.spacetime.Others.Owner.ownerId;
 import static com.example.spacetime.Others.Owner.phoneNumber;
 import static com.example.spacetime.Others.Owner.profession;
 import static com.example.spacetime.Others.Owner.school;
+import static com.example.spacetime.Others.Owner.setMessage;
 import static com.example.spacetime.Others.Owner.token;
 import static com.example.spacetime.Others.Owner.userName;
 
@@ -177,18 +178,7 @@ public class FragmentCompleteMessage extends BasicFragment implements View.OnCli
                         JSONObject object = new JSONObject(data);
                         String data1 = object.getString("data");
                         JSONObject object1 = new JSONObject(data1);
-                        ownerId = object1.getInt("id");
-                        avatar = object1.getString("avatar");
-                        birthday = object1.getString("birthday");
-                        comeFrom = object1.getString("comeFrom");
-                        Owner.gender = object1.getString("gender");
-                        interests = object1.getString("interests");
-                        labels = object1.getString("labels");
-                        major = object1.getString("major");
-                        phoneNumber = object1.getString("phoneNumber");
-                        profession = object1.getString("profession");
-                        school = object1.getString("school");
-                        userName = object1.getString("username");
+                        setMessage(data1);
                         ARouter.getInstance()
                                 .build("/spaceTime/welcome")
                                 .navigation();
