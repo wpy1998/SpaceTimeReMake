@@ -118,7 +118,7 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
                 okHttpAction.checkSmsCode(binding.registerBeginVerificationCode.getText().toString(),
                         intentAction_CheckSmsCode, intentAction);
             case R.id.register_begin_getVerificationCode:
-                String phoneNumber = binding.registerBeginTelephoneNumber
+                phoneNumber = binding.registerBeginTelephoneNumber
                         .getText().toString();
                 if (phoneNumber.length() != 11){
                     Toast.makeText(getContext(), "请输入正确号码", Toast.LENGTH_SHORT)
@@ -150,16 +150,16 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
                         String data1 = object.getString("data");
                         JSONObject object1 = new JSONObject(data1);
                         boolean isExist = object1.getBoolean("existence");
+                        System.out.println(isExist);
 
                         if (isExist){
                             Toast.makeText(getContext(), "该号码已被使用，请重新输入手机号码",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                             return;
                         }
 
                         Toast.makeText(getContext(), "验证码已发送",
-                                Toast.LENGTH_LONG).show();
-                        phoneNumber = binding.registerBeginTelephoneNumber.getText().toString();
+                                Toast.LENGTH_SHORT).show();
                         okHttpAction.getSmsCode(0, intentAction);
                     }catch (Exception e){
                         e.printStackTrace();

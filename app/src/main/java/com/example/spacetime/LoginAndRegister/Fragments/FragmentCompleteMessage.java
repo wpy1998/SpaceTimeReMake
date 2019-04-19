@@ -116,7 +116,8 @@ public class FragmentCompleteMessage extends BasicFragment implements View.OnCli
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 //修改日历控件的年，月，日
-                                //这里的year,monthOfYear,dayOfMonth的值与DatePickerDialog控件设置的最新值一致
+                                //这里的year,monthOfYear,dayOfMonth的值
+                                // 与DatePickerDialog控件设置的最新值一致
                                 year = calendar.get(Calendar.YEAR);
                                 month = calendar.get(Calendar.MONTH);
                                 dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);

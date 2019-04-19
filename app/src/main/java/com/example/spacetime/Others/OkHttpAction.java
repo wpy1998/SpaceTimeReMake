@@ -164,8 +164,7 @@ public class OkHttpAction {
     }
 
     //put 设置头像
-    public void setAvatar(final String phoneNumber, final int type, final String
-            intentAction){
+    public void setAvatar(final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {

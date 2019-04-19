@@ -60,6 +60,15 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
         binding.loginRegisterNewAccount.setOnClickListener(this);
         binding.loginTelephoneArea.setOnClickListener(this);
 
+        binding.loginTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build("/spaceTime/forbidden")
+                        .navigation();
+            }
+        });
+
         areaCode = binding.loginTelephoneArea;
         return binding.getRoot();
     }

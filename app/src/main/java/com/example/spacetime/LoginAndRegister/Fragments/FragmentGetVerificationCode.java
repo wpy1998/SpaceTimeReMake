@@ -84,6 +84,11 @@ public class FragmentGetVerificationCode extends BasicFragment {
         super.onDestroyView();
     }
 
+    void refresh(){
+        chooseArea.setText("");
+        chooseArea.setInputType(InputType.TYPE_CLASS_NUMBER);
+    }
+
     private class UserInfoBroadcastReceiver extends BroadcastReceiver{
 
         @Override
@@ -98,6 +103,19 @@ public class FragmentGetVerificationCode extends BasicFragment {
                     try {
                         data = intent.getStringExtra("data");
                         JSONObject jsonObject = new JSONObject(data);
+                        int status = jsonObject.getInt("status");
+                        if (status >= 400 && status < 500){
+                            Toast.makeText(getContext(), "status=" + status +
+                                            "发送信息有误，请重新发送", Toast.LENGTH_SHORT).show();
+                            refresh();
+                            return;
+                        }
+                        if (status >= 500 && status < 600){
+                            Toast.makeText(getContext(), "status=" + status +
+                                    "服务器异常", Toast.LENGTH_SHORT).show();
+                            refresh();
+                            return;
+                        }
                         String data1 = jsonObject.getString("data");
                         JSONObject jsonObject1 = new JSONObject(data1);
                         token = jsonObject1.getString("token");
