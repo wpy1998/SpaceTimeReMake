@@ -8,7 +8,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -26,17 +25,16 @@ import com.example.spacetime.databinding.FragmentGetVerificationCodeBinding;
 
 import org.json.JSONObject;
 
-import static com.example.spacetime.Others.Cookies.phoneNumber;
 import static com.example.spacetime.Others.Cookies.token;
 import static com.example.spacetime.Others.Settings.isReset;
 
-public class FragmentGetVerificationCode extends BasicFragment {
+public class FragmentSmsCode extends BasicFragment {
     private FragmentGetVerificationCodeBinding binding;
     private OkHttpAction okHttpAction;
     private IntentFilter intentFilter;
     private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
     private final String intentAction = "com.example.spacetime.LoginAndRegister.Fragments" +
-            ".FragmentGetVerificationCode";
+            ".FragmentSmsCode";
     private final int intentAction_authorizeWithSmsCode = 1;
 
     private TextView chooseArea;
@@ -44,7 +42,7 @@ public class FragmentGetVerificationCode extends BasicFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_verification_code,
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sms_code,
                 null, false);
         intentFilter = new IntentFilter();
         userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();

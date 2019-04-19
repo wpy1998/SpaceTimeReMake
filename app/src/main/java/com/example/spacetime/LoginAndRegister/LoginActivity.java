@@ -3,15 +3,12 @@ package com.example.spacetime.LoginAndRegister;
 import android.Manifest;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.spacetime.Others.BasicActivity;
 import com.example.spacetime.LoginAndRegister.Fragments.FragmentGetTelephone;
-import com.example.spacetime.LoginAndRegister.Fragments.FragmentGetVerificationCode;
+import com.example.spacetime.LoginAndRegister.Fragments.FragmentSmsCode;
 import com.example.spacetime.LoginAndRegister.Fragments.FragmentResetPassword;
 import com.example.spacetime.LoginAndRegister.Fragments.LoginBeginFragment;
 import com.example.spacetime.R;
@@ -51,7 +48,7 @@ public class LoginActivity extends BasicActivity {
                 replaceFragment(R.id.login_frameLayout);
                 break;
             case "getVerificationCode":
-                originFragment = new FragmentGetVerificationCode();
+                originFragment = new FragmentSmsCode();
                 replaceFragment(R.id.login_frameLayout);
                 break;
             case "resetPassword":
