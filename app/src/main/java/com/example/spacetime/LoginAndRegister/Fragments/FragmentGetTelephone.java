@@ -16,10 +16,13 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.Others.BasicFragment;
 import com.example.spacetime.Others.OkHttpAction;
+import com.example.spacetime.Others.Cookies;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentGetTelephoneBinding;
 
 import org.json.JSONObject;
+
+import static com.example.spacetime.Others.Cookies.phoneNumber;
 
 public class FragmentGetTelephone extends BasicFragment implements View.OnClickListener {
     private FragmentGetTelephoneBinding binding;
@@ -65,6 +68,7 @@ public class FragmentGetTelephone extends BasicFragment implements View.OnClickL
                 if (isFastClick()){
                     return;
                 }
+                Cookies.phoneNumber = phoneNumber;
                 okHttpAction.checkExistence(binding.getTelephoneTelephoneNumber.getText().toString(),
                         intentAction_CheckExistence, intentAction);
                 break;
@@ -98,8 +102,8 @@ public class FragmentGetTelephone extends BasicFragment implements View.OnClickL
                             return;
                         }
 
-                        okHttpAction.getSmsCode(binding.getTelephoneTelephoneNumber.getText()
-                                .toString(), intentAction_SmsCode, intentAction);
+                        phoneNumber = binding.getTelephoneTelephoneNumber.getText().toString();
+                        okHttpAction.getSmsCode(intentAction_SmsCode, intentAction);
                     }catch (Exception e){
                         e.printStackTrace();
                     }

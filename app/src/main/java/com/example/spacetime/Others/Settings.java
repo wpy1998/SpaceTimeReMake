@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Settings {
+    public static boolean isReset = false;
     private static int dpi;
     private static int dpiToDp;
     public static int windowsWidth;

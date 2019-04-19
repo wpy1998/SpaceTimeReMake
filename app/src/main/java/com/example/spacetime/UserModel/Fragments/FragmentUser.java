@@ -24,7 +24,7 @@ import com.example.spacetime.databinding.FragmentUserBinding;
 
 import static com.example.spacetime.Others.Settings.adaptView;
 import static com.example.spacetime.Others.Settings.getPx;
-import static com.example.spacetime.Others.Owner.ownerId;
+import static com.example.spacetime.Others.Cookies.ownerId;
 import static com.example.spacetime.Others.Settings.setHW;
 import static com.example.spacetime.Others.Settings.setTextSize;
 

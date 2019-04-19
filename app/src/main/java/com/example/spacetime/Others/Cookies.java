@@ -2,7 +2,7 @@ package com.example.spacetime.Others;
 
 import org.json.JSONObject;
 
-public class Owner {
+public class Cookies {
     public static int ownerId = 0;
     public static String token = null;
     public static String phoneNumber = null;

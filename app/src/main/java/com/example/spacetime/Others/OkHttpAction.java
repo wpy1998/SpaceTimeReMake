@@ -11,6 +11,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.example.spacetime.Others.Cookies.password;
+import static com.example.spacetime.Others.Cookies.phoneNumber;
+import static com.example.spacetime.Others.Cookies.token;
 import static com.example.spacetime.Others.ForbiddenActivity.logout;
 
 public class OkHttpAction {
@@ -25,9 +28,9 @@ public class OkHttpAction {
     }
 
 
-    //authorization-controller************************
+    //*************************authorization-controller************************
     //post 发送验证码
-    public void getSmsCode(final String phoneNumber, final int type, final String intentAction){
+    public void getSmsCode(final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -48,8 +51,7 @@ public class OkHttpAction {
     }
 
     //get 检查验证码是否正确
-    public void checkSmsCode(final String phoneNumber, final String smsCode, final int type,
-                             final String intentAction){
+    public void checkSmsCode(final String smsCode, final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -68,9 +70,28 @@ public class OkHttpAction {
         }).start();
     }
 
+    //put 刷新令牌
+    public void refreshToken(final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder().build();
+                    Request request = new Request.Builder().url(web + "/auth/token")
+                            .addHeader("Authorization", token).put(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     //post 使用密码登陆
-    public void authorizeWithPassword(final String phoneNumber, final String password, final int type,
-                                final String intentAction){
+    public void authorizeWithPassword(final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -92,14 +113,14 @@ public class OkHttpAction {
     }
 
     //post 使用验证码登陆
-    public void authorizeWithSmsCode(final String phoneNumber, final String smsCode, final int type,
-                                     final String intentAction){
+    public void authorizeWithSmsCode(final String smsCode, final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody body = new FormBody.Builder().add("phoneNumber", phoneNumber)
+                    RequestBody body = new FormBody.Builder()
+                            .add("phoneNumber", phoneNumber)
                             .add("smsCode", smsCode).build();
                     Request request = new Request.Builder()
                             .url(web + "/auth/token/authorize-with-sms-code").post(body).build();
@@ -113,7 +134,12 @@ public class OkHttpAction {
         }).start();
     }
 
-    //authorization-controller************************
+
+
+
+
+
+    //************************user-controller************************
     //post 注册用户
     public void registerUsers(final String smsCode, final String phoneNumber, final String password,
                               final int type, final String intentAction){
@@ -127,6 +153,27 @@ public class OkHttpAction {
                             .add("password", password).build();
                     Request request = new Request.Builder().url(web + "/users")
                             .post(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //put 设置头像
+    public void setAvatar(final String phoneNumber, final int type, final String
+            intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String url = web + "/auth/sms-code?phoneNumber=" + phoneNumber;
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = RequestBody.create(URLENCODED, url);
+                    Request request = new Request.Builder().url(url).put(body).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
                     sendBroadcast(action, type, intentAction);
@@ -157,17 +204,20 @@ public class OkHttpAction {
         }).start();
     }
 
-    //put 设置头像
-    public void setAvatar(final String phoneNumber, final int type, final String
-            intentAction){
+    //put 重置密码
+    public void resetPassword(final String newPassword, final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    String url = web + "/auth/sms-code?phoneNumber=" + phoneNumber;
+                    System.out.println(token);
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody body = RequestBody.create(URLENCODED, url);
-                    Request request = new Request.Builder().url(url).put(body).build();
+                    RequestBody body = new FormBody.Builder()
+                            .add("phoneNumber", phoneNumber)
+                            .add("newPassword", newPassword).build();
+                    Request request = new Request.Builder().url(web + "/users/" +
+                            phoneNumber + "/password")
+                            .addHeader("Authorization", token).put(body).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
                     sendBroadcast(action, type, intentAction);
@@ -201,10 +251,8 @@ public class OkHttpAction {
                             .add("labels", labels).build();
                     Request request = new Request.Builder().url(web + "/users/" + phoneNumber)
                             .addHeader("Authorization", token).put(body).build();
-                    System.out.println(body.toString());
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
-                    System.out.println("************************" + action);
                     sendBroadcast(action, type, intentAction);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -218,6 +266,6 @@ public class OkHttpAction {
         intent.putExtra("type", type);
         intent.putExtra("data", data);
         context.sendBroadcast(intent);
-        logout = logout + data + "\n\n";
+        logout = logout + "action=" + intentAction + "\ndata=" + data + "\n\n";
     }
 }

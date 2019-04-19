@@ -24,8 +24,10 @@ import com.example.spacetime.databinding.FragmentLoginBeginBinding;
 
 import org.json.JSONObject;
 
-import static com.example.spacetime.Others.Owner.password;
-import static com.example.spacetime.Others.Owner.setMessage;
+import static com.example.spacetime.Others.Cookies.password;
+import static com.example.spacetime.Others.Cookies.phoneNumber;
+import static com.example.spacetime.Others.Cookies.setMessage;
+import static com.example.spacetime.Others.Settings.isReset;
 
 public class LoginBeginFragment extends BasicFragment implements View.OnClickListener {
     private FragmentLoginBeginBinding binding;
@@ -72,8 +74,8 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.login_login:
-                String phoneNumber = binding.loginTelephoneNumber.getText().toString();
-                String password = binding.loginPassword.getText().toString();
+                phoneNumber = binding.loginTelephoneNumber.getText().toString();
+                password = binding.loginPassword.getText().toString();
                 if (phoneNumber.length() != 11){
                     Toast.makeText(getContext(), "请输入正确电话号码", Toast.LENGTH_SHORT).show();
                     return;
@@ -81,8 +83,7 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
                 if (isFastClick()){
                     return;
                 }
-                okHttpAction.authorizeWithPassword(phoneNumber, password,
-                        intentAction_AuthorizationWithPassword, intentAction);
+                okHttpAction.authorizeWithPassword(intentAction_AuthorizationWithPassword, intentAction);
                 break;
             case R.id.login_registerNewAccount:
                 ARouter.getInstance()
@@ -118,11 +119,7 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
                 binding.loginChooseArea.performClick();
                 break;
             case R.id.login_forgetPassword:
-                ARouter.getInstance()
-                        .build("/spaceTime/login")
-                        .withString("path", "getTelephone")
-                        .navigation();
-                break;
+                isReset = true;
             case R.id.login_getVerificationCode:
                 ARouter.getInstance()
                         .build("/spaceTime/login")
@@ -150,8 +147,8 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
                             JSONObject object = new JSONObject(data);
                             String data1 = object.getString("data");
                             int status = object.getInt("status");
-                            if (status >= 300){
-                                Toast.makeText(getContext(), "发生异常，可能号码已被注册",
+                            if (status >= 400){
+                                Toast.makeText(getContext(), "账户或密码错误",
                                         Toast.LENGTH_SHORT).show();
                                 return;
                             }

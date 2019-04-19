@@ -31,16 +31,16 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
-import static com.example.spacetime.Others.Owner.birthday;
-import static com.example.spacetime.Others.Owner.comeFrom;
-import static com.example.spacetime.Others.Owner.interests;
-import static com.example.spacetime.Others.Owner.labels;
-import static com.example.spacetime.Others.Owner.major;
-import static com.example.spacetime.Others.Owner.phoneNumber;
-import static com.example.spacetime.Others.Owner.profession;
-import static com.example.spacetime.Others.Owner.school;
-import static com.example.spacetime.Others.Owner.setMessage;
-import static com.example.spacetime.Others.Owner.token;
+import static com.example.spacetime.Others.Cookies.birthday;
+import static com.example.spacetime.Others.Cookies.comeFrom;
+import static com.example.spacetime.Others.Cookies.interests;
+import static com.example.spacetime.Others.Cookies.labels;
+import static com.example.spacetime.Others.Cookies.major;
+import static com.example.spacetime.Others.Cookies.phoneNumber;
+import static com.example.spacetime.Others.Cookies.profession;
+import static com.example.spacetime.Others.Cookies.school;
+import static com.example.spacetime.Others.Cookies.setMessage;
+import static com.example.spacetime.Others.Cookies.token;
 
 public class FragmentCompleteMessage extends BasicFragment implements View.OnClickListener {
     private FragmentCompleteMessageBinding binding;
@@ -166,13 +166,13 @@ public class FragmentCompleteMessage extends BasicFragment implements View.OnCli
             switch (type){
                 case intentAction_EditUserMessage:
                     String data = intent.getStringExtra("data");
-                    System.out.println(token + "**********************" + data);
                     try {
                         JSONObject object = new JSONObject(data);
                         String data1 = object.getString("data");
                         setMessage(data1);
                         ARouter.getInstance()
-                                .build("/spaceTime/welcome")
+                                .build("/spaceTime/main")
+                                .withString("path", "loginBegin")
                                 .navigation();
                     }catch (Exception e){
                         e.printStackTrace();

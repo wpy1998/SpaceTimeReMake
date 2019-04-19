@@ -24,10 +24,10 @@ import com.example.spacetime.databinding.FragmentRegisterBeginBinding;
 
 import org.json.JSONObject;
 
-import static com.example.spacetime.Others.Owner.password;
-import static com.example.spacetime.Others.Owner.phoneNumber;
-import static com.example.spacetime.Others.Owner.setMessage;
-import static com.example.spacetime.Others.Owner.token;
+import static com.example.spacetime.Others.Cookies.password;
+import static com.example.spacetime.Others.Cookies.phoneNumber;
+import static com.example.spacetime.Others.Cookies.setMessage;
+import static com.example.spacetime.Others.Cookies.token;
 
 public class RegisterBeginFragment extends BasicFragment implements View.OnClickListener {
     private FragmentRegisterBeginBinding binding;
@@ -114,8 +114,8 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
                     return;
                 }
                 if (isFastClick()) return;
-                okHttpAction.checkSmsCode(binding.registerBeginTelephoneNumber.getText().toString(),
-                        binding.registerBeginVerificationCode.getText().toString(),
+                phoneNumber = binding.registerBeginTelephoneNumber.getText().toString();
+                okHttpAction.checkSmsCode(binding.registerBeginVerificationCode.getText().toString(),
                         intentAction_CheckSmsCode, intentAction);
             case R.id.register_begin_getVerificationCode:
                 String phoneNumber = binding.registerBeginTelephoneNumber
@@ -139,92 +139,91 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction(), data;
             if (action.equals(intentAction)){
-                int type = intent.getIntExtra("type", 0);
-                switch (type){
-                    case intentAction_CheckExistence:
-                        data = intent.getStringExtra("data");
-                        try {
-                            JSONObject object = new JSONObject(data);
-                            String data1 = object.getString("data");
-                            JSONObject object1 = new JSONObject(data1);
-                            boolean isExist = object1.getBoolean("existence");
-
-                            if (isExist){
-                                Toast.makeText(getContext(), "该号码已被使用，请重新输入手机号码",
-                                        Toast.LENGTH_LONG).show();
-                            }else {
-                                Toast.makeText(getContext(), "验证码已发送",
-                                        Toast.LENGTH_LONG).show();
-                                okHttpAction.getSmsCode(binding.registerBeginTelephoneNumber.getText()
-                                        .toString(), 0, intentAction);
-                            }
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        break;
-
-                    case intentAction_CheckSmsCode:
-                        data = intent.getStringExtra("data");
-                        try {
-                            JSONObject object = new JSONObject(data);
-                            String data1 = object.getString("data");
-                            JSONObject jsonObject = new JSONObject(data1);
-                            if (jsonObject.getBoolean("correction") == false){
-                                Toast.makeText(getContext(), "验证码错误，请重新输入",
-                                        Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            okHttpAction.registerUsers(binding.registerBeginVerificationCode.getText()
-                                            .toString(), binding.registerBeginTelephoneNumber.getText().toString(),
-                                    binding.registerBeginSetPassword.getText().toString(),
-                                    intentAction_Register, intentAction);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        break;
-
-                    case intentAction_Register:
-                        data = intent.getStringExtra("data");
-                        System.out.println(data);
-                        try {
-                            JSONObject object = new JSONObject(data);
-                            String data1 = object.getString("data");
-                            int status = object.getInt("status");
-                            if (status >= 300){
-                                Toast.makeText(getContext(), "发生异常，可能号码已被注册",
-                                        Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            setMessage(data1);
-                            password = binding.registerBeginSetPassword.getText().toString();
-                            okHttpAction.authorizeWithPassword(phoneNumber, password, intentAction_getToken,
-                                    intentAction);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        break;
-
-                    case intentAction_getToken:
-                        data = intent.getStringExtra("data");
-                        try {
-                            JSONObject object = new JSONObject(data);
-                            String data1 = object.getString("data");
-                            JSONObject object1 = new JSONObject(data1);
-                            token = object1.getString("token");
-                            ARouter.getInstance()
-                                    .build("/spaceTime/register")
-                                    .withString("path", "completeMessage")
-                                    .navigation();
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
-            }else {
                 return;
+            }
+            int type = intent.getIntExtra("type", 0);
+            switch (type){
+                case intentAction_CheckExistence:
+                    data = intent.getStringExtra("data");
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        JSONObject object1 = new JSONObject(data1);
+                        boolean isExist = object1.getBoolean("existence");
+
+                        if (isExist){
+                            Toast.makeText(getContext(), "该号码已被使用，请重新输入手机号码",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        Toast.makeText(getContext(), "验证码已发送",
+                                Toast.LENGTH_LONG).show();
+                        phoneNumber = binding.registerBeginTelephoneNumber.getText().toString();
+                        okHttpAction.getSmsCode(0, intentAction);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case intentAction_CheckSmsCode:
+                    data = intent.getStringExtra("data");
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        JSONObject jsonObject = new JSONObject(data1);
+                        if (jsonObject.getBoolean("correction") == false){
+                            Toast.makeText(getContext(), "验证码错误，请重新输入",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        okHttpAction.registerUsers(binding.registerBeginVerificationCode.getText()
+                                        .toString(), binding.registerBeginTelephoneNumber.getText().toString(),
+                                binding.registerBeginSetPassword.getText().toString(),
+                                intentAction_Register, intentAction);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case intentAction_Register:
+                    data = intent.getStringExtra("data");
+                    System.out.println(data);
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        int status = object.getInt("status");
+                        if (status >= 300){
+                            Toast.makeText(getContext(), "发生异常，可能号码已被注册",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        setMessage(data1);
+                        password = binding.registerBeginSetPassword.getText().toString();
+                        okHttpAction.authorizeWithPassword(intentAction_getToken, intentAction);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case intentAction_getToken:
+                    data = intent.getStringExtra("data");
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        JSONObject object1 = new JSONObject(data1);
+                        token = object1.getString("token");
+                        ARouter.getInstance()
+                                .build("/spaceTime/register")
+                                .withString("path", "completeMessage")
+                                .navigation();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
     }
