@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.spacetime.Others.Cookies;
 import com.example.spacetime.Others.OkHttpAction;
 import com.example.spacetime.R;
 import com.example.spacetime.Others.BasicFragment;
@@ -152,7 +153,8 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
                                         Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            setMessage(data1);
+                            JSONObject jsonObject = new JSONObject(data1);
+                            Cookies.token = jsonObject.getString("token");
                             password = binding.loginPassword.getText().toString();
                             ARouter.getInstance()
                                     .build("/spaceTime/main")

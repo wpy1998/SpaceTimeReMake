@@ -27,6 +27,7 @@ import static com.example.spacetime.Others.BasicActivity.closeCUT;
 import static com.example.spacetime.Others.Cookies.initCookies;
 import static com.example.spacetime.Others.Settings.adaptView;
 import static com.example.spacetime.Others.Settings.setHW;
+import static com.example.spacetime.Others.Settings.setTextSize;
 
 public class SettingFragment extends BasicFragment implements
         View.OnClickListener {
@@ -149,15 +150,22 @@ public class SettingFragment extends BasicFragment implements
         openNotification.drawView();
         feedback.drawView();
         accountAndSafety.drawView();
+
+        TextView theme = title.findViewById(R.id.fragment_setting_title);
+        setTextSize(theme, 30);
     }
 
     private class UserBroadcastReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            String data, action = intent.getAction();
+            String action = intent.getAction();
+            if (!action.equals(intentAction)){
+                return;
+            }
             int type = intent.getIntExtra("type", 0);
             switch (type){
                 case intentAction_exitAccount:
+                    if (isFastClick()) return;
                     ARouter.getInstance()
                             .build("/spaceTime/start")
                             .navigation();

@@ -54,11 +54,9 @@ public class FeedbackFragment extends BasicFragment implements View.OnClickListe
                 break;
             case R.id.feedback_save:
                 String message = binding.feedbackContent.getText().toString();
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                okHttpAction.feedback(message, intentAction_feedBack, intentAction);
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true",
-                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -95,6 +93,8 @@ public class FeedbackFragment extends BasicFragment implements View.OnClickListe
             int type = intent.getIntExtra("type", 0);
             switch (type){
                 case intentAction_feedBack:
+                    Toast.makeText(getContext(), "提交成功", Toast.LENGTH_SHORT).show();
+                    binding.feedbackContent.setText("");
                     break;
                 default:
                     break;

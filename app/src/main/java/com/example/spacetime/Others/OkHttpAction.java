@@ -109,6 +109,7 @@ public class OkHttpAction {
             @Override
             public void run() {
                 try {
+                    System.out.println(token);
                     OkHttpClient client = new OkHttpClient();
                     RequestBody body = new FormBody.Builder().build();
                     Request request = new Request.Builder().url(web + "/auth/token")
@@ -362,23 +363,20 @@ public class OkHttpAction {
         Intent intent = new Intent(intentAction);
         try {
             JSONObject jsonObject = new JSONObject(data);
+            logout = logout + "action=" + intentAction + "\ndata=" + data + "\n\n";
             int status = jsonObject.getInt("status");
             if (status >= 400 && status < 500){
                 Toast.makeText(context, "status=" + status +
                         "发送信息有误，请重新发送", Toast.LENGTH_SHORT).show();
                 intent.putExtra("type", 0);
                 return;
-            }
-            if (status >= 500 && status < 600){
+            }else if (status >= 500 && status < 600){
                 Toast.makeText(context, "status=" + status +
                         "服务器异常", Toast.LENGTH_SHORT).show();
                 intent.putExtra("type", 0);
-                return;
-            }
-            intent.putExtra("type", type);
+            }else intent.putExtra("type", type);
             intent.putExtra("data", data);
             context.sendBroadcast(intent);
-            logout = logout + "action=" + intentAction + "\ndata=" + data + "\n\n";
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -10,19 +10,21 @@ import android.widget.TextView;
 
 public class Settings {
     public static boolean isReset = false;
-    private static int dpi;
-    private static int dpiToDp;
     public static int windowsWidth;
     public static int windowsHeight;
 
+    private static int dpi;
+    private static int dpiToDp;
+
     public static int getPx(int input){
-        return input * dpiToDp;
+//        return input * dpiToDp;
+        return input * windowsWidth / 375;
     }
 
     public static void update(Context context){
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
-        dpi = dm.densityDpi;
-        dpiToDp = dpi / 160;
+//        dpi = dm.densityDpi;
+//        dpiToDp = dpi / 160;
         windowsWidth = dm.widthPixels;
         windowsHeight = dm.heightPixels;
     }
