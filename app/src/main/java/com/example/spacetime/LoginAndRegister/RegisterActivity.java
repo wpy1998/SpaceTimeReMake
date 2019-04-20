@@ -1,14 +1,11 @@
 package com.example.spacetime.LoginAndRegister;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.spacetime.Others.BasicActivity;
-import com.example.spacetime.LoginAndRegister.Fragments.FragmentCompleteMessage;
+import com.example.spacetime.LoginAndRegister.Fragments.CompleteMessageFragment;
 import com.example.spacetime.LoginAndRegister.Fragments.RegisterBeginFragment;
 import com.example.spacetime.R;
 
@@ -31,7 +28,7 @@ public class RegisterActivity extends BasicActivity {
                 replaceFragment(R.id.register_frameLayout);
                 break;
             case "completeMessage":
-                originFragment = new FragmentCompleteMessage();
+                originFragment = new CompleteMessageFragment();
                 replaceFragment(R.id.register_frameLayout);
                 break;
             default:

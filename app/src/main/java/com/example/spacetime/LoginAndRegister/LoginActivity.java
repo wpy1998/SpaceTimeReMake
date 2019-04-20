@@ -7,9 +7,9 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.spacetime.Others.BasicActivity;
-import com.example.spacetime.LoginAndRegister.Fragments.FragmentGetTelephone;
-import com.example.spacetime.LoginAndRegister.Fragments.FragmentSmsCode;
-import com.example.spacetime.LoginAndRegister.Fragments.FragmentResetPassword;
+import com.example.spacetime.LoginAndRegister.Fragments.GetTelephoneFragment;
+import com.example.spacetime.LoginAndRegister.Fragments.SmsCodeFragment;
+import com.example.spacetime.LoginAndRegister.Fragments.ResetPasswordFragment;
 import com.example.spacetime.LoginAndRegister.Fragments.LoginBeginFragment;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.ActivityLoginBinding;
@@ -44,15 +44,15 @@ public class LoginActivity extends BasicActivity {
                 replaceFragment(R.id.login_frameLayout);
                 break;
             case "getTelephone":
-                originFragment = new FragmentGetTelephone();
+                originFragment = new GetTelephoneFragment();
                 replaceFragment(R.id.login_frameLayout);
                 break;
             case "getVerificationCode":
-                originFragment = new FragmentSmsCode();
+                originFragment = new SmsCodeFragment();
                 replaceFragment(R.id.login_frameLayout);
                 break;
             case "resetPassword":
-                originFragment = new FragmentResetPassword();
+                originFragment = new ResetPasswordFragment();
                 replaceFragment(R.id.login_frameLayout);
                 break;
             default:

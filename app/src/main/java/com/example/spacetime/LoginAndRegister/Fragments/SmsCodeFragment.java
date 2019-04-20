@@ -21,20 +21,17 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.spacetime.Others.BasicFragment;
 import com.example.spacetime.Others.OkHttpAction;
 import com.example.spacetime.R;
-import com.example.spacetime.databinding.FragmentGetVerificationCodeBinding;
+import com.example.spacetime.databinding.FragmentSmsCodeBinding;
 
 import org.json.JSONObject;
 
 import static com.example.spacetime.Others.Cookies.token;
 import static com.example.spacetime.Others.Settings.isReset;
 
-public class FragmentSmsCode extends BasicFragment {
-    private FragmentGetVerificationCodeBinding binding;
-    private OkHttpAction okHttpAction;
-    private IntentFilter intentFilter;
-    private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
+public class SmsCodeFragment extends BasicFragment {
+    private FragmentSmsCodeBinding binding;
     private final String intentAction = "com.example.spacetime.LoginAndRegister.Fragments" +
-            ".FragmentSmsCode";
+            ".SmsCodeFragment";
     private final int intentAction_authorizeWithSmsCode = 1;
 
     private TextView chooseArea;
@@ -76,12 +73,6 @@ public class FragmentSmsCode extends BasicFragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onDestroyView() {
-        getContext().unregisterReceiver(userInfoBroadcastReceiver);
-        super.onDestroyView();
-    }
-
     void refresh(){
         chooseArea.setText("");
         chooseArea.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -101,19 +92,6 @@ public class FragmentSmsCode extends BasicFragment {
                     try {
                         data = intent.getStringExtra("data");
                         JSONObject jsonObject = new JSONObject(data);
-                        int status = jsonObject.getInt("status");
-                        if (status >= 400 && status < 500){
-                            Toast.makeText(getContext(), "status=" + status +
-                                            "发送信息有误，请重新发送", Toast.LENGTH_SHORT).show();
-                            refresh();
-                            return;
-                        }
-                        if (status >= 500 && status < 600){
-                            Toast.makeText(getContext(), "status=" + status +
-                                    "服务器异常", Toast.LENGTH_SHORT).show();
-                            refresh();
-                            return;
-                        }
                         String data1 = jsonObject.getString("data");
                         JSONObject jsonObject1 = new JSONObject(data1);
                         token = jsonObject1.getString("token");
@@ -134,6 +112,7 @@ public class FragmentSmsCode extends BasicFragment {
                     }
                     break;
                 default:
+                    refresh();
                     break;
             }
         }

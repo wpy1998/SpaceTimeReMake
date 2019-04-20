@@ -36,9 +36,6 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
             "RegisterBeginFragment";
     private final int intentAction_CheckExistence = 1, intentAction_CheckSmsCode = 2,
             intentAction_Register = 3, intentAction_getToken = 4;
-    OkHttpAction okHttpAction;
-    private IntentFilter intentFilter;
-    private LGBroadCastReceiver lgBroadCastReceiver;
 
     private TextView areaCode;
     @Nullable
@@ -50,9 +47,9 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
 
         okHttpAction = new OkHttpAction(getContext());
         intentFilter = new IntentFilter();
-        lgBroadCastReceiver = new LGBroadCastReceiver();
+        userInfoBroadcastReceiver = new UserInfoBroadCastReceiver();
         intentFilter.addAction(intentAction);
-        getContext().registerReceiver(lgBroadCastReceiver, intentFilter);
+        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
 
         binding.registerBeginChooseArea.setOnClickListener(this);
         binding.registerBeginLogin.setOnClickListener(this);
@@ -63,12 +60,6 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
 
         areaCode=binding.registerBeginAreaCode;
         return binding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        getContext().unregisterReceiver(lgBroadCastReceiver);
-        super.onDestroyView();
     }
 
     @Override
@@ -126,14 +117,14 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
                     return;
                 }
                 if (isFastClick()) return;
-                okHttpAction.checkExistence(phoneNumber, intentAction_CheckExistence, intentAction);
+                okHttpAction.checkExistence(intentAction_CheckExistence, intentAction);
                 break;
             default:
                 break;
         }
     }
 
-    private class LGBroadCastReceiver extends BroadcastReceiver{
+    private class UserInfoBroadCastReceiver extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -177,10 +168,10 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        phoneNumber = binding.registerBeginTelephoneNumber.getText().toString();
+                        password = binding.registerBeginSetPassword.getText().toString();
                         okHttpAction.registerUsers(binding.registerBeginVerificationCode.getText()
-                                        .toString(), binding.registerBeginTelephoneNumber.getText().toString(),
-                                binding.registerBeginSetPassword.getText().toString(),
-                                intentAction_Register, intentAction);
+                                        .toString(), intentAction_Register, intentAction);
                     }catch (Exception e){
                         e.printStackTrace();
                     }

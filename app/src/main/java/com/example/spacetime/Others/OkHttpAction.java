@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -11,9 +13,20 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.example.spacetime.Others.Cookies.password;
-import static com.example.spacetime.Others.Cookies.phoneNumber;
 import static com.example.spacetime.Others.Cookies.token;
+import static com.example.spacetime.Others.Cookies.ownerId;
+import static com.example.spacetime.Others.Cookies.phoneNumber;
+import static com.example.spacetime.Others.Cookies.gender;
+import static com.example.spacetime.Others.Cookies.major;
+import static com.example.spacetime.Others.Cookies.comeFrom;
+import static com.example.spacetime.Others.Cookies.birthday;
+import static com.example.spacetime.Others.Cookies.interests;
+import static com.example.spacetime.Others.Cookies.profession;
+import static com.example.spacetime.Others.Cookies.school;
+import static com.example.spacetime.Others.Cookies.userName;
+import static com.example.spacetime.Others.Cookies.labels;
+import static com.example.spacetime.Others.Cookies.password;
+import static com.example.spacetime.Others.Cookies.newPassword;
 import static com.example.spacetime.Others.ForbiddenActivity.logout;
 
 public class OkHttpAction {
@@ -28,7 +41,7 @@ public class OkHttpAction {
     }
 
 
-    //*************************authorization-controller************************
+    //Authorization Controller
     //post 发送验证码
     public void getSmsCode(final int type, final String intentAction){
         new Thread(new Runnable() {
@@ -90,6 +103,26 @@ public class OkHttpAction {
         }).start();
     }
 
+    //delete 退出当前账号
+    public void exitAccount(final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder().build();
+                    Request request = new Request.Builder().url(web + "/auth/token")
+                            .addHeader("Authorization", token).delete(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     //post 使用密码登陆
     public void authorizeWithPassword(final int type, final String intentAction){
         new Thread(new Runnable() {
@@ -139,10 +172,36 @@ public class OkHttpAction {
 
 
 
-    //************************user-controller************************
+    //Feedback Collection Controller
+    //post 提交反馈信息
+    public void feedback(final String feedback, final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder()
+                            .add("phoneNumber", phoneNumber)
+                            .add("feedback", feedback).build();
+                    Request request = new Request.Builder().url(web + "/feedback")
+                            .addHeader("Authorization", token).post(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+
+
+
+
+    //User Controller
     //post 注册用户
-    public void registerUsers(final String smsCode, final String phoneNumber, final String password,
-                              final int type, final String intentAction){
+    public void registerUsers(final String smsCode, final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -153,6 +212,35 @@ public class OkHttpAction {
                             .add("password", password).build();
                     Request request = new Request.Builder().url(web + "/users")
                             .post(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //put 修改用户信息
+    public void editUserMessage(final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder()
+                            .add("username", userName)
+                            .add("gender", gender)
+                            .add("birthday", birthday)
+                            .add("comeFrom", comeFrom)
+                            .add("profession", profession)
+                            .add("school", school)
+                            .add("major", major)
+                            .add("interests", interests)
+                            .add("labels", labels).build();
+                    Request request = new Request.Builder().url(web + "/users/" + phoneNumber)
+                            .addHeader("Authorization", token).put(body).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
                     sendBroadcast(action, type, intentAction);
@@ -184,8 +272,7 @@ public class OkHttpAction {
     }
 
     //get 检查手机是否被使用
-    public void checkExistence(final String phoneNumber, final int type,
-                               final String intentAction){
+    public void checkExistence(final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -203,8 +290,29 @@ public class OkHttpAction {
         }).start();
     }
 
+    //post 关注某人
+    public void followUser(final String userPhoneNumber, final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder()
+                            .add("phoneNumber", userPhoneNumber).build();
+                    Request request = new Request.Builder().url(web + "/users/" + phoneNumber
+                            + "/following").addHeader("Authorization", token).post(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     //put 重置密码
-    public void resetPassword(final String newPassword, final int type, final String intentAction){
+    public void resetPassword(final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -227,29 +335,16 @@ public class OkHttpAction {
         }).start();
     }
 
-    //put 修改用户信息
-    public void editUserMessage(final String token, final String phoneNumber, final String userName,
-                                final String gender, final String birthday, final String comeFrom,
-                                final String profession, final String school, final String major,
-                                final String interests, final String labels, final int type,
-                                final String intentAction){
+    //get 获取用户信息
+    public void getUserMessage(final String targetPhoneNumber, final int type,
+                               final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody body = new FormBody.Builder()
-                            .add("username", userName)
-                            .add("gender", gender)
-                            .add("birthday", birthday)
-                            .add("comeFrom", comeFrom)
-                            .add("profession", profession)
-                            .add("school", school)
-                            .add("major", major)
-                            .add("interests", interests)
-                            .add("labels", labels).build();
-                    Request request = new Request.Builder().url(web + "/users/" + phoneNumber)
-                            .addHeader("Authorization", token).put(body).build();
+                    Request request = new Request.Builder().url(web + "/users/" + targetPhoneNumber)
+                            .addHeader("Authorization", token).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
                     sendBroadcast(action, type, intentAction);
@@ -260,11 +355,32 @@ public class OkHttpAction {
         }).start();
     }
 
+
+
+
     public synchronized void sendBroadcast(String data, int type, String intentAction){
         Intent intent = new Intent(intentAction);
-        intent.putExtra("type", type);
-        intent.putExtra("data", data);
-        context.sendBroadcast(intent);
-        logout = logout + "action=" + intentAction + "\ndata=" + data + "\n\n";
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            int status = jsonObject.getInt("status");
+            if (status >= 400 && status < 500){
+                Toast.makeText(context, "status=" + status +
+                        "发送信息有误，请重新发送", Toast.LENGTH_SHORT).show();
+                intent.putExtra("type", 0);
+                return;
+            }
+            if (status >= 500 && status < 600){
+                Toast.makeText(context, "status=" + status +
+                        "服务器异常", Toast.LENGTH_SHORT).show();
+                intent.putExtra("type", 0);
+                return;
+            }
+            intent.putExtra("type", type);
+            intent.putExtra("data", data);
+            context.sendBroadcast(intent);
+            logout = logout + "action=" + intentAction + "\ndata=" + data + "\n\n";
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

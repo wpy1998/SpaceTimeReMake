@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.spacetime.Others.Cookies;
 import com.example.spacetime.Others.FileOperation;
 import com.example.spacetime.Others.OkHttpAction;
 import com.example.spacetime.R;
@@ -41,26 +42,25 @@ import static com.example.spacetime.Others.Cookies.profession;
 import static com.example.spacetime.Others.Cookies.school;
 import static com.example.spacetime.Others.Cookies.setMessage;
 import static com.example.spacetime.Others.Cookies.token;
+import static com.example.spacetime.Others.Cookies.userName;
 
-public class FragmentCompleteMessage extends BasicFragment implements View.OnClickListener {
+public class CompleteMessageFragment extends BasicFragment implements View.OnClickListener {
     private FragmentCompleteMessageBinding binding;
     private int genderWhich;
     private Calendar calendar;
     private final String intentAction = "com.example.spacetime.Login_and_Register.Fragments." +
-            "FragmentCompleteMessage";
+            "CompleteMessageFragment";
     private final int intentAction_EditUserMessage = 1;
-    OkHttpAction okHttpAction;
-    private MyBroadcastReceiver myBroadcastReceiver;
 
     private TextView gender, time;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        IntentFilter intentFilter = new IntentFilter();
-        myBroadcastReceiver = new MyBroadcastReceiver();
+        intentFilter = new IntentFilter();
+        userInfoBroadcastReceiver = new UserInfoBroadCastReceiver();
         intentFilter.addAction(intentAction);
-        getContext().registerReceiver(myBroadcastReceiver, intentFilter);
+        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
 
         okHttpAction = new OkHttpAction(getContext());
 
@@ -77,19 +77,13 @@ public class FragmentCompleteMessage extends BasicFragment implements View.OnCli
     }
 
     @Override
-    public void onDestroyView() {
-        getContext().unregisterReceiver(myBroadcastReceiver);
-        super.onDestroyView();
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_complete_message_nextPage:
-                okHttpAction.editUserMessage(token, phoneNumber, binding.fragmentCompleteMessageName.
-                                getText().toString(), gender.getText().toString(), birthday, comeFrom,
-                        profession, school, major, interests, labels, intentAction_EditUserMessage,
-                        intentAction);
+                userName = binding.fragmentCompleteMessageName.getText().toString();
+                Cookies.gender = gender.getText().toString();
+                birthday = binding.fragmentCompleteMessageTime.getText().toString();
+                okHttpAction.editUserMessage(intentAction_EditUserMessage, intentAction);
                 break;
             case R.id.fragment_complete_message_gender:
                 new AlertDialog.Builder(getContext()).setTitle("请选择您的性别").setIcon(
@@ -159,7 +153,7 @@ public class FragmentCompleteMessage extends BasicFragment implements View.OnCli
         }
     }
 
-    private class MyBroadcastReceiver extends BroadcastReceiver{
+    private class UserInfoBroadCastReceiver extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {

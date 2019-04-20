@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.spacetime.LoginAndRegister.Adapter.FragmentAdapter;
+import com.example.spacetime.Others.Adapter.FragmentAdapter;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentDynamicBinding;
 

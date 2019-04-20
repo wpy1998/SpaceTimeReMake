@@ -1,10 +1,13 @@
 package com.example.spacetime.UserModel.Fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,29 +16,41 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.spacetime.Others.BasicFragment;
+import com.example.spacetime.Others.OkHttpAction;
 import com.example.spacetime.R;
 import com.example.spacetime.UserModel.Components.OptionLayoutChoose;
 import com.example.spacetime.UserModel.Components.OptionLayoutTurn;
 import com.example.spacetime.databinding.FragmentSettingBinding;
 
 import static com.example.spacetime.Others.BasicActivity.closeCUT;
+import static com.example.spacetime.Others.Cookies.initCookies;
 import static com.example.spacetime.Others.Settings.adaptView;
 import static com.example.spacetime.Others.Settings.setHW;
 
-public class FragmentSetting extends Fragment implements
+public class SettingFragment extends BasicFragment implements
         View.OnClickListener {
     private FragmentSettingBinding binding;
-
     private TextView title;
     private ImageView back;
     private OptionLayoutTurn editUserMessage, accountAndSafety, feedback, aboutUs;
     private OptionLayoutChoose openNotification;
+
+    private final String intentAction = "com.example.spacetime.UserModel.Fragments.SettingFragment";
+    private final int intentAction_exitAccount = 1;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting,
                 null, false);
+        intentFilter = new IntentFilter();
+        userInfoBroadcastReceiver = new UserBroadcastReceiver();
+        intentFilter.addAction(intentAction);
+        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
+
+        okHttpAction = new OkHttpAction(getContext());
+
         title = binding.getRoot().findViewById(R.id.fragment_setting_title);
         back = binding.getRoot().findViewById(R.id.fragment_setting_back);
 
@@ -105,17 +120,12 @@ public class FragmentSetting extends Fragment implements
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_setting_exit:
-                ARouter.getInstance()
-                        .build("/spaceTime/start")
-                        .navigation();
-                closeCUT();
+                okHttpAction.exitAccount(intentAction_exitAccount, intentAction);
                 break;
             case R.id.fragment_setting_back:
                 getActivity().finish();
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true",
-                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -139,5 +149,24 @@ public class FragmentSetting extends Fragment implements
         openNotification.drawView();
         feedback.drawView();
         accountAndSafety.drawView();
+    }
+
+    private class UserBroadcastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String data, action = intent.getAction();
+            int type = intent.getIntExtra("type", 0);
+            switch (type){
+                case intentAction_exitAccount:
+                    ARouter.getInstance()
+                            .build("/spaceTime/start")
+                            .navigation();
+                    initCookies();
+                    closeCUT();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

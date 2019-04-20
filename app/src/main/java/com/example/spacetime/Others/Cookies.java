@@ -18,7 +18,9 @@ public class Cookies {
     public static String labels = null;
     public static String password = null;
 
-    public static void initMessage(){
+    public static String newPassword = null;
+
+    public static void initCookies(){
         ownerId = 0;
         token = null;
         phoneNumber = null;
@@ -33,6 +35,7 @@ public class Cookies {
         userName = null;
         labels = null;
         password = null;
+        newPassword = null;
     }
 
     public static void setMessage(String data){

@@ -35,19 +35,16 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
     private final String intentAction = "com.example.spacetime.Login_and_Register.Fragments." +
             "LoginBeginFragment";
     private final int intentAction_AuthorizationWithPassword = 0;
-    OkHttpAction okHttpAction;
 
-    private MyBroadcastReceiver myBroadcastReceiver;
-    private IntentFilter intentFilter;
     private TextView areaCode;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         intentFilter = new IntentFilter();
-        myBroadcastReceiver = new MyBroadcastReceiver();
+        userInfoBroadcastReceiver = new UserInfoBroadCastReceiver();
         intentFilter.addAction(intentAction);
-        getContext().registerReceiver(myBroadcastReceiver, intentFilter);
+        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
 
         okHttpAction = new OkHttpAction(getContext());
 
@@ -71,12 +68,6 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
 
         areaCode = binding.loginTelephoneArea;
         return binding.getRoot();
-    }
-
-    @Override
-    public void onDestroy() {
-        getContext().unregisterReceiver(myBroadcastReceiver);
-        super.onDestroy();
     }
 
     @Override
@@ -140,7 +131,7 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
         }
     }
 
-    private class MyBroadcastReceiver extends BroadcastReceiver{
+    private class UserInfoBroadCastReceiver extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {

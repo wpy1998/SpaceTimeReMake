@@ -1,15 +1,20 @@
 package com.example.spacetime.UserModel.Fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.spacetime.Others.BasicFragment;
+import com.example.spacetime.Others.OkHttpAction;
 import com.example.spacetime.R;
 import com.example.spacetime.databinding.FragmentFeedbackBinding;
 
@@ -18,14 +23,23 @@ import static com.example.spacetime.Others.Settings.getPx;
 import static com.example.spacetime.Others.Settings.setHW;
 import static com.example.spacetime.Others.Settings.setTextSize;
 
-public class FragmentFeedback extends Fragment implements View.OnClickListener {
+public class FeedbackFragment extends BasicFragment implements View.OnClickListener {
     private FragmentFeedbackBinding binding;
+    private final String intentAction = "com.example.spacetime.UserModel.Fragments.FeedbackFragment";
+    private final int intentAction_feedBack = 1;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_feedback,
                 null, false);
+        intentFilter = new IntentFilter();
+        userInfoBroadcastReceiver = new UserInfoBroadCastReceiver();
+        intentFilter.addAction(intentAction);
+        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
+
+        okHttpAction = new OkHttpAction(getContext());
+
         init();
         binding.feedbackBack.setOnClickListener(this);
         binding.feedbackSave.setOnClickListener(this);
@@ -69,5 +83,22 @@ public class FragmentFeedback extends Fragment implements View.OnClickListener {
         adaptView(binding.feedbackContent, 20, 0, 20, 0,
                 false);
         binding.feedbackContent.setMinimumHeight(getPx(160));
+    }
+
+    private class UserInfoBroadCastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String data, action = intent.getAction();
+            if (!action.equals(intentAction)){
+                return;
+            }
+            int type = intent.getIntExtra("type", 0);
+            switch (type){
+                case intentAction_feedBack:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

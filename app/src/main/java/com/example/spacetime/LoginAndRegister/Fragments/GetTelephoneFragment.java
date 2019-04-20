@@ -24,22 +24,19 @@ import org.json.JSONObject;
 
 import static com.example.spacetime.Others.Cookies.phoneNumber;
 
-public class FragmentGetTelephone extends BasicFragment implements View.OnClickListener {
+public class GetTelephoneFragment extends BasicFragment implements View.OnClickListener {
     private FragmentGetTelephoneBinding binding;
     private final String intentAction = "com.example.spacetime.Login_and_Register.Fragments." +
-            "FragmentGetTelephone";
+            "GetTelephoneFragment";
     private final int intentAction_CheckExistence = 1, intentAction_SmsCode = 2;
-    private IntentFilter intentFilter;
-    private OkHttpAction okHttpAction;
-    private MyBroadcastReceiver myBroadcastReceiver;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         intentFilter = new IntentFilter();
-        myBroadcastReceiver = new MyBroadcastReceiver();
+        userInfoBroadcastReceiver = new UserInfoBroadCastReceiver();
         intentFilter.addAction(intentAction);
-        getContext().registerReceiver(myBroadcastReceiver, intentFilter);
+        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
 
         okHttpAction = new OkHttpAction(getContext());
 
@@ -48,12 +45,6 @@ public class FragmentGetTelephone extends BasicFragment implements View.OnClickL
         binding.getTelephoneNext.setOnClickListener(this);
         binding.getTelephoneChooseArea.setOnClickListener(this);
         return binding.getRoot();
-    }
-
-    @Override
-    public void onDestroy() {
-        getContext().unregisterReceiver(myBroadcastReceiver);
-        super.onDestroy();
     }
 
     @Override
@@ -69,15 +60,14 @@ public class FragmentGetTelephone extends BasicFragment implements View.OnClickL
                     return;
                 }
                 Cookies.phoneNumber = phoneNumber;
-                okHttpAction.checkExistence(binding.getTelephoneTelephoneNumber.getText().toString(),
-                        intentAction_CheckExistence, intentAction);
+                okHttpAction.checkExistence(intentAction_CheckExistence, intentAction);
                 break;
             default:
                 break;
         }
     }
 
-    private class MyBroadcastReceiver extends BroadcastReceiver{
+    private class UserInfoBroadCastReceiver extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {

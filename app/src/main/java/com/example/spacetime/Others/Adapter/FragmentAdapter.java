@@ -1,4 +1,4 @@
-package com.example.spacetime.LoginAndRegister.Adapter;
+package com.example.spacetime.Others.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
