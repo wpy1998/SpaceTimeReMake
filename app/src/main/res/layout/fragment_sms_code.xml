@@ -5,6 +5,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
         <TextView
+            android:id="@+id/verificationCode_title"
             android:text="请输入验证码"
             android:textColor="@color/colorBlack"
             android:textSize="30dp"
@@ -15,22 +16,19 @@
             android:layout_marginTop="50dp"
             android:layout_marginBottom="10dp" />
         <LinearLayout
+            android:id="@+id/verificationCode_line1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp">
+            android:background="@drawable/linearlayout_style">
             <EditText
                 android:id="@+id/verificationCode_content"
                 android:inputType="number"
                 android:maxLines="1"
                 android:textSize="25dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/linearlayout_style"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"/>
+                android:background="@color/colorLoginTextView"
+                android:layout_height="50dp"/>
         </LinearLayout>
     </LinearLayout>
 
