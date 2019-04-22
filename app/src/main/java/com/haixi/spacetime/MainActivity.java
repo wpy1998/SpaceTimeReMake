@@ -7,11 +7,11 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.InterestModel.Fragments.FragmentInterest;
 import com.haixi.spacetime.Others.BasicActivity;
-import com.haixi.spacetime.DynamicModel.Fragments.FragmentDynamic;
+import com.haixi.spacetime.DynamicModel.Fragments.DynamicFragment;
 import com.haixi.spacetime.UserModel.Fragments.FragmentUser;
 import com.haixi.spacetime.databinding.ActivityMainBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 
@@ -25,7 +25,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
 
         closeL_R_W();
         activityList1.add(this);
-        init();
+        drawActivity();
 
         binding.mainConversation.setOnClickListener(this);
         binding.mainPersonal.setOnClickListener(this);
@@ -55,7 +55,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainConversation.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth_lighting);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                originFragment = new FragmentDynamic();
+                originFragment = new DynamicFragment();
                 replaceFragment(R.id.main_fragment);
                 break;
             default:
@@ -63,18 +63,18 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         }
     }
 
-    private void init(){
+    private void drawActivity(){
         binding.mainPartView.getLayoutParams().height = getPx(40);
 
         setHW(binding.mainBrowser, 30, 30);
-        adaptView(binding.mainBrowser, 5, 5, 5, 5, true);
+        setMargin(binding.mainBrowser, 5, 5, 5, 5, true);
 
         setHW(binding.mainConversation, 30, 30);
-        adaptView(binding.mainConversation, 5, 5, 5, 5,
+        setMargin(binding.mainConversation, 5, 5, 5, 5,
                 true);
 
         setHW(binding.mainPersonal, 30, 30);
-        adaptView(binding.mainPersonal, 5, 5, 5, 5,
+        setMargin(binding.mainPersonal, 5, 5, 5, 5,
                 true);
     }
 }

@@ -28,7 +28,7 @@ import static com.haixi.spacetime.Others.Cookies.password;
 import static com.haixi.spacetime.Others.Cookies.phoneNumber;
 import static com.haixi.spacetime.Others.Cookies.setMessage;
 import static com.haixi.spacetime.Others.Cookies.token;
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.setH;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -227,50 +227,50 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
 
     private void drawFragment(){
         setHW(binding.registerBeginLine0, 52, 327);
-        adaptView(binding.registerBeginLine0, 28, 34, 22, 0, false);
+        setMargin(binding.registerBeginLine0, 28, 34, 22, 0, false);
 
         setH(binding.registerBeginTitle, 52);
-        adaptView(binding.registerBeginTitle, 0, 0, 0, 0, true);
+        setMargin(binding.registerBeginTitle, 0, 0, 0, 0, true);
         setTextSize(binding.registerBeginTitle, 36);
 
         setH(binding.registerBeginLogin, 23);
-        adaptView(binding.registerBeginLogin, 0, 15, 0, 14, true);
+        setMargin(binding.registerBeginLogin, 0, 15, 0, 14, true);
         setTextSize(binding.registerBeginLogin, 16);
 
         setHW(binding.registerBeginLine1, 50, 331);
-        adaptView(binding.registerBeginLine1, 22, 30, 22, 0, false);
+        setMargin(binding.registerBeginLine1, 22, 30, 22, 0, false);
 
         setH(binding.registerBeginAreaCode, 23);
-        adaptView(binding.registerBeginAreaCode, 12, 14, 0, 13, true);
+        setMargin(binding.registerBeginAreaCode, 12, 14, 0, 13, true);
         setTextSize(binding.registerBeginAreaCode, 14);
 
         setHW(binding.registerBeginChooseArea, 24, 24);
-        adaptView(binding.registerBeginChooseArea, 0, 13, 0, 13, false);
+        setMargin(binding.registerBeginChooseArea, 0, 13, 0, 13, false);
 
         setHW(binding.registerBeginTelephoneNumber, 23, 218);
-        adaptView(binding.registerBeginTelephoneNumber,27,14,12,13,true);
+        setMargin(binding.registerBeginTelephoneNumber,27,14,12,13,true);
         setTextSize(binding.registerBeginTelephoneNumber, 14);
 
         setHW(binding.registerBeginLine2, 50, 331);
-        adaptView(binding.registerBeginLine2, 22, 30, 22, 0, false);
+        setMargin(binding.registerBeginLine2, 22, 30, 22, 0, false);
 
         setHW(binding.registerBeginSmsCode, 23, 187);
-        adaptView(binding.registerBeginSmsCode, 12, 14, 12, 13, true);
+        setMargin(binding.registerBeginSmsCode, 12, 14, 12, 13, true);
         setTextSize(binding.registerBeginSmsCode, 14);
 
         setHW(binding.registerBeginGetSmsCode, 23, 82);
-        adaptView(binding.registerBeginGetSmsCode, 19, 14, 19, 13, true);
+        setMargin(binding.registerBeginGetSmsCode, 19, 14, 19, 13, true);
         setTextSize(binding.registerBeginGetSmsCode, 14);
 
         setHW(binding.registerBeginLine3, 50, 331);
-        adaptView(binding.registerBeginLine3, 22, 34, 22, 0, false);
+        setMargin(binding.registerBeginLine3, 22, 34, 22, 0, false);
 
         setHW(binding.registerBeginSetPassword, 26, 305);
-        adaptView(binding.registerBeginSetPassword, 13, 12, 13, 12, true);
+        setMargin(binding.registerBeginSetPassword, 13, 12, 13, 12, true);
         setTextSize(binding.registerBeginSetPassword, 14);
 
         setHW(binding.registerBeginNextPage, 50, 320);
-        adaptView(binding.registerBeginNextPage, 27, 0, 28, 14, true);
+        setMargin(binding.registerBeginNextPage, 27, 0, 28, 14, true);
         setTextSize(binding.registerBeginNextPage, 16);
     }
 }

@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentInterestBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -41,12 +41,12 @@ public class FragmentInterest extends Fragment implements View.OnClickListener {
 
     private void drawView() {
         binding.fragmentInterestTitle.getLayoutParams().height = getPx(41);
-        adaptView(binding.fragmentInterestTitle, 15, 25, 0,
+        setMargin(binding.fragmentInterestTitle, 15, 25, 0,
                 9, false);
         setTextSize(binding.fragmentInterestTitle, 24);
 
         setHW(binding.fragmentInterestAdd, 30, 30);
-        adaptView(binding.fragmentInterestAdd, 0, 25, 25,
+        setMargin(binding.fragmentInterestAdd, 0, 25, 25,
                 15, false);
 
     }
@@ -67,7 +67,7 @@ public class FragmentInterest extends Fragment implements View.OnClickListener {
         textView.setText(interest);
         textView.getLayoutParams().height = getPx(28);
         textView.setTextColor(Color.parseColor("#000000"));
-        adaptView(textView, 15, 16, 15, 16, false);
+        setMargin(textView, 15, 16, 15, 16, false);
         setTextSize(textView, 20);
     }
 }

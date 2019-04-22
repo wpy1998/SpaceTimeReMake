@@ -25,7 +25,7 @@ import com.haixi.spacetime.databinding.FragmentSettingBinding;
 
 import static com.haixi.spacetime.Others.BasicActivity.closeCUT;
 import static com.haixi.spacetime.Others.Cookies.initCookies;
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
 
@@ -133,16 +133,16 @@ public class SettingFragment extends BasicFragment implements
 
     private void drawFragment() {
         setHW(back, 24, 24);
-        adaptView(back, 13, 10, 0, 0, false);
+        setMargin(back, 13, 10, 0, 0, false);
 
         setHW(title, 52, 61);
-        adaptView(title, 20, 0, 0, 3, false);
+        setMargin(title, 20, 0, 0, 3, false);
 
         setHW(binding.fragmentSettingExit, 50, 160);
-        adaptView(binding.fragmentSettingExit, 0, 50, 0, 0, true);
+        setMargin(binding.fragmentSettingExit, 0, 50, 0, 0, true);
 
         setHW(binding.fragmentSettingVersion, 23, 85);
-        adaptView(binding.fragmentSettingVersion, 0, 10, 0,
+        setMargin(binding.fragmentSettingVersion, 0, 10, 0,
                 19, true);
 
         editUserMessage.drawView();

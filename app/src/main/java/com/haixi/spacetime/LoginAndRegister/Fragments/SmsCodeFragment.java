@@ -25,7 +25,7 @@ import com.haixi.spacetime.databinding.FragmentSmsCodeBinding;
 import org.json.JSONObject;
 
 import static com.haixi.spacetime.Others.Cookies.token;
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.isReset;
 import static com.haixi.spacetime.Others.Settings.setH;
 import static com.haixi.spacetime.Others.Settings.setHW;
@@ -124,14 +124,14 @@ public class SmsCodeFragment extends BasicFragment {
 
     public void drawFragment(){
         setH(binding.verificationCodeTitle, 53);
-        adaptView(binding.verificationCodeTitle, 20, 44, 20, 0, true);
+        setMargin(binding.verificationCodeTitle, 20, 44, 20, 0, true);
         setTextSize(binding.verificationCodeTitle, 36);
 
         setHW(binding.verificationCodeLine1, 70, 335);
-        adaptView(binding.verificationCodeLine1, 20, 40, 20, 0, false);
+        setMargin(binding.verificationCodeLine1, 20, 40, 20, 0, false);
 
         setHW(binding.verificationCodeContent, 52, 285);
-        adaptView(binding.verificationCodeContent, 25, 9, 25, 9, false);
+        setMargin(binding.verificationCodeContent, 25, 9, 25, 9, false);
         setTextSize(binding.verificationCodeContent, 24);
     }
 }

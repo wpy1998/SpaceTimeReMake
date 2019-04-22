@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.OptionLayoutTurnBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -26,7 +26,7 @@ public class OptionLayoutTurn extends LinearLayout {
 
     public void drawView(){
         getLayoutParams().height = getPx(60);
-        adaptView(this, 20, 24, 18, 10, true);
+        setMargin(this, 20, 24, 18, 10, true);
         setTextSize(binding.optionLayoutTurnText,18);
 
         setHW(binding.optionLayoutTurnImage, 24, 24);

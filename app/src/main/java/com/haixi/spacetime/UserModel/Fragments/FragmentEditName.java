@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentEditNameBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -36,20 +36,20 @@ public class FragmentEditName extends Fragment implements View.OnClickListener {
         binding.editNameTitleView.getLayoutParams().height = getPx(58);
 
         setHW(binding.editNameBack, 24, 24);
-        adaptView(binding.editNameBack,13, 10, 0, 24,
+        setMargin(binding.editNameBack,13, 10, 0, 24,
                 false);
 
         binding.editNameTitle.getLayoutParams().height = getPx(29);
-        adaptView(binding.editNameTitle, 0, 8, 0, 21,
+        setMargin(binding.editNameTitle, 0, 8, 0, 21,
                 false);
         setTextSize(binding.editNameTitle, 20);
 
         setHW(binding.editNameSave,29, 37);
-        adaptView(binding.editNameSave, 0, 8, 28, 21,
+        setMargin(binding.editNameSave, 0, 8, 28, 21,
                 false);
         setTextSize(binding.editNameSave, 18);
 
-        adaptView(binding.editNameContent, 20, 0, 20, 0,
+        setMargin(binding.editNameContent, 20, 0, 20, 0,
                 false);
     }
 

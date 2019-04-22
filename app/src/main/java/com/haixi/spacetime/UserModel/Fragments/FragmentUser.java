@@ -18,11 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.DynamicModel.Fragments.FragmentDynamic2;
+import com.haixi.spacetime.DynamicModel.Fragments.Dynamic2Fragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentUserBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Cookies.ownerId;
 import static com.haixi.spacetime.Others.Settings.setHW;
@@ -35,7 +35,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     private TextView dynamic, message, name, ageLocation;
     private LinearLayout userView, chooseView;
     private ImageView image, gender;
-    private FragmentDynamic2 userDynamic;
+    private Dynamic2Fragment userDynamic;
     private FragmentMessage userMessage;
 
     private int userId = 0;
@@ -57,7 +57,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         image = binding.getRoot().findViewById(R.id.fragment_user_image);
         gender = binding.getRoot().findViewById(R.id.fragment_user_gender);
 
-        userDynamic = new FragmentDynamic2();
+        userDynamic = new Dynamic2Fragment(false);
         userMessage = new FragmentMessage();
         if (userId != ownerId){
             setting.setText("关注");
@@ -124,21 +124,21 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         chooseView.getLayoutParams().height = getPx(51);
 
         setHW(image, 70, 70);
-        adaptView(image, 20, 17, 21, 0, false);
+        setMargin(image, 20, 17, 21, 0, false);
 
         name.getLayoutParams().height = getPx(41);
         setTextSize(name, 24);
-        adaptView(name, 0, 17, 6, 7, false);
+        setMargin(name, 0, 17, 6, 7, false);
 
         setHW(gender, 24, 24);
-        adaptView(gender, 0, 25, 0, 69, false);
+        setMargin(gender, 0, 25, 0, 69, false);
 
         setHW(ageLocation, 22, 73);
-        adaptView(ageLocation, 0, 0, 0, 31, false);
+        setMargin(ageLocation, 0, 0, 0, 31, false);
         setTextSize(ageLocation, 16);
 
         setting.getLayoutParams().height = getPx(33);
-        adaptView(setting, 0, 21, 22, 3, false);
+        setMargin(setting, 0, 21, 22, 3, false);
 
         dynamic.getLayoutParams().height = getPx(41);
         setTextSize(dynamic, 16);

@@ -23,7 +23,7 @@ import com.haixi.spacetime.databinding.FragmentGetTelephoneBinding;
 import org.json.JSONObject;
 
 import static com.haixi.spacetime.Others.Cookies.phoneNumber;
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.setH;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -118,22 +118,22 @@ public class GetTelephoneFragment extends BasicFragment implements View.OnClickL
 
     private void drawFragment(){
         setH(binding.getTelephoneTitle, 52);
-        adaptView(binding.getTelephoneTitle, 31, 49, 31, 0, true);
+        setMargin(binding.getTelephoneTitle, 31, 49, 31, 0, true);
         setTextSize(binding.getTelephoneTitle, 36);
 
         setHW(binding.getTelephoneLine1, 50, 346);
-        adaptView(binding.getTelephoneLine1, 15, 35, 14, 0, false);
+        setMargin(binding.getTelephoneLine1, 15, 35, 14, 0, false);
 
         setH(binding.getTelephoneChooseArea, 32);
-        adaptView(binding.getTelephoneChooseArea, 16, 9, 19, 9, true);
+        setMargin(binding.getTelephoneChooseArea, 16, 9, 19, 9, true);
         setTextSize(binding.getTelephoneChooseArea, 16);
 
         setH(binding.getTelephoneTelephoneNumber, 32);
-        adaptView(binding.getTelephoneTelephoneNumber, 18,9,18,9,false);
+        setMargin(binding.getTelephoneTelephoneNumber, 18,9,18,9,false);
         setTextSize(binding.getTelephoneTelephoneNumber, 14);
 
         setHW(binding.getTelephoneNext, 50, 315);
-        adaptView(binding.getTelephoneNext, 30, 0, 30, 15, true);
+        setMargin(binding.getTelephoneNext, 30, 0, 30, 15, true);
         setTextSize(binding.getTelephoneNext, 16);
     }
 }

@@ -10,43 +10,39 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Others.Adapter.FragmentAdapter;
+import com.haixi.spacetime.Others.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentDynamicBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.haixi.spacetime.Others.Settings.getPx;
+import static com.haixi.spacetime.Others.Settings.setH;
+import static com.haixi.spacetime.Others.Settings.setHW;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
 
-public class FragmentDynamic extends Fragment implements View.OnClickListener {
+public class DynamicFragment extends BasicFragment implements View.OnClickListener{
     private FragmentDynamicBinding binding;
-
     private FragmentAdapter fragmentAdapter;
     private List<Fragment> fragments;
     private ViewPager viewPager;
     private Fragment collectionF;
-    private FragmentDynamic2 recommendF;
-    private TextView socialCircle, follow;
+    private Dynamic2Fragment recommendF;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dynamic,
                 null, false);
-        socialCircle = binding.getRoot().findViewById(
-                R.id.fragment_topic_socialCircle);
-        follow = binding.getRoot().findViewById(R.id.fragment_topic_follow);
 
         viewPager = binding.getRoot().findViewById(R.id.fragment_topic_viewPager);
         fragments = new ArrayList<Fragment>();
-        recommendF = new FragmentDynamic2(true);
+        recommendF = new Dynamic2Fragment(true);
         collectionF = new Fragment();
         fragments.add(recommendF);
         fragments.add(collectionF);
@@ -65,9 +61,9 @@ public class FragmentDynamic extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), "position = " + position
                         , Toast.LENGTH_SHORT).show();
                 if (position == 0){
-                    socialCircle.performClick();
+                    binding.fragmentDynamicSocialCircle.performClick();
                 }else if (position == 1){
-                    follow.performClick();
+                    binding.fragmentDynamicFollow.performClick();
                 }
             }
 
@@ -76,13 +72,17 @@ public class FragmentDynamic extends Fragment implements View.OnClickListener {
             }
         });
 
-        drawView();
-        socialCircle.setOnClickListener(this);
-        follow.setOnClickListener(this);
-        binding.getRoot().findViewById(R.id.fragment_topic_add).
-                setOnClickListener(this);
+        drawFragment();
 
-        socialCircle.performClick();
+        binding.fragmentDynamicSocialCircle.setOnClickListener(this);
+        binding.fragmentDynamicFollow.setOnClickListener(this);
+        binding.fragmentDynamicAdd.setOnClickListener(this);
+        binding.fragmentDynamicFab1.setOnClickListener(this);
+        binding.fragmentDynamicFab2.setOnClickListener(this);
+        binding.fragmentDynamicFab3.setOnClickListener(this);
+        binding.fragmentDynamicFab4.setOnClickListener(this);
+
+        binding.fragmentDynamicSocialCircle.performClick();
 
         return binding.getRoot();
     }
@@ -90,17 +90,17 @@ public class FragmentDynamic extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.fragment_topic_socialCircle:
-                socialCircle.setTextColor(Color.parseColor("#000000"));
-                follow.setTextColor(Color.parseColor("#7F7E80"));
+            case R.id.fragmentDynamic_socialCircle:
+                binding.fragmentDynamicSocialCircle.setTextColor(Color.parseColor("#000000"));
+                binding.fragmentDynamicFollow.setTextColor(Color.parseColor("#7F7E80"));
                 viewPager.setCurrentItem(0);
                 break;
-            case R.id.fragment_topic_follow:
-                socialCircle.setTextColor(Color.parseColor("#7F7E80"));
-                follow.setTextColor(Color.parseColor("#000000"));
+            case R.id.fragmentDynamic_follow:
+                binding.fragmentDynamicSocialCircle.setTextColor(Color.parseColor("#7F7E80"));
+                binding.fragmentDynamicFollow.setTextColor(Color.parseColor("#000000"));
                 viewPager.setCurrentItem(1);
                 break;
-            case R.id.fragment_topic_add:
+            case R.id.fragmentDynamic_add:
                 ARouter.getInstance()
                         .build("/spaceTime/topic")
                         .withString("path", "addDynamic")
@@ -112,29 +112,18 @@ public class FragmentDynamic extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void drawView(){
-        socialCircle.getLayoutParams().height = getPx(41);
-        setTextSize(socialCircle, 20);
-        LinearLayout.LayoutParams params = new LinearLayout.
-                LayoutParams(socialCircle.getLayoutParams());
-        params.setMargins(getPx(18), 0, getPx(19), getPx(2));
-        socialCircle.setLayoutParams(params);
+    private void drawFragment(){
+        setH(binding.fragmentDynamicSocialCircle, 41);
+        setTextSize(binding.fragmentDynamicSocialCircle, 20);
+        setMargin(binding.fragmentDynamicSocialCircle, 18, 0, 19,
+                2, false);
 
-        follow.getLayoutParams().height = getPx(41);
-        setTextSize(follow, 20);
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(follow.
-                getLayoutParams());
-        params2.setMargins(0, 0, 0, getPx(2));
-        follow.setLayoutParams(params2);
+        setH(binding.fragmentDynamicFollow, 41);
+        setTextSize(binding.fragmentDynamicFollow, 20);
+        setMargin(binding.fragmentDynamicFollow, 0, 0, 0, 2, false);
 
-        binding.getRoot().findViewById(R.id.fragment_topic_add).getLayoutParams()
-                .height = getPx(25);
-        binding.getRoot().findViewById(R.id.fragment_topic_add).getLayoutParams()
-                .width = getPx(25);
-        LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(binding.
-                getRoot().findViewById(R.id.fragment_topic_add).getLayoutParams());
-        params3.setMargins(0, getPx(7), getPx(20), getPx(11));
-        binding.getRoot().findViewById(R.id.fragment_topic_add)
-                .setLayoutParams(params3);
+        setHW(binding.getRoot().findViewById(R.id.fragmentDynamic_add), 25, 25);
+        setMargin(binding.getRoot().findViewById(R.id.fragmentDynamic_add), 0,
+                7,20, 11, false);
     }
 }

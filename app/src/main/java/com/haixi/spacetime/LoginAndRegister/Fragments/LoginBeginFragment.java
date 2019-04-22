@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 import static com.haixi.spacetime.Others.Cookies.password;
 import static com.haixi.spacetime.Others.Cookies.phoneNumber;
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.isReset;
 import static com.haixi.spacetime.Others.Settings.setH;
 import static com.haixi.spacetime.Others.Settings.setHW;
@@ -180,47 +180,47 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
 
     private void drawFragment(){
         setHW(binding.loginLine0, 52, 321);
-        adaptView(binding.loginLine0, 26, 34, 28, 0, false);
+        setMargin(binding.loginLine0, 26, 34, 28, 0, false);
 
         setH(binding.loginTitle, 52);
         setTextSize(binding.loginTitle, 36);
 
         setH(binding.loginRegisterNewAccount, 23);
-        adaptView(binding.loginRegisterNewAccount, 0, 14, 0, 15, true);
+        setMargin(binding.loginRegisterNewAccount, 0, 14, 0, 15, true);
 
         setHW(binding.loginLine1, 50, 331);
-        adaptView(binding.loginLine1, 22, 50, 22, 0, false);
+        setMargin(binding.loginLine1, 22, 50, 22, 0, false);
 
         setHW(binding.loginTelephoneArea, 23, 38);
-        adaptView(binding.loginTelephoneArea, 12, 14, 0, 13, true);
+        setMargin(binding.loginTelephoneArea, 12, 14, 0, 13, true);
         setTextSize(binding.loginTelephoneArea, 14);
 
         setHW(binding.loginChooseArea, 24, 24);
-        adaptView(binding.loginChooseArea, 0, 13, 0, 13, false);
+        setMargin(binding.loginChooseArea, 0, 13, 0, 13, false);
 
         setHW(binding.loginTelephoneNumber, 23, 218);
-        adaptView(binding.loginTelephoneNumber,27,14,12,13,true);
+        setMargin(binding.loginTelephoneNumber,27,14,12,13,true);
         setTextSize(binding.loginTelephoneNumber, 14);
 
         setHW(binding.loginLine2, 50, 331);
-        adaptView(binding.loginLine2, 22, 34, 22, 0, false);
+        setMargin(binding.loginLine2, 22, 34, 22, 0, false);
 
         setHW(binding.loginPassword, 26, 307);
-        adaptView(binding.loginPassword, 12, 12, 12, 12, true);
+        setMargin(binding.loginPassword, 12, 12, 12, 12, true);
         setTextSize(binding.loginPassword, 14);
 
         setHW(binding.loginLine3, 23, 331);
-        adaptView(binding.loginLine3, 22, 17, 22, 0, false);
+        setMargin(binding.loginLine3, 22, 17, 22, 0, false);
 
         setH(binding.loginForgetPassword, 23);
         setTextSize(binding.loginForgetPassword, 14);
 
         setHW(binding.loginLogin, 50, 320);
-        adaptView(binding.loginLogin, 27, 0, 28, 14, true);
+        setMargin(binding.loginLogin, 27, 0, 28, 14, true);
         setTextSize(binding.loginLogin, 16);
 
         setH(binding.loginGetVerificationCode, 23);
-        adaptView(binding.loginGetVerificationCode, 131, 17, 131, 34, true);
+        setMargin(binding.loginGetVerificationCode, 131, 17, 131, 34, true);
         setTextSize(binding.loginGetVerificationCode, 16);
     }
 }

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -93,7 +93,7 @@ public class DynamicContentView extends LinearLayout
         textView.setText("#" + tag);
         textView.setTextColor(Color.parseColor("#3E66FB"));
         textView.getLayoutParams().height = getPx(20);
-        adaptView(textView, 5, 5, 5, 5, false);
+        setMargin(textView, 5, 5, 5, 5, false);
 
         textView.setOnClickListener(new OnClickListener() {
             @Override
@@ -107,44 +107,44 @@ public class DynamicContentView extends LinearLayout
         titleView.getLayoutParams().height = getPx(60);
 
         setHW(userImage, 50, 50);
-        adaptView(userImage, 12, 10, 9, 0, false);
+        setMargin(userImage, 12, 10, 9, 0, false);
 
         userName.getLayoutParams().height = getPx(22);
-        adaptView(userName, 0, 10, 0, 8, false);
+        setMargin(userName, 0, 10, 0, 8, false);
         setTextSize(userName, 16);
 
         publishTime.getLayoutParams().height = getPx(20);
         setTextSize(publishTime, 14);
 
-        adaptView(binding.dynamicContentViewText, 16, 19, 16,
+        setMargin(binding.dynamicContentViewText, 16, 19, 16,
                 7, true);
 
         setHW(binding.dynamicContentViewLike, 24, 24);
-        adaptView(binding.dynamicContentViewLike, 20, 9, 7,
+        setMargin(binding.dynamicContentViewLike, 20, 9, 7,
                 20, true);
 
         binding.dynamicContentViewLikeNumber.getLayoutParams().
                 height = getPx(20);
-        adaptView(binding.dynamicContentViewLikeNumber, 0, 13, 21,
+        setMargin(binding.dynamicContentViewLikeNumber, 0, 13, 21,
                 21, true);
         setTextSize(binding.dynamicContentViewLikeNumber, 14);
 
         setHW(binding.dynamicContentViewComment, 24, 24);
-        adaptView(binding.dynamicContentViewComment, 0, 8, 10,
+        setMargin(binding.dynamicContentViewComment, 0, 8, 10,
                 21, true);
 
         binding.dynamicContentViewCommentNumber.getLayoutParams().
                 height = getPx(20);
-        adaptView(binding.dynamicContentViewCommentNumber, 0, 13,
+        setMargin(binding.dynamicContentViewCommentNumber, 0, 13,
                 20, 20, true);
         setTextSize(binding.dynamicContentViewCommentNumber, 14);
 
         binding.dynamicContentViewTime.getLayoutParams().height = getPx(20);
-        adaptView(binding.dynamicContentViewTime, 0, 13, 24,
+        setMargin(binding.dynamicContentViewTime, 0, 13, 24,
                 20, true);
         setTextSize(binding.dynamicContentViewTime, 14);
 
-        adaptView(binding.dynamicContentViewHorizontalScrollView, 20, 0,
+        setMargin(binding.dynamicContentViewHorizontalScrollView, 20, 0,
                 20, 0, true);
     }
 }

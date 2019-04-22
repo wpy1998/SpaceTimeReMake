@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentAddDynamicBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -42,20 +42,20 @@ public class FragmentAddDynamic extends Fragment implements View.OnClickListener
 
     private void drawView() {
         setHW(back, 24, 24);
-        adaptView(back, 19, 16, 0,26, false);
+        setMargin(back, 19, 16, 0,26, false);
 
         save.getLayoutParams().height = getPx(25);
-        adaptView(save, 0, 16, 35, 25, false);
+        setMargin(save, 0, 16, 35, 25, false);
         setTextSize(save, 18);
 
-        adaptView(binding.fragmentAddDynamicContent, 29, 25, 29, 25, false);
+        setMargin(binding.fragmentAddDynamicContent, 29, 25, 29, 25, false);
         setTextSize(binding.fragmentAddDynamicContent,16);
 
         setHW(binding.fragmentAddDynamicImage, 80, 80);
-        adaptView(binding.fragmentAddDynamicImage,29, 0, 0, 10, false);
+        setMargin(binding.fragmentAddDynamicImage,29, 0, 0, 10, false);
 
         binding.fragmentAddDynamicChoose.getLayoutParams().height = getPx(22);
-        adaptView(binding.fragmentAddDynamicChoose, 29, 0,0,0,false);
+        setMargin(binding.fragmentAddDynamicChoose, 29, 0,0,0,false);
     }
 
     @Override

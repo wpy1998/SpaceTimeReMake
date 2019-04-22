@@ -17,7 +17,7 @@ import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Components.EditUserComponent;
 import com.haixi.spacetime.databinding.FragmentEditUserBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -78,14 +78,14 @@ public class FragmentEditUser extends Fragment implements View.OnClickListener {
 
     private void drawView() {
         setHW(back, 24, 24);
-        adaptView(back, 13, 10, 11, 0, false);
+        setMargin(back, 13, 10, 11, 0, false);
 
         setTextSize(title,18);
         title.getLayoutParams().height = getPx(26);
-        adaptView(title, 0, 11, 0, 8, false);
+        setMargin(title, 0, 11, 0, 8, false);
 
         save.getLayoutParams().height = getPx(23);
-        adaptView(save, 0, 11, 23, 11, false);
+        setMargin(save, 0, 11, 23, 11, false);
         setTextSize(save, 16);
 
         userImage.setTitle("头像");

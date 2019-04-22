@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentEditUserBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -40,27 +40,27 @@ public class EditUserComponent extends LinearLayout {
 
     public void drawComponent(){
         binding.componentEditUserMainView.getLayoutParams().height = getPx(70);
-        adaptView(binding.componentEditUserMainView, 0, 4, 0,
+        setMargin(binding.componentEditUserMainView, 0, 4, 0,
                 0, false);
 
         binding.componentEditUserTitle.getLayoutParams().height = getPx(29);
-        adaptView(binding.componentEditUserTitle, 20, 21, 17,
+        setMargin(binding.componentEditUserTitle, 20, 21, 17,
                 20, true);
         setTextSize(binding.componentEditUserTitle, 20);
 
         binding.componentEditUserContent.getLayoutParams().height = getPx(26);
-        adaptView(binding.componentEditUserContent, 0, 23, 0,
+        setMargin(binding.componentEditUserContent, 0, 23, 0,
                 23, true);
         setTextSize(binding.componentEditUserContent, 18);
 
         if (isSetImage){
             setHW(binding.componentEditUserImage, 60, 60);
-            adaptView(binding.componentEditUserImage, 0, 5, 0,
+            setMargin(binding.componentEditUserImage, 0, 5, 0,
                     5, true);
         }
 
         setHW(binding.componentEditUserNext, 24, 24);
-        adaptView(binding.componentEditUserNext, 18, 23, 23,
+        setMargin(binding.componentEditUserNext, 18, 23, 23,
                 23, false);
     }
 }

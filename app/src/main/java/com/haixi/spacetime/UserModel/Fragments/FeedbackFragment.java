@@ -18,7 +18,7 @@ import com.haixi.spacetime.Others.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentFeedbackBinding;
 
-import static com.haixi.spacetime.Others.Settings.adaptView;
+import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
@@ -65,20 +65,20 @@ public class FeedbackFragment extends BasicFragment implements View.OnClickListe
         binding.feedbackTitleView.getLayoutParams().height = getPx(58);
 
         setHW(binding.feedbackBack, 24, 24);
-        adaptView(binding.feedbackBack,13, 10, 0, 24,
+        setMargin(binding.feedbackBack,13, 10, 0, 24,
                 false);
 
         binding.feedbackTitle.getLayoutParams().height = getPx(29);
-        adaptView(binding.feedbackTitle, 0, 8, 0, 21,
+        setMargin(binding.feedbackTitle, 0, 8, 0, 21,
                 false);
         setTextSize(binding.feedbackTitle, 20);
 
         binding.feedbackSave.getLayoutParams().height = getPx(29);
-        adaptView(binding.feedbackSave, 0, 8, 28, 21,
+        setMargin(binding.feedbackSave, 0, 8, 28, 21,
                 false);
         setTextSize(binding.feedbackSave, 18);
 
-        adaptView(binding.feedbackContent, 20, 0, 20, 0,
+        setMargin(binding.feedbackContent, 20, 0, 20, 0,
                 false);
         binding.feedbackContent.setMinimumHeight(getPx(160));
     }
