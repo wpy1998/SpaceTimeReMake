@@ -9,18 +9,27 @@
             android:layout_height="40dp"
             android:layout_margin="5dp">
             <TextView
-                android:id="@+id/option_layout_choose_text"
+                android:id="@+id/optionLayoutChoose_text"
                 android:textColor="@color/colorBlack"
                 android:textSize="18dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"/>
             <Switch
-                android:id="@+id/option_layout_choose_getNotification"
+                android:id="@+id/optionLayoutChoose_getNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp" />
         </LinearLayout>
-        <include layout="@layout/xml_line"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/optionLayoutChoose_line"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/colorBackGround"/>
     </LinearLayout>
 </layout>

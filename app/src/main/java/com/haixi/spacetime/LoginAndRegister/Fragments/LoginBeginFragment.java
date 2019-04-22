@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -39,8 +41,11 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
     private final String intentAction = "com.example.spacetime.Login_and_Register.Fragments." +
             "LoginBeginFragment";
     private final int intentAction_AuthorizationWithPassword = 0;
-
     private TextView areaCode;
+
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    boolean rememberPass;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -73,6 +78,13 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
         });
 
         areaCode = binding.loginTelephoneArea;
+
+        pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String account1 = pref.getString("phoneNumber", "");
+        String password1 = pref.getString("password", "");
+        binding.loginTelephoneNumber.setText(account1);
+        binding.loginPassword.setText(password1);
+
         return binding.getRoot();
     }
 
@@ -161,6 +173,12 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
                             JSONObject jsonObject = new JSONObject(data1);
                             Cookies.token = jsonObject.getString("token");
                             password = binding.loginPassword.getText().toString();
+
+                            editor = pref.edit();
+                            editor.putString("phoneNumber", phoneNumber);
+                            editor.putString("password", password);
+                            editor.apply();
+
                             ARouter.getInstance()
                                     .build("/spaceTime/main")
                                     .withString("path", "loginBegin")

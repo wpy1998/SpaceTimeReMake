@@ -33,16 +33,16 @@
         <activity android:name="com.haixi.spacetime.InterestModel.InterestActivity" />
         <activity android:name="com.haixi.spacetime.DynamicModel.DynamicActivity" />
         <activity android:name="com.haixi.spacetime.UserModel.UserActivity" />
-        <activity android:name="com.haixi.spacetime.LoginAndRegister.StartActivity"></activity>
-        <activity android:name="com.haixi.spacetime.LoginAndRegister.RegisterActivity" />
-        <activity android:name="com.haixi.spacetime.LoginAndRegister.LoginActivity" />
-        <activity android:name="com.haixi.spacetime.MainActivity">
+        <activity android:name="com.haixi.spacetime.LoginAndRegister.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.haixi.spacetime.LoginAndRegister.RegisterActivity" />
+        <activity android:name="com.haixi.spacetime.LoginAndRegister.LoginActivity" />
+        <activity android:name="com.haixi.spacetime.MainActivity"></activity>
     </application>
 
 </manifest>

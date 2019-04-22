@@ -17,7 +17,7 @@ public class BasicFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private static final int MIN_DELAY_TIME = 1000;
+    private static final int MIN_DELAY_TIME = 2000;
     private long lastClickTime;
     public boolean isFastClick() {//false代表不是连续触屏
         boolean flag = true;

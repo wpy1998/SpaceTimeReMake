@@ -87,11 +87,11 @@ public class SettingFragment extends BasicFragment implements
                     public void onClick(View v) {
                         if (openNotification.isAllowed){
                             openNotification.isAllowed = false;
-                            Toast.makeText(getContext(), "推送已关闭",
+                            Toast.makeText(getContext(), "推送已开启",
                                     Toast.LENGTH_SHORT).show();
                         }else {
                             openNotification.isAllowed = true;
-                            Toast.makeText(getContext(), "推送已开启",
+                            Toast.makeText(getContext(), "推送已关闭",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
