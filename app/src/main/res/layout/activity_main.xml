@@ -19,6 +19,7 @@
             android:layout_alignParentBottom="true"
             android:background="#ffffff">
             <LinearLayout
+                android:id="@+id/main_b1"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -32,6 +33,7 @@
                     android:layout_gravity="center"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/main_b2"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -45,6 +47,7 @@
                     android:layout_gravity="center"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/main_b3"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

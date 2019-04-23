@@ -132,7 +132,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@color/colorWhite"
-            android:background="@drawable/buttonstyle"
+            android:background="@drawable/background_circle_blue"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"

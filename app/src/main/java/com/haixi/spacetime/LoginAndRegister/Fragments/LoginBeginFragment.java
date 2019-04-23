@@ -45,7 +45,6 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
-    boolean rememberPass;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

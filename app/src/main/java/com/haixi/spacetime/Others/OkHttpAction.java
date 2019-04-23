@@ -373,9 +373,9 @@ public class OkHttpAction {
                 Toast.makeText(context, "status=" + status +
                         "服务器异常", Toast.LENGTH_SHORT).show();
             }
+            context.sendBroadcast(intent);
         }catch (Exception e){
             e.printStackTrace();
         }
-        context.sendBroadcast(intent);
     }
 }

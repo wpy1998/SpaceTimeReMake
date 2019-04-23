@@ -30,6 +30,9 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         binding.mainConversation.setOnClickListener(this);
         binding.mainPersonal.setOnClickListener(this);
         binding.mainBrowser.setOnClickListener(this);
+        binding.mainB1.setOnClickListener(this);
+        binding.mainB2.setOnClickListener(this);
+        binding.mainB3.setOnClickListener(this);
 
         binding.mainBrowser.performClick();
     }
@@ -57,6 +60,15 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainPersonal.setImageResource(R.drawable.person);
                 originFragment = new DynamicFragment();
                 replaceFragment(R.id.main_fragment);
+                break;
+            case R.id.main_b1:
+                binding.mainConversation.performClick();
+                break;
+            case R.id.main_b2:
+                binding.mainBrowser.performClick();
+                break;
+            case R.id.main_b3:
+                binding.mainPersonal.performClick();
                 break;
             default:
                 break;

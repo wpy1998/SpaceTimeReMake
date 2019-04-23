@@ -168,6 +168,7 @@ public class SettingFragment extends BasicFragment implements
                     if (isFastClick()) return;
                     ARouter.getInstance()
                             .build("/spaceTime/start")
+                            .withInt("type", 1)
                             .navigation();
                     initCookies();
                     closeCUT();

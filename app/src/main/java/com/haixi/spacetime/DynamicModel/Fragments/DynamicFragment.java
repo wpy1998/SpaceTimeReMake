@@ -77,10 +77,10 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
         binding.fragmentDynamicSocialCircle.setOnClickListener(this);
         binding.fragmentDynamicFollow.setOnClickListener(this);
         binding.fragmentDynamicAdd.setOnClickListener(this);
-        binding.fragmentDynamicFab1.setOnClickListener(this);
-        binding.fragmentDynamicFab2.setOnClickListener(this);
-        binding.fragmentDynamicFab3.setOnClickListener(this);
-        binding.fragmentDynamicFab4.setOnClickListener(this);
+//        binding.fragmentDynamicFab1.setOnClickListener(this);
+//        binding.fragmentDynamicFab2.setOnClickListener(this);
+//        binding.fragmentDynamicFab3.setOnClickListener(this);
+//        binding.fragmentDynamicFab4.setOnClickListener(this);
 
         binding.fragmentDynamicSocialCircle.performClick();
 

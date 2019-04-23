@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.haixi.spacetime.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class BasicActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 
         ActionBar actionBar=getSupportActionBar();
         if (actionBar.isShowing()){
@@ -28,6 +31,12 @@ public class BasicActivity extends AppCompatActivity {
         }
 
         update(this);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+//        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
     }
 
     public static void closeL_R_W(){

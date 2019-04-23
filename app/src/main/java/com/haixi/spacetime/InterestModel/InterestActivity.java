@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.Others.BasicActivity;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ActivityInterestBinding;
 
+@Route(path = "/spaceTime/interest")
 public class InterestActivity extends BasicActivity {
     private ActivityInterestBinding binding;
 
