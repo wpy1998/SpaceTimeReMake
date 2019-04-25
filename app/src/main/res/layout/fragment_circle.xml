@@ -2,11 +2,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackGround">
+        android:background="@color/colorWhite">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorBlue">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -16,7 +17,9 @@
                     android:text="圈子薄"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
-                    android:id="@+id/fragmentInterest_title"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/fragmentCircle_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <LinearLayout
@@ -25,23 +28,12 @@
                     android:layout_height="wrap_content"/>
                 <ImageView
                     android:src="@drawable/add_white"
-                    android:id="@+id/fragmentInterest_add"
+                    android:id="@+id/fragmentCircle_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorBlue">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:id="@+id/fragmentInterest_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/user_drawable">
 
-                </LinearLayout>
-            </LinearLayout>
+            <include layout="@layout/title_second_circle"/>
         </LinearLayout>
     </ScrollView>
 </layout>

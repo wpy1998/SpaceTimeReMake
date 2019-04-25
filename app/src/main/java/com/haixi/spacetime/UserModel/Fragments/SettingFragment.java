@@ -19,8 +19,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Others.BasicFragment;
 import com.haixi.spacetime.Others.OkHttpAction;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.UserModel.Components.OptionLayoutChoose;
-import com.haixi.spacetime.UserModel.Components.OptionLayoutTurn;
+import com.haixi.spacetime.UserModel.Components.ChooseComponent;
+import com.haixi.spacetime.UserModel.Components.TurnComponent;
 import com.haixi.spacetime.databinding.FragmentSettingBinding;
 
 import static com.haixi.spacetime.Others.BasicActivity.closeCUT;
@@ -34,8 +34,8 @@ public class SettingFragment extends BasicFragment implements
     private FragmentSettingBinding binding;
     private TextView title;
     private ImageView back;
-    private OptionLayoutTurn editUserMessage, accountAndSafety, feedback, aboutUs;
-    private OptionLayoutChoose openNotification;
+    private TurnComponent editUserMessage, accountAndSafety, feedback, aboutUs;
+    private ChooseComponent openNotification;
 
     private final String intentAction = "com.example.spacetime.UserModel.Fragments.SettingFragment";
     private final int intentAction_exitAccount = 1;
@@ -55,11 +55,11 @@ public class SettingFragment extends BasicFragment implements
         title = binding.getRoot().findViewById(R.id.fragment_setting_title);
         back = binding.getRoot().findViewById(R.id.fragment_setting_back);
 
-        editUserMessage = new OptionLayoutTurn(getContext(), "修改个人资料");
-        accountAndSafety = new OptionLayoutTurn(getContext(), "账号与安全");
-        openNotification = new OptionLayoutChoose(getContext(), "开启推送");
-        feedback = new OptionLayoutTurn(getContext(), "意见反馈");
-        aboutUs = new OptionLayoutTurn(getContext(), "关于我们");
+        editUserMessage = new TurnComponent(getContext(), "修改个人资料");
+        accountAndSafety = new TurnComponent(getContext(), "账号与安全");
+        openNotification = new ChooseComponent(getContext(), "开启推送");
+        feedback = new TurnComponent(getContext(), "意见反馈");
+        aboutUs = new TurnComponent(getContext(), "关于我们");
         binding.fragmentSettingMainView.addView(editUserMessage);
         binding.fragmentSettingMainView.addView(accountAndSafety);
         binding.fragmentSettingMainView.addView(openNotification);
@@ -69,6 +69,7 @@ public class SettingFragment extends BasicFragment implements
         drawFragment();
         binding.fragmentSettingExit.setOnClickListener(this);
         back.setOnClickListener(this);
+
         editUserMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,14 +107,8 @@ public class SettingFragment extends BasicFragment implements
                         .navigation();
             }
         });
-        aboutUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance()
-                        .build("/spaceTime/forbidden")
-                        .navigation();
-            }
-        });
+
+        aboutUs.setOnClickListener(this);
         return binding.getRoot();
     }
 

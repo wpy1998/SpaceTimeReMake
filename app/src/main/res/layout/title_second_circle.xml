@@ -1,14 +1,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite">
-        <include layout="@layout/title_fragment_edit_user"/>
-
+        android:background="@drawable/user_drawable"
+        android:minHeight="15dp">
         <LinearLayout
-            android:id="@+id/fragmentEditUser_mainView"
             android:orientation="vertical"
+            android:id="@+id/titleSecondCircle_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

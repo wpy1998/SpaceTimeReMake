@@ -77,10 +77,7 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
         binding.fragmentDynamicSocialCircle.setOnClickListener(this);
         binding.fragmentDynamicFollow.setOnClickListener(this);
         binding.fragmentDynamicAdd.setOnClickListener(this);
-//        binding.fragmentDynamicFab1.setOnClickListener(this);
-//        binding.fragmentDynamicFab2.setOnClickListener(this);
-//        binding.fragmentDynamicFab3.setOnClickListener(this);
-//        binding.fragmentDynamicFab4.setOnClickListener(this);
+        binding.fragmentDynamicShare.setOnClickListener(this);
 
         binding.fragmentDynamicSocialCircle.performClick();
 
@@ -105,6 +102,7 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
                         .build("/spaceTime/topic")
                         .withString("path", "addDynamic")
                         .navigation();
+                break;
             default:
                 Toast.makeText(getContext(), "waiting for coming true",
                         Toast.LENGTH_SHORT).show();
@@ -121,9 +119,5 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
         setH(binding.fragmentDynamicFollow, 41);
         setTextSize(binding.fragmentDynamicFollow, 20);
         setMargin(binding.fragmentDynamicFollow, 0, 0, 0, 2, false);
-
-        setHW(binding.getRoot().findViewById(R.id.fragmentDynamic_add), 25, 25);
-        setMargin(binding.getRoot().findViewById(R.id.fragmentDynamic_add), 0,
-                7,20, 11, false);
     }
 }

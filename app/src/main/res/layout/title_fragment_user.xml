@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp">
             <ImageView
-                android:src="@drawable/nhx"
+                android:src="@drawable/jack"
                 android:id="@+id/fragment_user_image"
                 android:layout_width="100dp"
                 android:layout_height="match_parent" />

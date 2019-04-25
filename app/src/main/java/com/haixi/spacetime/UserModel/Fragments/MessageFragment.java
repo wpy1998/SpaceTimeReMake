@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.haixi.spacetime.Others.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentMessageBinding;
 
@@ -18,7 +19,7 @@ import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
 import static com.haixi.spacetime.Others.Settings.windowsWidth;
 
-public class FragmentMessage extends Fragment {
+public class MessageFragment extends BasicFragment {
     private FragmentMessageBinding binding;
     @Nullable
     @Override

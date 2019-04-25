@@ -10,6 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorBackGround">
+
             <android.support.v4.view.ViewPager
                 android:id="@+id/fragment_topic_viewPager"
                 android:layout_width="match_parent"
@@ -46,11 +47,6 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"/>
                 </LinearLayout>
-                <ImageView
-                    android:id="@+id/fragmentDynamic_add"
-                    android:src="@drawable/add"
-                    android:layout_width="1dp"
-                    android:layout_height="1dp"/>
             </LinearLayout>
         </FrameLayout>
 
@@ -59,26 +55,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom|end"
+            android:layout_centerInParent="true"
             fab:fab_labelsPosition="left"
             fab:fab_labelStyle="@style/menu_labels_style"
             app:layout_behavior="com.haixi.spacetime.Behavior.ScrollAwareFABBehavior">
 
             <com.getbase.floatingactionbutton.FloatingActionButton
+                android:src="@drawable/ic_write"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/fragmentDynamic_fab1"/>
+                android:id="@+id/fragmentDynamic_add"
+                app:fab_title="发布"
+                app:fabSize="mini"/>
             <com.getbase.floatingactionbutton.FloatingActionButton
+                android:src="@drawable/ic_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/fragmentDynamic_fab2"/>
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/fragmentDynamic_fab3"/>
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/fragmentDynamic_fab4"/>
+                android:id="@+id/fragmentDynamic_share"
+                app:fab_title="分享"
+                app:fabSize="mini"/>
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

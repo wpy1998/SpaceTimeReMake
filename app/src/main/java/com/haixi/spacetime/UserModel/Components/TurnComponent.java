@@ -6,36 +6,35 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.databinding.OptionLayoutTurnBinding;
+import com.haixi.spacetime.databinding.ComponentTurnBinding;
 
 import static com.haixi.spacetime.Others.Settings.setH;
 import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
 
-public class OptionLayoutTurn extends LinearLayout {
-    public OptionLayoutTurnBinding binding;
+public class TurnComponent extends LinearLayout {
+    public ComponentTurnBinding binding;
     private Context context;
-    public OptionLayoutTurn(Context context, String text) {
+    public TurnComponent(Context context, String text) {
         super(context);
         this.context = context;
         binding = DataBindingUtil.inflate(LayoutInflater.from(this.context),
-                R.layout.option_layout_turn, this, true);
+                R.layout.component_turn, this, true);
         binding.optionLayoutTurnText.setText(text + "");
     }
 
     public void drawView(){
-        setH(this, 60);
         setMargin(this, 13, 10, 13, 10, true);
 
         setH(binding.optionLayoutTurnText, 26);
-        setMargin(binding.optionLayoutTurnText, 0, 12, 0, 12, false);
+        setMargin(binding.optionLayoutTurnText,0,12,0,12,true);
         setTextSize(binding.optionLayoutTurnText,18);
 
         setHW(binding.optionLayoutTurnImage, 24, 24);
-        setMargin(binding.optionLayoutTurnImage, 0, 12, 0, 12, false);
+        setMargin(binding.optionLayoutTurnImage,0,13,0,13,false);
 
-        setH(binding.optionLayoutTurnLine, 4);
+        setH(binding.optionLayoutTurnLine, 3);
+        setMargin(binding.optionLayoutTurnLine, 0, 5, 0, 5, false);
     }
 }

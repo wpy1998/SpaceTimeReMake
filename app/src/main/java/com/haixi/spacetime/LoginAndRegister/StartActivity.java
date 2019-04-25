@@ -6,13 +6,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
+import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.haixi.spacetime.LoginAndRegister.Fragments.StartFragment;
+import com.haixi.spacetime.LoginAndRegister.Fragments.WelcomeFragment;
+import com.haixi.spacetime.MainActivity;
 import com.haixi.spacetime.Others.BasicActivity;
 import com.haixi.spacetime.Others.Cookies;
 import com.haixi.spacetime.Others.OkHttpAction;
@@ -25,7 +29,7 @@ import static com.haixi.spacetime.Others.Cookies.password;
 import static com.haixi.spacetime.Others.Cookies.phoneNumber;
 
 @Route(path = "/spaceTime/start")
-public class StartActivity extends BasicActivity implements View.OnClickListener {
+public class StartActivity extends BasicActivity{
     private ActivityStartBinding binding;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -40,68 +44,46 @@ public class StartActivity extends BasicActivity implements View.OnClickListener
         binding = DataBindingUtil.setContentView(this,R.layout.activity_start);
         activityList0.add(this);
 
+        Intent intentFront = getIntent();
+        int type = intentFront.getIntExtra("type", 0);
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        String account1 = pref.getString("phoneNumber", "");
+        String password1 = pref.getString("password", "");
+
+        if (type == 1){
+            originFragment = new StartFragment();
+            replaceFragment(R.id.start_frameLayout);
+            editor = pref.edit();
+            editor.putString("phoneNumber", "");
+            editor.putString("password", "");
+            editor.apply();
+            return;
+        }
+
         okHttpAction = new OkHttpAction(this);
         intentFilter = new IntentFilter();
         userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
         intentFilter.addAction(intentAction);
         registerReceiver(userInfoBroadcastReceiver, intentFilter);
 
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
-        String account1 = pref.getString("phoneNumber", "");
-        String password1 = pref.getString("password", "");
-        Intent intentFront = getIntent();
-        int type = intentFront.getIntExtra("type", 0);
-        if (account1.equals("")==false && password1.equals("")==false && type== 0){
+        if (account1.equals("")==false && password1.equals("")==false){
             phoneNumber = account1;
             password = password1;
             okHttpAction.authorizeWithPassword(intentAction_login, intentAction);
-            binding.startMainView.removeAllViews();
         }
-
-        if (type == 1){
-            editor = pref.edit();
-            editor.putString("phoneNumber", "");
-            editor.putString("password", "");
-            editor.apply();
-        }
-
-        drawActivity();
-
-        binding.startLogin.setOnClickListener(this);
-        binding.startRegister.setOnClickListener(this);
+        originFragment = new WelcomeFragment();
+        replaceFragment(R.id.start_frameLayout);
     }
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(userInfoBroadcastReceiver);
+        if (userInfoBroadcastReceiver != null){
+            unregisterReceiver(userInfoBroadcastReceiver);
+        }
         super.onDestroy();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.start_login:
-                ARouter.getInstance()
-                        .build("/spaceTime/login")
-                        .withString("path", "loginBegin")
-                        .navigation();
-                break;
-            case R.id.start_register:
-                ARouter.getInstance()
-                        .build("/spaceTime/register")
-                        .withString("path", "registerBegin")
-                    .navigation();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void drawActivity(){
-    }
-
-    private class UserInfoBroadcastReceiver extends BroadcastReceiver{
-
+    private class UserInfoBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction(),data;
@@ -133,7 +115,6 @@ public class StartActivity extends BasicActivity implements View.OnClickListener
 
                         ARouter.getInstance()
                                 .build("/spaceTime/main")
-                                .withTransition(R.anim.fade_in, R.anim.fade_out)
                                 .navigation();
                         break;
                     }catch (Exception e){

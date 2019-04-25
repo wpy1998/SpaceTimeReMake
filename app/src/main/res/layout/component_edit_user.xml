@@ -1,33 +1,45 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:id="@+id/componentEditUser_mainView"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite">
-        <TextView
-            android:id="@+id/componentEditUser_title"
-            android:hint="title"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/componentEditUser_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/componentEditUser_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:src="@drawable/next"
-            android:id="@+id/componentEditUser_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/componentEditUser_mainView"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
+            <TextView
+                android:id="@+id/componentEditUser_title"
+                android:hint="title"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/componentEditUser_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/componentEditUser_image"
+                android:src="@drawable/jack"
+                android:layout_width="60dp"
+                android:layout_height="60dp"/>
+            <ImageView
+                android:src="@drawable/next"
+                android:id="@+id/componentEditUser_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/componentEditUser_line"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/colorBackGround"/>
     </LinearLayout>
 </layout>

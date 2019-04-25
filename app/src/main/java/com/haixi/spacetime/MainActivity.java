@@ -1,14 +1,17 @@
 package com.haixi.spacetime;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.transition.Fade;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.haixi.spacetime.InterestModel.Fragments.FragmentInterest;
+import com.haixi.spacetime.CircleModel.Fragments.CircleFragment;
 import com.haixi.spacetime.Others.BasicActivity;
 import com.haixi.spacetime.DynamicModel.Fragments.DynamicFragment;
-import com.haixi.spacetime.UserModel.Fragments.FragmentUser;
+import com.haixi.spacetime.UserModel.Fragments.UserFragment;
 import com.haixi.spacetime.databinding.ActivityMainBinding;
 
 import static com.haixi.spacetime.Others.Settings.setMargin;
@@ -44,14 +47,14 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainConversation.setImageResource(R.drawable.ic_talk_lighting);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                originFragment = new FragmentInterest();
+                originFragment = new CircleFragment();
                 replaceFragment(R.id.main_fragment);
                 break;
             case R.id.main_personal:
                 binding.mainConversation.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person_lighting);
-                originFragment = new FragmentUser();
+                originFragment = new UserFragment();
                 replaceFragment(R.id.main_fragment);
                 break;
             case R.id.main_browser:

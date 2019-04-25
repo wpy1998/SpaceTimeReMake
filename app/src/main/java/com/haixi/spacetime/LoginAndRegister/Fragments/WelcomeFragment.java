@@ -47,7 +47,8 @@ public class WelcomeFragment extends BasicFragment implements View.OnClickListen
         switch (v.getId()){
             case R.id.welcome_login:
                 ARouter.getInstance()
-                        .build("/spaceTime/main")
+                        .build("/spaceTime/start")
+                        .withInt("type", 1)
                         .navigation();
                 break;
             default:

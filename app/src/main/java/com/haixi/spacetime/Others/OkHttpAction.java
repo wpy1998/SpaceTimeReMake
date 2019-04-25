@@ -365,14 +365,6 @@ public class OkHttpAction {
         try {
             JSONObject jsonObject = new JSONObject(data);
             logout = logout + "action=" + intentAction + "\ndata=" + data + "\n\n";
-            int status = jsonObject.getInt("status");
-            if (status >= 400 && status < 500){
-                Toast.makeText(context, "status=" + status +
-                        "发送信息有误，请重新发送", Toast.LENGTH_SHORT).show();
-            }else if (status >= 500 && status < 600){
-                Toast.makeText(context, "status=" + status +
-                        "服务器异常", Toast.LENGTH_SHORT).show();
-            }
             context.sendBroadcast(intent);
         }catch (Exception e){
             e.printStackTrace();

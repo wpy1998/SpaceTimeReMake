@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.haixi.spacetime.Others.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Components.EditUserComponent;
 import com.haixi.spacetime.databinding.FragmentEditUserBinding;
 
+import static com.haixi.spacetime.Others.Settings.setH;
 import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.getPx;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
 
-public class FragmentEditUser extends Fragment implements View.OnClickListener {
+public class EditUserFragment extends BasicFragment implements View.OnClickListener {
     private FragmentEditUserBinding binding;
     private TextView save, title;
     private ImageView back;
@@ -77,6 +78,8 @@ public class FragmentEditUser extends Fragment implements View.OnClickListener {
     }
 
     private void drawView() {
+        setH(binding.getRoot().findViewById(R.id.fragmentEditUser_line0), 2);
+
         setHW(back, 24, 24);
         setMargin(back, 13, 10, 11, 0, false);
 
@@ -89,7 +92,7 @@ public class FragmentEditUser extends Fragment implements View.OnClickListener {
         setTextSize(save, 16);
 
         userImage.setTitle("头像");
-        userImage.setImage(R.drawable.nhx);
+        userImage.setImage(R.drawable.jack);
         userImage.drawComponent();
 
         userName.setTitle("昵称");

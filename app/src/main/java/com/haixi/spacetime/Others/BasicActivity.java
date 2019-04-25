@@ -23,7 +23,7 @@ public class BasicActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 
         ActionBar actionBar=getSupportActionBar();
         if (actionBar.isShowing()){
@@ -36,7 +36,7 @@ public class BasicActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-//        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
     }
 
     public static void closeL_R_W(){

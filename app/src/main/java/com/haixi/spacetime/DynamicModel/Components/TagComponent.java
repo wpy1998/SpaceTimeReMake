@@ -10,24 +10,25 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.databinding.TagViewBinding;
+import com.haixi.spacetime.databinding.ComponentTagBinding;
 
 import static com.haixi.spacetime.Others.Settings.setH;
 import static com.haixi.spacetime.Others.Settings.setMargin;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
 
-public class TagView extends LinearLayout{
+public class TagComponent extends LinearLayout{
     private Context context;
-    private TagViewBinding binding;
+    private ComponentTagBinding binding;
     private boolean isChoosen;
-    private String intentAction = "com.haixi.spacetime.DynamicModel.Components.TagView";
+    private String intentAction = "com.haixi.spacetime.DynamicModel.Components.TagComponent";
     private IntentFilter intentFilter;
     private ControlBroadcastReceiver controlBroadcastReceiver;
 
     private String name;
 
-    public TagView(Context context, String name) {
+    public TagComponent(Context context, String name) {
         super(context);
+        this.context = context;
         initLinearLayout(context);
         drawLinearLayout();
         this.name = name;
@@ -46,7 +47,7 @@ public class TagView extends LinearLayout{
     private void initLinearLayout(Context context){
         this.context = context;
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
-                R.layout.tag_view, this, true);
+                R.layout.component_tag, this, true);
 
         intentFilter = new IntentFilter();
         controlBroadcastReceiver = new ControlBroadcastReceiver();

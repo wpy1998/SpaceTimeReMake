@@ -9,13 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.haixi.spacetime.DynamicModel.Components.TagView;
+import com.haixi.spacetime.DynamicModel.Components.TagComponent;
 import com.haixi.spacetime.Others.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.Components.DynamicContentView;
 import com.haixi.spacetime.databinding.FragmentDynamic2Binding;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.haixi.spacetime.Others.Settings.setMargin;
@@ -25,7 +24,7 @@ public class Dynamic2Fragment extends BasicFragment{
     private FragmentDynamic2Binding binding;
     private boolean isUserView;
 
-    private List<TagView> tagViews;
+    private List<TagComponent> tagComponents;
 
     public Dynamic2Fragment(){
         isUserView = false;
@@ -56,20 +55,20 @@ public class Dynamic2Fragment extends BasicFragment{
                 isUserView));
         if (!isUserView) return binding.getRoot();
 
-        TagView tagView = new TagView(getContext(), "全部");
-        TagView tagView1 = new TagView(getContext(), "吃鸡党");
-        TagView tagView2 = new TagView(getContext(), "大社联");
-        TagView tagView3 = new TagView(getContext(), "俱乐部");
-        TagView tagView4 = new TagView(getContext(), "潮牌");
-        TagView tagView5 = new TagView(getContext(), "王者荣耀");
-        tagView.refresh();
+        TagComponent tagComponent = new TagComponent(getContext(), "全部");
+        TagComponent tagComponent1 = new TagComponent(getContext(), "吃鸡党");
+        TagComponent tagComponent2 = new TagComponent(getContext(), "大社联");
+        TagComponent tagComponent3 = new TagComponent(getContext(), "俱乐部");
+        TagComponent tagComponent4 = new TagComponent(getContext(), "潮牌");
+        TagComponent tagComponent5 = new TagComponent(getContext(), "王者荣耀");
+        tagComponent.refresh();
 
-        binding.fragmentDynamic2TagView.addView(tagView);
-        binding.fragmentDynamic2TagView.addView(tagView1);
-        binding.fragmentDynamic2TagView.addView(tagView2);
-        binding.fragmentDynamic2TagView.addView(tagView3);
-        binding.fragmentDynamic2TagView.addView(tagView4);
-        binding.fragmentDynamic2TagView.addView(tagView5);
+        binding.fragmentDynamic2TagView.addView(tagComponent);
+        binding.fragmentDynamic2TagView.addView(tagComponent1);
+        binding.fragmentDynamic2TagView.addView(tagComponent2);
+        binding.fragmentDynamic2TagView.addView(tagComponent3);
+        binding.fragmentDynamic2TagView.addView(tagComponent4);
+        binding.fragmentDynamic2TagView.addView(tagComponent5);
 
         return binding.getRoot();
     }

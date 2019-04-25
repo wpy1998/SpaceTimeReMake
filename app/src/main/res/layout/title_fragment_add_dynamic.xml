@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@drawable/back"
+            android:src="@drawable/back_blue"
             android:id="@+id/fragmentAddDynamic_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

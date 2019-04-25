@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/dynamicContentView_userImage"
-        android:src="@drawable/nhx"
+        android:src="@drawable/jack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout

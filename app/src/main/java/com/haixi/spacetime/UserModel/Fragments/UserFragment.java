@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.DynamicModel.Fragments.Dynamic2Fragment;
+import com.haixi.spacetime.Others.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentUserBinding;
 
@@ -28,7 +29,7 @@ import static com.haixi.spacetime.Others.Cookies.ownerId;
 import static com.haixi.spacetime.Others.Settings.setHW;
 import static com.haixi.spacetime.Others.Settings.setTextSize;
 
-public class FragmentUser extends Fragment implements View.OnClickListener {
+public class UserFragment extends BasicFragment implements View.OnClickListener {
     private FragmentUserBinding binding;
 
     private Button setting;
@@ -36,7 +37,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     private LinearLayout userView, chooseView;
     private ImageView image, gender;
     private Dynamic2Fragment userDynamic;
-    private FragmentMessage userMessage;
+    private MessageFragment userMessage;
 
     private int userId = 0;
     private boolean isFollow;
@@ -58,7 +59,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         gender = binding.getRoot().findViewById(R.id.fragment_user_gender);
 
         userDynamic = new Dynamic2Fragment(false);
-        userMessage = new FragmentMessage();
+        userMessage = new MessageFragment();
         if (userId != ownerId){
             setting.setText("关注");
             isFollow = false;
@@ -98,14 +99,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.fragment_user_dynamic:
-                dynamic.setTextColor(Color.parseColor("#3E66FB"));
-                message.setTextColor(Color.parseColor("#000000"));
+                dynamic.setTextColor(getResources().getColor(R.color.colorBlue));
+                message.setTextColor(getResources().getColor(R.color.colorBlack));
                 replaceFragment(userDynamic);
                 setting.setText("设置");
                 break;
             case R.id.fragment_user_message:
-                dynamic.setTextColor(Color.parseColor("#000000"));
-                message.setTextColor(Color.parseColor("#3E66FB"));
+                dynamic.setTextColor(getResources().getColor(R.color.colorBlack));
+                message.setTextColor(getResources().getColor(R.color.colorBlue));
                 replaceFragment(userMessage);
                 if (userId != ownerId){
                     setting.setText("关注");

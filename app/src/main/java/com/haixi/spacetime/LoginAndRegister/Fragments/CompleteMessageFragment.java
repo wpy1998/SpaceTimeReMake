@@ -158,8 +158,7 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
                         String data1 = object.getString("data");
                         setMessage(data1);
                         ARouter.getInstance()
-                                .build("/spaceTime/register")
-                                .withString("path", "welcome")
+                                .build("/spaceTime/main")
                                 .navigation();
                     }catch (Exception e){
                         e.printStackTrace();

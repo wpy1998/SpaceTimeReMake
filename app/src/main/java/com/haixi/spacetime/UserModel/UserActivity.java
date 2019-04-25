@@ -10,7 +10,7 @@ import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Fragments.FeedbackFragment;
 import com.haixi.spacetime.UserModel.Fragments.FragmentEditName;
 import com.haixi.spacetime.UserModel.Fragments.FragmentEditSign;
-import com.haixi.spacetime.UserModel.Fragments.FragmentEditUser;
+import com.haixi.spacetime.UserModel.Fragments.EditUserFragment;
 import com.haixi.spacetime.UserModel.Fragments.SettingFragment;
 import com.haixi.spacetime.databinding.ActivityUserBinding;
 
@@ -33,7 +33,7 @@ public class UserActivity extends BasicActivity {
     private void choosePath(String path) {
         switch (path){
             case "editUserMessage":
-                originFragment = new FragmentEditUser();
+                originFragment = new EditUserFragment();
                 replaceFragment(R.id.user_frameLayout);
                 break;
             case "feedback":
@@ -53,6 +53,7 @@ public class UserActivity extends BasicActivity {
                 replaceFragment(R.id.user_frameLayout);
                 break;
             default:
+                replaceFragment(R.id.user_frameLayout);
                 break;
         }
     }

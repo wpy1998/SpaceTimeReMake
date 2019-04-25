@@ -32,10 +32,6 @@ public class RegisterActivity extends BasicActivity {
                 originFragment = new CompleteMessageFragment();
                 replaceFragment(R.id.register_frameLayout);
                 break;
-            case "welcome":
-                originFragment = new WelcomeFragment();
-                replaceFragment(R.id.register_frameLayout);
-                break;
             default:
                 replaceFragment(R.id.register_frameLayout);
                 break;

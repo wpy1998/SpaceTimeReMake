@@ -91,7 +91,7 @@ public class DynamicContentView extends LinearLayout
         TextView textView = new TextView(getContext());
         binding.dynamicContentViewTag.addView(textView);
         textView.setText("#" + tag);
-        textView.setTextColor(Color.parseColor("#3E66FB"));
+        textView.setTextColor(getResources().getColor(R.color.colorBlue));
         textView.getLayoutParams().height = getPx(20);
         setMargin(textView, 5, 5, 5, 5, false);
 

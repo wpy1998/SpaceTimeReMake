@@ -11,7 +11,7 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/feedback_back"
-                android:src="@drawable/back"
+                android:src="@drawable/back_blue"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center" />

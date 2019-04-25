@@ -50,6 +50,10 @@ public class Settings {
         view.getLayoutParams().height = getPx(height);
     }
 
+    public static void setW(View view, int width){
+        view.getLayoutParams().width = getPx(width);
+    }
+
     public static void setTextSize(TextView view, int size){
         view.setTextSize(TypedValue.COMPLEX_UNIT_PX, getPx(size));
     }
