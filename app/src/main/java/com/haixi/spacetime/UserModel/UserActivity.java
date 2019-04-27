@@ -2,10 +2,12 @@ package com.haixi.spacetime.UserModel;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.haixi.spacetime.Others.BasicActivity;
+import com.haixi.spacetime.Common.Components.BasicActivity;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Fragments.FeedbackFragment;
 import com.haixi.spacetime.UserModel.Fragments.FragmentEditName;
@@ -18,6 +20,7 @@ import com.haixi.spacetime.databinding.ActivityUserBinding;
 public class UserActivity extends BasicActivity {
     private ActivityUserBinding binding;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

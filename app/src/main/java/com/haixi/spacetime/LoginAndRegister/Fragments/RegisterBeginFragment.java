@@ -17,21 +17,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Others.OkHttpAction;
+import com.haixi.spacetime.Common.Components.OkHttpAction;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.Others.BasicFragment;
+import com.haixi.spacetime.Common.Components.BasicFragment;
 import com.haixi.spacetime.databinding.FragmentRegisterBeginBinding;
 
 import org.json.JSONObject;
 
-import static com.haixi.spacetime.Others.Cookies.password;
-import static com.haixi.spacetime.Others.Cookies.phoneNumber;
-import static com.haixi.spacetime.Others.Cookies.setMessage;
-import static com.haixi.spacetime.Others.Cookies.token;
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.setH;
-import static com.haixi.spacetime.Others.Settings.setHW;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
+import static com.haixi.spacetime.Common.Entity.Cookies.password;
+import static com.haixi.spacetime.Common.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Common.Entity.Cookies.setMessage;
+import static com.haixi.spacetime.Common.Entity.Cookies.token;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.setH;
+import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
 
 public class RegisterBeginFragment extends BasicFragment implements View.OnClickListener {
     private FragmentRegisterBeginBinding binding;
@@ -63,6 +63,15 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
         binding.registerBeginNextPage.setOnClickListener(this);
         binding.registerBeginAreaCode.setOnClickListener(this);
         binding.registerBeginAreaCode.setOnClickListener(this);
+
+        binding.registerBeginTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build("/spaceTime/forbidden")
+                        .navigation();
+            }
+        });
 
         areaCode=binding.registerBeginAreaCode;
         return binding.getRoot();
@@ -106,14 +115,18 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
                 break;
             case R.id.register_begin_nextPage:
                 String password = binding.registerBeginSetPassword.getText().toString();
+                String smsCode = binding.registerBeginSmsCode.getText().toString();
+                if (smsCode.equals("")){
+                    Toast.makeText(getContext(), "验证码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (password.equals("")){
                     Toast.makeText(getContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (isFastClick()) return;
                 phoneNumber = binding.registerBeginTelephoneNumber.getText().toString();
-                okHttpAction.checkSmsCode(binding.registerBeginSmsCode.getText().toString(),
-                        intentAction_CheckSmsCode, intentAction);
+                okHttpAction.checkSmsCode(smsCode, intentAction_CheckSmsCode, intentAction);
             case R.id.register_begin_getSmsCode:
                 phoneNumber = binding.registerBeginTelephoneNumber
                         .getText().toString();
@@ -135,19 +148,19 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction(), data;
-            if (action.equals(intentAction)){
+            if (!action.equals(intentAction)){
                 return;
             }
             int type = intent.getIntExtra("type", 0);
             switch (type){
                 case intentAction_CheckExistence:
                     data = intent.getStringExtra("data");
+                    Toast.makeText(getContext(), "data=" + data, Toast.LENGTH_SHORT).show();
                     try {
                         JSONObject object = new JSONObject(data);
                         String data1 = object.getString("data");
                         JSONObject object1 = new JSONObject(data1);
                         boolean isExist = object1.getBoolean("existence");
-                        System.out.println(isExist);
 
                         if (isExist){
                             Toast.makeText(getContext(), "该号码已被使用，请重新输入手机号码",

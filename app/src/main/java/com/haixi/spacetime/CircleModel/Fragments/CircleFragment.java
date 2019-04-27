@@ -5,30 +5,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.CircleModel.Components.CircleComponent;
-import com.haixi.spacetime.Others.BasicFragment;
-import com.haixi.spacetime.Others.OkHttpAction;
+import com.haixi.spacetime.Common.Components.BasicFragment;
+import com.haixi.spacetime.Common.Components.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentCircleBinding;
 
-import static com.haixi.spacetime.Others.Settings.setH;
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.getPx;
-import static com.haixi.spacetime.Others.Settings.setHW;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
+import static com.haixi.spacetime.Common.Settings.setH;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
 
 public class CircleFragment extends BasicFragment implements View.OnClickListener {
     private FragmentCircleBinding binding;

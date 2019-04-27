@@ -10,22 +10,18 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.haixi.spacetime.CircleModel.Components.CircleComponent;
 import com.haixi.spacetime.CircleModel.Components.CodeComponent;
-import com.haixi.spacetime.Others.BasicFragment;
+import com.haixi.spacetime.Common.Components.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentCircleMessageBinding;
 
-import static com.haixi.spacetime.Others.Settings.setH;
-import static com.haixi.spacetime.Others.Settings.setHW;
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
-import static com.haixi.spacetime.Others.Settings.setW;
+import static com.haixi.spacetime.Common.Settings.setH;
+import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
 
 @SuppressLint("ValidFragment")
 public class CircleMessageFragment extends BasicFragment implements View.OnClickListener {

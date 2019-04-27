@@ -12,9 +12,9 @@ import android.widget.LinearLayout;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentTagBinding;
 
-import static com.haixi.spacetime.Others.Settings.setH;
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
+import static com.haixi.spacetime.Common.Settings.setH;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
 
 public class TagComponent extends LinearLayout{
     private Context context;

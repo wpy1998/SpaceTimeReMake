@@ -12,16 +12,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Others.BasicFragment;
+import com.haixi.spacetime.Common.Components.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Components.EditUserComponent;
 import com.haixi.spacetime.databinding.FragmentEditUserBinding;
 
-import static com.haixi.spacetime.Others.Settings.setH;
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.getPx;
-import static com.haixi.spacetime.Others.Settings.setHW;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
+import static com.haixi.spacetime.Common.Settings.setH;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.getPx;
+import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
 
 public class EditUserFragment extends BasicFragment implements View.OnClickListener {
     private FragmentEditUserBinding binding;

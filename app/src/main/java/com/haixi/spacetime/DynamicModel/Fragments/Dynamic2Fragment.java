@@ -10,14 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.haixi.spacetime.DynamicModel.Components.TagComponent;
-import com.haixi.spacetime.Others.BasicFragment;
+import com.haixi.spacetime.Common.Components.BasicFragment;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.Components.DynamicContentView;
+import com.haixi.spacetime.Common.Components.DynamicContentView;
 import com.haixi.spacetime.databinding.FragmentDynamic2Binding;
 
 import java.util.List;
 
-import static com.haixi.spacetime.Others.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.setMargin;
 
 @SuppressLint("ValidFragment")
 public class Dynamic2Fragment extends BasicFragment{

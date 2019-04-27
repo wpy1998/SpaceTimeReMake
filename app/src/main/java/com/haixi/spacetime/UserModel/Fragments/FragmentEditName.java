@@ -13,10 +13,10 @@ import android.widget.Toast;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentEditNameBinding;
 
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.getPx;
-import static com.haixi.spacetime.Others.Settings.setHW;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.getPx;
+import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
 
 public class FragmentEditName extends Fragment implements View.OnClickListener {
     private FragmentEditNameBinding binding;

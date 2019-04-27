@@ -2,13 +2,15 @@ package com.haixi.spacetime.CircleModel;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.CircleModel.Fragments.AddCircleFragment;
 import com.haixi.spacetime.CircleModel.Fragments.CircleMessageFragment;
 import com.haixi.spacetime.CircleModel.Fragments.CreateCircleFragment;
-import com.haixi.spacetime.Others.BasicActivity;
+import com.haixi.spacetime.Common.Components.BasicActivity;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ActivityCircleBinding;
 
@@ -16,6 +18,7 @@ import com.haixi.spacetime.databinding.ActivityCircleBinding;
 public class CircleActivity extends BasicActivity {
     private ActivityCircleBinding binding;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

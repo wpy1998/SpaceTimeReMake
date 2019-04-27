@@ -13,17 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Others.BasicFragment;
-import com.haixi.spacetime.Others.Cookies;
-import com.haixi.spacetime.Others.OkHttpAction;
+import com.haixi.spacetime.Common.Components.BasicFragment;
+import com.haixi.spacetime.Common.Entity.Cookies;
+import com.haixi.spacetime.Common.Components.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentResetPasswordBinding;
 
-import static com.haixi.spacetime.Others.Cookies.newPassword;
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.setH;
-import static com.haixi.spacetime.Others.Settings.setHW;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
+import static com.haixi.spacetime.Common.Entity.Cookies.newPassword;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.setH;
+import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
 
 public class ResetPasswordFragment extends BasicFragment implements View.OnClickListener {
     private FragmentResetPasswordBinding binding;

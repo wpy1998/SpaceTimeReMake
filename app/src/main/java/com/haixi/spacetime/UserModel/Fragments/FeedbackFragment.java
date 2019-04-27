@@ -13,15 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.haixi.spacetime.Others.BasicFragment;
-import com.haixi.spacetime.Others.OkHttpAction;
+import com.haixi.spacetime.Common.Components.BasicFragment;
+import com.haixi.spacetime.Common.Components.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentFeedbackBinding;
 
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.getPx;
-import static com.haixi.spacetime.Others.Settings.setHW;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.getPx;
+import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
 
 public class FeedbackFragment extends BasicFragment implements View.OnClickListener {
     private FragmentFeedbackBinding binding;

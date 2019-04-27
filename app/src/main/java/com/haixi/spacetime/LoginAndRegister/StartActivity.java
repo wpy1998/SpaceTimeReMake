@@ -6,27 +6,24 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.LoginAndRegister.Fragments.StartFragment;
 import com.haixi.spacetime.LoginAndRegister.Fragments.WelcomeFragment;
-import com.haixi.spacetime.MainActivity;
-import com.haixi.spacetime.Others.BasicActivity;
-import com.haixi.spacetime.Others.Cookies;
-import com.haixi.spacetime.Others.OkHttpAction;
+import com.haixi.spacetime.Common.Components.BasicActivity;
+import com.haixi.spacetime.Common.Entity.Cookies;
+import com.haixi.spacetime.Common.Components.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ActivityStartBinding;
 
 import org.json.JSONObject;
 
-import static com.haixi.spacetime.Others.Cookies.password;
-import static com.haixi.spacetime.Others.Cookies.phoneNumber;
+import static com.haixi.spacetime.Common.Entity.Cookies.password;
+import static com.haixi.spacetime.Common.Entity.Cookies.phoneNumber;
 
 @Route(path = "/spaceTime/start")
 public class StartActivity extends BasicActivity{

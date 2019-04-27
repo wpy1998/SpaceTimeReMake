@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.haixi.spacetime.Others.BasicFragment;
+import com.haixi.spacetime.Common.Components.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentCreateCircleBinding;
 
-import static com.haixi.spacetime.Others.Settings.setH;
-import static com.haixi.spacetime.Others.Settings.setHW;
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
-import static com.haixi.spacetime.Others.Settings.setW;
+import static com.haixi.spacetime.Common.Settings.setH;
+import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Common.Settings.setW;
 
 public class CreateCircleFragment extends BasicFragment implements View.OnClickListener {
     private FragmentCreateCircleBinding binding;

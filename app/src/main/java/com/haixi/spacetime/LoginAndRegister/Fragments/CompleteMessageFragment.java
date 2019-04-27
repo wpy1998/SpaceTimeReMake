@@ -21,20 +21,20 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Others.Cookies;
-import com.haixi.spacetime.Others.FileOperation;
-import com.haixi.spacetime.Others.OkHttpAction;
+import com.haixi.spacetime.Common.Entity.Cookies;
+import com.haixi.spacetime.Common.Others.FileOperation;
+import com.haixi.spacetime.Common.Components.OkHttpAction;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.Others.BasicFragment;
+import com.haixi.spacetime.Common.Components.BasicFragment;
 import com.haixi.spacetime.databinding.FragmentCompleteMessageBinding;
 
 import org.json.JSONObject;
 
 import java.util.Calendar;
 
-import static com.haixi.spacetime.Others.Cookies.birthday;
-import static com.haixi.spacetime.Others.Cookies.setMessage;
-import static com.haixi.spacetime.Others.Cookies.userName;
+import static com.haixi.spacetime.Common.Entity.Cookies.birthday;
+import static com.haixi.spacetime.Common.Entity.Cookies.setMessage;
+import static com.haixi.spacetime.Common.Entity.Cookies.userName;
 
 public class CompleteMessageFragment extends BasicFragment implements View.OnClickListener {
     private FragmentCompleteMessageBinding binding;

@@ -1,10 +1,12 @@
 package com.haixi.spacetime.UserModel.Fragments;
 
+import android.annotation.SuppressLint;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,16 +21,18 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.DynamicModel.Fragments.Dynamic2Fragment;
-import com.haixi.spacetime.Others.BasicFragment;
+import com.haixi.spacetime.Common.Components.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentUserBinding;
 
-import static com.haixi.spacetime.Others.Settings.setMargin;
-import static com.haixi.spacetime.Others.Settings.getPx;
-import static com.haixi.spacetime.Others.Cookies.ownerId;
-import static com.haixi.spacetime.Others.Settings.setHW;
-import static com.haixi.spacetime.Others.Settings.setTextSize;
+import static com.haixi.spacetime.Common.Settings.setH;
+import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Common.Settings.getPx;
+import static com.haixi.spacetime.Common.Entity.Cookies.ownerId;
+import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Common.Settings.setTextSize;
 
+@SuppressLint("ValidFragment")
 public class UserFragment extends BasicFragment implements View.OnClickListener {
     private FragmentUserBinding binding;
 
@@ -41,6 +45,16 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
 
     private int userId = 0;
     private boolean isFollow;
+
+    public UserFragment(){
+        userId = ownerId;
+    }
+
+    public UserFragment(int userId){
+        this.userId = userId;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
@@ -134,7 +148,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         setHW(gender, 24, 24);
         setMargin(gender, 0, 25, 0, 69, false);
 
-        setHW(ageLocation, 22, 73);
+        setH(ageLocation, 22);
         setMargin(ageLocation, 0, 0, 0, 31, false);
         setTextSize(ageLocation, 16);
 
