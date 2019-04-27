@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.CircleModel.Fragments.CircleFragment;
-import com.haixi.spacetime.Common.Components.BasicActivity;
+import com.haixi.spacetime.Common.BasicActivity;
 import com.haixi.spacetime.DynamicModel.Fragments.DynamicFragment;
 import com.haixi.spacetime.UserModel.Fragments.UserFragment;
 import com.haixi.spacetime.databinding.ActivityMainBinding;

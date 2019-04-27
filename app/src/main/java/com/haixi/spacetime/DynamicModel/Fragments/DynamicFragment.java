@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.Others.Adapter.FragmentAdapter;
-import com.haixi.spacetime.Common.Components.BasicFragment;
+import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentDynamicBinding;
 
@@ -31,7 +31,7 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
     private List<Fragment> fragments;
     private ViewPager viewPager;
     private Fragment collectionF;
-    private Dynamic2Fragment recommendF;
+    private SocialFragment recommendF;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,8 +41,8 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
 
         viewPager = binding.getRoot().findViewById(R.id.fragment_topic_viewPager);
         fragments = new ArrayList<Fragment>();
-        recommendF = new Dynamic2Fragment(true);
-        collectionF = new Fragment();
+        recommendF = new SocialFragment();
+        collectionF = new FollowFragment();
         fragments.add(recommendF);
         fragments.add(collectionF);
         fragmentAdapter = new FragmentAdapter(

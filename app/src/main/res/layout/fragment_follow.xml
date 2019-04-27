@@ -1,13 +1,36 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <HorizontalScrollView
-            android:scrollbars="none"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/fragmentFollow_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <HorizontalScrollView
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/fragmentFollow_tagView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        </HorizontalScrollView>
-    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/fragmentFollow_mainView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </layout>

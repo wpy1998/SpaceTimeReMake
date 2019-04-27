@@ -1,6 +1,9 @@
-package com.haixi.spacetime.Common.Components;
+package com.haixi.spacetime.DynamicModel.Components;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.haixi.spacetime.DynamicModel.Entity.Dynamic;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
 
+import java.util.List;
+
+import static com.haixi.spacetime.Common.Entity.Cookies.ownerId;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
@@ -24,17 +31,16 @@ public class DynamicContentView extends LinearLayout
     private LinearLayout titleView;
     private TextView userName, publishTime;
     private ImageView userImage;
-
     private boolean isLike = false;
     private int likeNumber, commentNumber;
 
-    public DynamicContentView(Context context, boolean isUserView){
+    public Dynamic dynamic;
+
+    public DynamicContentView(Context context, Dynamic dynamic){
         super(context);
+        this.dynamic = dynamic;
         init(context);
-        if (isUserView){
-            userName.setText("聂海东");
-            publishTime.setText("1天前");
-        }else {
+        if (dynamic.getUserId() == ownerId){
             binding.dynamicContentViewMainView.removeView(titleView);
         }
     }
@@ -43,10 +49,6 @@ public class DynamicContentView extends LinearLayout
         this.context = context;
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.dynamic_content_view, this, true);
-        binding.dynamicContentViewText.setText("每当我为世界的现状感到沮丧时，" +
-                "我就会想到伦敦希思罗机场的接机大厅。很多人都开始觉得，我们生活在" +
-                "一个充满贪婪与憎恨的世界里，但我却不这么认为。");
-
         titleView = binding.getRoot()
                 .findViewById(R.id.dynamicContentView_titleView);
         userImage = binding.getRoot()
@@ -56,9 +58,18 @@ public class DynamicContentView extends LinearLayout
         publishTime = binding.getRoot()
                 .findViewById(R.id.dynamicContentView_publishTime);
         drawView();
-        addTag("大社联");
+
+        for (String tag: dynamic.tags){
+            addTag(tag);
+        }
+        userImage.setImageResource(dynamic.imageId);
+        userName.setText(dynamic.name);
+        binding.dynamicContentViewText.setText(dynamic.content);
+        publishTime.setText("1天前");
+
         binding.dynamicContentViewLike.setOnClickListener(this);
         binding.dynamicContentViewComment.setOnClickListener(this);
+        binding.dynamicContentViewText.setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +89,8 @@ public class DynamicContentView extends LinearLayout
                     likeNumber++;
                     binding.dynamicContentViewLikeNumber.setText("" + likeNumber);
                 }
+                break;
+            case R.id.dynamicContentView_text:
                 break;
             default:
                 Toast.makeText(getContext(), "waiting for coming true",

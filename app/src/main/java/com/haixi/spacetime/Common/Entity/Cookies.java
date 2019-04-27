@@ -3,7 +3,7 @@ package com.haixi.spacetime.Common.Entity;
 import org.json.JSONObject;
 
 public class Cookies {
-    public static int ownerId = 0;
+    public static int ownerId = -1;
     public static String token = null;
     public static String phoneNumber = null;
     public static String gender = null;

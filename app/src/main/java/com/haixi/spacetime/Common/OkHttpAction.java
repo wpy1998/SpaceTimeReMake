@@ -1,4 +1,4 @@
-package com.haixi.spacetime.Common.Components;
+package com.haixi.spacetime.Common;
 
 import android.content.Context;
 import android.content.Intent;

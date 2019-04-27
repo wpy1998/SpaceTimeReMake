@@ -23,9 +23,9 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.Entity.Cookies;
 import com.haixi.spacetime.Common.Others.FileOperation;
-import com.haixi.spacetime.Common.Components.OkHttpAction;
+import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.Common.Components.BasicFragment;
+import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.databinding.FragmentCompleteMessageBinding;
 
 import org.json.JSONObject;

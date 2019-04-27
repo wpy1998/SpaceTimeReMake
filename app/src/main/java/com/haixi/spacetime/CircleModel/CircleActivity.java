@@ -10,7 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.CircleModel.Fragments.AddCircleFragment;
 import com.haixi.spacetime.CircleModel.Fragments.CircleMessageFragment;
 import com.haixi.spacetime.CircleModel.Fragments.CreateCircleFragment;
-import com.haixi.spacetime.Common.Components.BasicActivity;
+import com.haixi.spacetime.Common.BasicActivity;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ActivityCircleBinding;
 

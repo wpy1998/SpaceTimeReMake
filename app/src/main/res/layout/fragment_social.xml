@@ -11,7 +11,7 @@
             android:layout_height="match_parent">
             <LinearLayout
                 android:orientation="vertical"
-                android:id="@+id/fragmentDynamic2_top"
+                android:id="@+id/fragmentSocial_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <HorizontalScrollView
@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content">
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:id="@+id/fragmentDynamic2_tagView"
+                    android:id="@+id/fragmentSocial_tagView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -28,7 +28,7 @@
             </HorizontalScrollView>
             <LinearLayout
                 android:orientation="vertical"
-                android:id="@+id/fragmentDynamic2_mainView"
+                android:id="@+id/fragmentSocial_mainView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </LinearLayout>

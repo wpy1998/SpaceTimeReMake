@@ -14,9 +14,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.LoginAndRegister.Fragments.StartFragment;
 import com.haixi.spacetime.LoginAndRegister.Fragments.WelcomeFragment;
-import com.haixi.spacetime.Common.Components.BasicActivity;
+import com.haixi.spacetime.Common.BasicActivity;
 import com.haixi.spacetime.Common.Entity.Cookies;
-import com.haixi.spacetime.Common.Components.OkHttpAction;
+import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ActivityStartBinding;
 

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.zxing.activity.CaptureActivity;
 import com.google.zxing.util.Constant;
-import com.haixi.spacetime.Common.Components.BasicActivity;
+import com.haixi.spacetime.Common.BasicActivity;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ActivityCodeBinding;
 

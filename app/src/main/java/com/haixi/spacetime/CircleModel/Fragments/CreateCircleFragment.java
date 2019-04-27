@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.haixi.spacetime.Common.Components.BasicFragment;
+import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentCreateCircleBinding;
 

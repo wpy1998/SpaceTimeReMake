@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentAddDynamicBinding;
 
@@ -20,7 +21,7 @@ import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
 
-public class FragmentAddDynamic extends Fragment implements View.OnClickListener {
+public class AddDynamicFragment extends BasicFragment implements View.OnClickListener {
     private FragmentAddDynamicBinding binding;
 
     private ImageView back;

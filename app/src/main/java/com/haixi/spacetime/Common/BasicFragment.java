@@ -1,4 +1,4 @@
-package com.haixi.spacetime.Common.Components;
+package com.haixi.spacetime.Common;
 
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;

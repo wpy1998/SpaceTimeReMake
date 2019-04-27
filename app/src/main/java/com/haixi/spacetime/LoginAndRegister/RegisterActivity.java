@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.haixi.spacetime.Common.Components.BasicActivity;
+import com.haixi.spacetime.Common.BasicActivity;
 import com.haixi.spacetime.LoginAndRegister.Fragments.CompleteMessageFragment;
 import com.haixi.spacetime.LoginAndRegister.Fragments.RegisterBeginFragment;
 import com.haixi.spacetime.R;

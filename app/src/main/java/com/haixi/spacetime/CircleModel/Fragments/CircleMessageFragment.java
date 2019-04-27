@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.haixi.spacetime.CircleModel.Components.CircleComponent;
 import com.haixi.spacetime.CircleModel.Components.CodeComponent;
-import com.haixi.spacetime.Common.Components.BasicFragment;
+import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentCircleMessageBinding;
 

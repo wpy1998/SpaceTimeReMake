@@ -58,7 +58,7 @@
             android:layout_centerInParent="true"
             fab:fab_labelsPosition="left"
             fab:fab_labelStyle="@style/menu_labels_style"
-            app:layout_behavior=".Common.Behavior.ScrollAwareFABBehavior">
+            app:layout_behavior="com.haixi.spacetime.Common.Behavior.ScrollAwareFABBehavior">
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:src="@drawable/ic_write"

@@ -20,8 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.DynamicModel.Fragments.Dynamic2Fragment;
-import com.haixi.spacetime.Common.Components.BasicFragment;
+import com.haixi.spacetime.Common.Entity.User;
+import com.haixi.spacetime.DynamicModel.Fragments.SocialFragment;
+import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentUserBinding;
 
@@ -40,7 +41,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     private TextView dynamic, message, name, ageLocation;
     private LinearLayout userView, chooseView;
     private ImageView image, gender;
-    private Dynamic2Fragment userDynamic;
+    private SocialFragment userDynamic;
     private MessageFragment userMessage;
 
     private int userId = 0;
@@ -72,7 +73,9 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         image = binding.getRoot().findViewById(R.id.fragment_user_image);
         gender = binding.getRoot().findViewById(R.id.fragment_user_gender);
 
-        userDynamic = new Dynamic2Fragment(false);
+        User user = new User();
+        user.userId = ownerId;
+        userDynamic = new SocialFragment(user);
         userMessage = new MessageFragment();
         if (userId != ownerId){
             setting.setText("关注");

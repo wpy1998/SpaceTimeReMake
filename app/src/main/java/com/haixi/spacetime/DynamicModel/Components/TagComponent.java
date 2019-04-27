@@ -20,7 +20,7 @@ public class TagComponent extends LinearLayout{
     private Context context;
     private ComponentTagBinding binding;
     private boolean isChoosen;
-    private String intentAction = "com.haixi.spacetime.DynamicModel.Components.TagComponent";
+    private String intentAction;
     private IntentFilter intentFilter;
     private ControlBroadcastReceiver controlBroadcastReceiver;
 
@@ -29,7 +29,9 @@ public class TagComponent extends LinearLayout{
     public TagComponent(Context context, String name) {
         super(context);
         this.context = context;
-        initLinearLayout(context);
+        this.context = context;
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context),
+                R.layout.component_tag, this, true);
         drawLinearLayout();
         this.name = name;
         binding.tagViewName.setText(name);
@@ -40,36 +42,32 @@ public class TagComponent extends LinearLayout{
 
     @Override
     protected void onDetachedFromWindow() {
-        getContext().unregisterReceiver(controlBroadcastReceiver);
+        if (controlBroadcastReceiver != null)
+            getContext().unregisterReceiver(controlBroadcastReceiver);
         super.onDetachedFromWindow();
     }
 
-    private void initLinearLayout(Context context){
-        this.context = context;
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context),
-                R.layout.component_tag, this, true);
+    public void setIntent(String intentAction){
+        this.intentAction = intentAction;
+        if (controlBroadcastReceiver != null)
+            getContext().unregisterReceiver(controlBroadcastReceiver);
+        registerControlReceiver();
+    }
 
+    private void registerControlReceiver(){
         intentFilter = new IntentFilter();
         controlBroadcastReceiver = new ControlBroadcastReceiver();
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(controlBroadcastReceiver, intentFilter);
 
-        binding.tagViewName.setOnClickListener(new OnClickListener() {
+        this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(intentAction);
-                intent.putExtra("name", name);
+                intent.putExtra("tag", name);
                 getContext().sendBroadcast(intent);
             }
         });
-    }
-
-    private void drawLinearLayout(){
-        setMargin(binding.tagViewMainView, 6, 10, 6, 10, false);
-
-        setH(binding.tagViewName, 40);
-        setMargin(binding.tagViewName, 0, 0, 0, 0, true);
-        setTextSize(binding.tagViewName, 16);
     }
 
     public void refresh(){
@@ -83,12 +81,11 @@ public class TagComponent extends LinearLayout{
     }
 
     private class ControlBroadcastReceiver extends BroadcastReceiver{
-
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(intentAction)){
-                String data = intent.getStringExtra("name");
+                String data = intent.getStringExtra("tag");
                 if (name.equals(data)){
                     if (!isChoosen) refresh();
                 }else {
@@ -96,5 +93,13 @@ public class TagComponent extends LinearLayout{
                 }
             }
         }
+    }
+
+    private void drawLinearLayout(){
+        setMargin(binding.tagViewMainView, 6, 10, 6, 10, false);
+
+        setH(binding.tagViewName, 40);
+        setMargin(binding.tagViewName, 0, 0, 0, 0, true);
+        setTextSize(binding.tagViewName, 16);
     }
 }

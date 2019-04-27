@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.haixi.spacetime.Common.Components.BasicActivity;
+import com.haixi.spacetime.Common.BasicActivity;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Fragments.FeedbackFragment;
 import com.haixi.spacetime.UserModel.Fragments.FragmentEditName;

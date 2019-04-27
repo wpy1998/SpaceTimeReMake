@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.CircleModel.Components.CircleComponent;
-import com.haixi.spacetime.Common.Components.BasicFragment;
-import com.haixi.spacetime.Common.Components.OkHttpAction;
+import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentCircleBinding;
 

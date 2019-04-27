@@ -16,14 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Common.Components.BasicFragment;
-import com.haixi.spacetime.Common.Components.OkHttpAction;
+import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Components.ChooseComponent;
 import com.haixi.spacetime.UserModel.Components.TurnComponent;
 import com.haixi.spacetime.databinding.FragmentSettingBinding;
 
-import static com.haixi.spacetime.Common.Components.BasicActivity.closeCUT;
+import static com.haixi.spacetime.Common.BasicActivity.closeCUT;
 import static com.haixi.spacetime.Common.Entity.Cookies.initCookies;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setHW;
