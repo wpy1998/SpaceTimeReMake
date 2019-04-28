@@ -3,7 +3,9 @@ package com.haixi.spacetime.LoginAndRegister;
 import android.Manifest;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.Common.BasicActivity;
@@ -28,11 +30,13 @@ public class LoginActivity extends BasicActivity {
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.MODIFY_AUDIO_SETTINGS};
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=DataBindingUtil.setContentView(this,R.layout.activity_login);
         activityList0.add(this);
+        setStatusBarColor(this, R.color.colorWhite);
         Intent intentFront = getIntent();
         choosePath(intentFront.getStringExtra("path"));
     }

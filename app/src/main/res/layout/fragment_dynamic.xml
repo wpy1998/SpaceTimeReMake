@@ -1,79 +1,60 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/tools">
-    <android.support.design.widget.CoordinatorLayout
+    <FrameLayout
+        android:id="@+id/fragmentDynamic_frameLayout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <FrameLayout
-            android:id="@+id/fragmentDynamic_frameLayout"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBackGround">
+        android:layout_height="match_parent"
+        android:background="@color/colorBackGround">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/fragment_topic_viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v4.view.ViewPager>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragment_topic_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v4.view.ViewPager>
+        <LinearLayout
+            android:id="@+id/fragmentDynamic_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="@color/colorWhite">
             <LinearLayout
-                android:id="@+id/fragmentDynamic_title"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
                 android:orientation="horizontal"
-                android:background="@color/colorWhite">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:text="社交圈"
-                        android:textColor="#000000"
-                        android:textStyle="bold"
-                        android:id="@+id/fragmentDynamic_socialCircle"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:text="关注"
-                        android:textColor="#000000"
-                        android:textStyle="bold"
-                        android:id="@+id/fragmentDynamic_follow"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <TextView
+                    android:text="社交圈"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:id="@+id/fragmentDynamic_socialCircle"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="关注"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:id="@+id/fragmentDynamic_follow"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
-        </FrameLayout>
-
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/fragmentDynamic_fabMenu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom|end"
-            android:layout_centerInParent="true"
-            fab:fab_labelsPosition="left"
-            fab:fab_labelStyle="@style/menu_labels_style"
-            app:layout_behavior="com.haixi.spacetime.Common.Behavior.ScrollAwareFABBehavior">
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:src="@drawable/ic_write"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <TextView
                 android:id="@+id/fragmentDynamic_add"
-                app:fab_title="发布"
-                app:fabSize="mini"/>
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:src="@drawable/ic_share"
+                android:background="@drawable/background_circle_blue"
+                android:textColor="@color/colorWhite"
+                android:text="发布"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/fragmentDynamic_share"
-                app:fab_title="分享"
-                app:fabSize="mini"/>
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
-    </android.support.design.widget.CoordinatorLayout>
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </FrameLayout>
 </layout>

@@ -1,9 +1,6 @@
 package com.haixi.spacetime.DynamicModel.Components;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +12,6 @@ import android.widget.Toast;
 import com.haixi.spacetime.DynamicModel.Entity.Dynamic;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
-
-import java.util.List;
 
 import static com.haixi.spacetime.Common.Entity.Cookies.ownerId;
 import static com.haixi.spacetime.Common.Settings.setMargin;
@@ -150,11 +145,6 @@ public class DynamicContentView extends LinearLayout
         setMargin(binding.dynamicContentViewCommentNumber, 0, 13,
                 20, 20, true);
         setTextSize(binding.dynamicContentViewCommentNumber, 14);
-
-        binding.dynamicContentViewTime.getLayoutParams().height = getPx(20);
-        setMargin(binding.dynamicContentViewTime, 0, 13, 24,
-                20, true);
-        setTextSize(binding.dynamicContentViewTime, 14);
 
         setMargin(binding.dynamicContentViewHorizontalScrollView, 20, 0,
                 20, 0, true);

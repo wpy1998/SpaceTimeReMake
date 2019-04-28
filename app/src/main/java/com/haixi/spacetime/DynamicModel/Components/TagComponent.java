@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.haixi.spacetime.DynamicModel.Entity.DynamicCookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentTagBinding;
 
@@ -47,6 +48,10 @@ public class TagComponent extends LinearLayout{
         super.onDetachedFromWindow();
     }
 
+    public String getName(){
+        return name;
+    }
+
     public void setIntent(String intentAction){
         this.intentAction = intentAction;
         if (controlBroadcastReceiver != null)
@@ -63,8 +68,9 @@ public class TagComponent extends LinearLayout{
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                DynamicCookies.currentTag = name;
                 Intent intent = new Intent(intentAction);
-                intent.putExtra("tag", name);
+                intent.putExtra("name", name);
                 getContext().sendBroadcast(intent);
             }
         });
@@ -85,7 +91,7 @@ public class TagComponent extends LinearLayout{
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(intentAction)){
-                String data = intent.getStringExtra("tag");
+                String data = intent.getStringExtra("name");
                 if (name.equals(data)){
                     if (!isChoosen) refresh();
                 }else {

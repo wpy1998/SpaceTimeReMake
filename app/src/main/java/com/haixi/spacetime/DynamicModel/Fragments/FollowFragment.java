@@ -1,8 +1,5 @@
 package com.haixi.spacetime.DynamicModel.Fragments;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.DynamicModel.Components.DynamicContentView;
-import com.haixi.spacetime.DynamicModel.Components.TagComponent;
+import com.haixi.spacetime.DynamicModel.Components.UserComponent;
 import com.haixi.spacetime.DynamicModel.Entity.Dynamic;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentFollowBinding;
@@ -87,26 +84,14 @@ public class FollowFragment extends BasicFragment {
         dynamics.add(dynamic6);
         addDynamicContent(dynamic6);
 
-        TagComponent tagComponent = new TagComponent(getContext(), "全部");
-        tagComponent.setIntent(intentAction);
-        TagComponent tagComponent1 = new TagComponent(getContext(), s1);
-        tagComponent1.setIntent(intentAction);
-        TagComponent tagComponent2 = new TagComponent(getContext(), s2);
-        tagComponent2.setIntent(intentAction);
-        TagComponent tagComponent3 = new TagComponent(getContext(), s3);
-        tagComponent3.setIntent(intentAction);
-        TagComponent tagComponent4 = new TagComponent(getContext(), s4);
-        tagComponent3.setIntent(intentAction);
-        TagComponent tagComponent5 = new TagComponent(getContext(), s5);
-        tagComponent5.setIntent(intentAction);
-        tagComponent.refresh();
-
-        binding.fragmentFollowTagView.addView(tagComponent);
-        binding.fragmentFollowTagView.addView(tagComponent1);
-        binding.fragmentFollowTagView.addView(tagComponent2);
-        binding.fragmentFollowTagView.addView(tagComponent3);
-        binding.fragmentFollowTagView.addView(tagComponent4);
-        binding.fragmentFollowTagView.addView(tagComponent5);
+        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
+        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
+        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
+        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
+        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
+        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
+        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
+        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
         return binding.getRoot();
     }
 

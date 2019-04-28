@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.Others.Adapter.FragmentAdapter;
 import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.DynamicModel.Entity.DynamicCookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentDynamicBinding;
 
@@ -38,6 +39,7 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dynamic,
                 null, false);
+        DynamicCookies.initData();
 
         viewPager = binding.getRoot().findViewById(R.id.fragment_topic_viewPager);
         fragments = new ArrayList<Fragment>();
@@ -57,8 +59,6 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
 
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(getContext(), "position = " + position
-                        , Toast.LENGTH_SHORT).show();
                 if (position == 0){
                     binding.fragmentDynamicSocialCircle.performClick();
                 }else if (position == 1){
@@ -76,7 +76,6 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
         binding.fragmentDynamicSocialCircle.setOnClickListener(this);
         binding.fragmentDynamicFollow.setOnClickListener(this);
         binding.fragmentDynamicAdd.setOnClickListener(this);
-        binding.fragmentDynamicShare.setOnClickListener(this);
 
         binding.fragmentDynamicSocialCircle.performClick();
 
@@ -118,5 +117,9 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
         setH(binding.fragmentDynamicFollow, 41);
         setTextSize(binding.fragmentDynamicFollow, 20);
         setMargin(binding.fragmentDynamicFollow, 0, 0, 0, 2, false);
+
+        setH(binding.fragmentDynamicAdd, 31);
+        setMargin(binding.fragmentDynamicAdd, 5, 5, 5, 5, true);
+        setTextSize(binding.fragmentDynamicAdd, 17);
     }
 }

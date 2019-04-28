@@ -1,13 +1,20 @@
 package com.haixi.spacetime.Common;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.haixi.spacetime.R;
 
@@ -20,17 +27,9 @@ public class BasicActivity extends AppCompatActivity {
     public static List<Activity> activityList0 = new ArrayList<Activity>();
     public static List<Activity> activityList1 = new ArrayList<Activity>();
     public Fragment originFragment;
+    public String fragmentName = null;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            View decorView = getWindow().getDecorView();
-//            int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-//            decorView.setSystemUiVisibility(option);
-//            getWindow().setNavigationBarColor(Color.TRANSPARENT);
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        }
         ActionBar actionBar=getSupportActionBar();
         if (actionBar.isShowing()){
             actionBar.hide();
@@ -41,19 +40,24 @@ public class BasicActivity extends AppCompatActivity {
         update(this);
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-//        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
-//            View decorView = getWindow().getDecorView();
-//            decorView.setSystemUiVisibility(
-//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-//        }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setStatusBarColor(Activity activity, int statusColor) {
+        Window window = activity.getWindow();
+        //取消状态栏透明
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //添加Flag把状态栏设为可绘制模式
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        //设置状态栏颜色
+        window.setStatusBarColor(getResources().getColor(statusColor));
+        //设置系统状态栏处于可见状态
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        //让view不根据系统窗口来调整自己的布局
+        ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
+        View mChildView = mContentView.getChildAt(0);
+        if (mChildView != null) {
+            ViewCompat.setFitsSystemWindows(mChildView, false);
+            ViewCompat.requestApplyInsets(mChildView);
+        }
     }
 
     @Override

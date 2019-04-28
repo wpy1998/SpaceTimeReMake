@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
                 <ImageView
-                    android:id="@+id/main_conversation"
+                    android:id="@+id/main_circle"
                     android:src="@drawable/ic_talk"
                     android:layout_width="35dp"
                     android:layout_height="35dp"

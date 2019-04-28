@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -35,11 +37,14 @@ public class StartActivity extends BasicActivity{
     private final String intentAction = "com.haixi.spacetime.LoginAndRegister.StartActivity";
     private final int intentAction_login = 1;
     private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_start);
         activityList0.add(this);
+        setStatusBarColor(this, R.color.colorWhite);
 
         Intent intentFront = getIntent();
         int type = intentFront.getIntExtra("type", 0);

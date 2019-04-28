@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.haixi.spacetime.CircleImageView;
 import com.haixi.spacetime.Common.Entity.User;
 import com.haixi.spacetime.DynamicModel.Fragments.SocialFragment;
 import com.haixi.spacetime.Common.BasicFragment;
@@ -40,7 +41,8 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     private Button setting;
     private TextView dynamic, message, name, ageLocation;
     private LinearLayout userView, chooseView;
-    private ImageView image, gender;
+    private ImageView gender;
+    private CircleImageView image;
     private SocialFragment userDynamic;
     private MessageFragment userMessage;
 
@@ -82,7 +84,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
             isFollow = false;
         }
 
-        init();
+        drawFragment();
         setting.setOnClickListener(this);
         dynamic.setOnClickListener(this);
         message.setOnClickListener(this);
@@ -137,7 +139,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         }
     }
 
-    private void init() {
+    private void drawFragment() {
         userView.getLayoutParams().height = getPx(118);
         chooseView.getLayoutParams().height = getPx(51);
 

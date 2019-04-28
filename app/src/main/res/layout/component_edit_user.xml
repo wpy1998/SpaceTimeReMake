@@ -1,4 +1,5 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -24,11 +25,11 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <ImageView
+            <com.haixi.spacetime.CircleImageView
                 android:id="@+id/componentEditUser_image"
                 android:src="@drawable/jack"
-                android:layout_width="60dp"
-                android:layout_height="60dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <ImageView
                 android:src="@drawable/next"
                 android:id="@+id/componentEditUser_next"

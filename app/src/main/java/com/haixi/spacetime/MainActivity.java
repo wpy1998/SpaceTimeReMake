@@ -1,7 +1,12 @@
 package com.haixi.spacetime;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -11,23 +16,28 @@ import com.haixi.spacetime.DynamicModel.Fragments.DynamicFragment;
 import com.haixi.spacetime.UserModel.Fragments.UserFragment;
 import com.haixi.spacetime.databinding.ActivityMainBinding;
 
+import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
 
 @Route(path = "/spaceTime/main")
 public class MainActivity extends BasicActivity implements View.OnClickListener {
     private ActivityMainBinding binding;
+    Fragment browser, personal, circle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-
         closeL_R_W();
+        browser = new DynamicFragment();
+        circle = new CircleFragment();
+        personal = new UserFragment();
+        originFragment = browser;
+        replaceFragment(R.id.main_fragment);
         activityList1.add(this);
         drawActivity();
 
-        binding.mainConversation.setOnClickListener(this);
+        binding.mainCircle.setOnClickListener(this);
         binding.mainPersonal.setOnClickListener(this);
         binding.mainBrowser.setOnClickListener(this);
         binding.mainB1.setOnClickListener(this);
@@ -37,32 +47,53 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         binding.mainBrowser.performClick();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    void switchFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragment != originFragment){
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            if (!fragment.isAdded()){
+                transaction.hide(originFragment).add(R.id.main_fragment,fragment);
+            }else {
+                transaction.hide(originFragment).show(fragment);
+            }
+            transaction.commitAllowingStateLoss();
+        }
+        originFragment = fragment;
+        if (originFragment != browser){
+            setStatusBarColor(this, R.color.colorBlue);
+        }else {
+            setStatusBarColor(this, R.color.colorWhite);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.main_conversation:
-                binding.mainConversation.setImageResource(R.drawable.ic_talk_lighting);
+            case R.id.main_circle:
+                fragmentName = "circle";
+                binding.mainCircle.setImageResource(R.drawable.ic_talk_lighting);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                originFragment = new CircleFragment();
-                replaceFragment(R.id.main_fragment);
+                switchFragment(circle);
                 break;
             case R.id.main_personal:
-                binding.mainConversation.setImageResource(R.drawable.ic_talk);
+                fragmentName = "personal";
+                binding.mainCircle.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person_lighting);
-                originFragment = new UserFragment();
-                replaceFragment(R.id.main_fragment);
+                switchFragment(personal);
                 break;
             case R.id.main_browser:
-                binding.mainConversation.setImageResource(R.drawable.ic_talk);
+                fragmentName = "browser";
+                binding.mainCircle.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth_lighting);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                originFragment = new DynamicFragment();
-                replaceFragment(R.id.main_fragment);
+                switchFragment(browser);
                 break;
             case R.id.main_b1:
-                binding.mainConversation.performClick();
+                binding.mainCircle.performClick();
                 break;
             case R.id.main_b2:
                 binding.mainBrowser.performClick();
@@ -76,17 +107,17 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
     }
 
     private void drawActivity(){
-        binding.mainPartView.getLayoutParams().height = getPx(40);
+        setH(binding.mainPartView, 50);
 
         setHW(binding.mainBrowser, 30, 30);
-        setMargin(binding.mainBrowser, 5, 5, 5, 5, true);
+        setMargin(binding.mainBrowser, 10, 10, 10, 10, true);
 
-        setHW(binding.mainConversation, 30, 30);
-        setMargin(binding.mainConversation, 5, 5, 5, 5,
+        setHW(binding.mainCircle, 30, 30);
+        setMargin(binding.mainCircle, 10, 10, 10, 10,
                 true);
 
         setHW(binding.mainPersonal, 30, 30);
-        setMargin(binding.mainPersonal, 5, 5, 5, 5,
+        setMargin(binding.mainPersonal, 10, 10, 10, 10,
                 true);
     }
 }
