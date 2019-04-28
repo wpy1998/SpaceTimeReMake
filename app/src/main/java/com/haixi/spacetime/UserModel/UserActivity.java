@@ -8,12 +8,14 @@ import android.support.annotation.RequiresApi;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.Common.BasicActivity;
+import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Fragments.FeedbackFragment;
 import com.haixi.spacetime.UserModel.Fragments.FragmentEditName;
 import com.haixi.spacetime.UserModel.Fragments.FragmentEditSign;
 import com.haixi.spacetime.UserModel.Fragments.EditUserFragment;
 import com.haixi.spacetime.UserModel.Fragments.SettingFragment;
+import com.haixi.spacetime.UserModel.Fragments.UserFragment;
 import com.haixi.spacetime.databinding.ActivityUserBinding;
 
 @Route(path = "/spaceTime/user")
@@ -30,10 +32,10 @@ public class UserActivity extends BasicActivity {
 
         Intent intentFront = getIntent();
         String path = intentFront.getStringExtra("path");
-        choosePath(path);
+        choosePath(path, intentFront);
     }
 
-    private void choosePath(String path) {
+    private void choosePath(String path, Intent intent) {
         switch (path){
             case "editUserMessage":
                 originFragment = new EditUserFragment();
@@ -53,6 +55,13 @@ public class UserActivity extends BasicActivity {
                 break;
             case "editSign":
                 originFragment = new FragmentEditSign();
+                replaceFragment(R.id.user_frameLayout);
+                break;
+            case "user":
+                int userId = intent.getIntExtra("userId", 0);
+                User user = new User();
+                user.userId = userId;
+                originFragment = new UserFragment(user);
                 replaceFragment(R.id.user_frameLayout);
                 break;
             default:

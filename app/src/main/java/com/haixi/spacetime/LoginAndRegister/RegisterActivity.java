@@ -20,7 +20,7 @@ public class RegisterActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         activityList0.add(this);
-        setStatusBarColor(this, R.color.colorWhite);
+        setStatusBarColor(this, R.color.colorWhite, true);
         Intent intentFront = getIntent();
         choosePath(intentFront.getStringExtra("path"));
     }

@@ -17,15 +17,15 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.LoginAndRegister.Fragments.StartFragment;
 import com.haixi.spacetime.LoginAndRegister.Fragments.WelcomeFragment;
 import com.haixi.spacetime.Common.BasicActivity;
-import com.haixi.spacetime.Common.Entity.Cookies;
+import com.haixi.spacetime.Entity.Cookies;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ActivityStartBinding;
 
 import org.json.JSONObject;
 
-import static com.haixi.spacetime.Common.Entity.Cookies.password;
-import static com.haixi.spacetime.Common.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Entity.Cookies.password;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 
 @Route(path = "/spaceTime/start")
 public class StartActivity extends BasicActivity{
@@ -44,7 +44,7 @@ public class StartActivity extends BasicActivity{
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_start);
         activityList0.add(this);
-        setStatusBarColor(this, R.color.colorWhite);
+        setStatusBarColor(this, R.color.colorWhite, true);
 
         Intent intentFront = getIntent();
         int type = intentFront.getIntExtra("type", 0);

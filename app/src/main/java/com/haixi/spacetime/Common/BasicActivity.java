@@ -41,7 +41,7 @@ public class BasicActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setStatusBarColor(Activity activity, int statusColor) {
+    public void setStatusBarColor(Activity activity, int statusColor, boolean isDark) {
         Window window = activity.getWindow();
         //取消状态栏透明
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -52,6 +52,8 @@ public class BasicActivity extends AppCompatActivity {
         //设置系统状态栏处于可见状态
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         //让view不根据系统窗口来调整自己的布局
+        if (isDark)
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
         View mChildView = mContentView.getChildAt(0);
         if (mChildView != null) {

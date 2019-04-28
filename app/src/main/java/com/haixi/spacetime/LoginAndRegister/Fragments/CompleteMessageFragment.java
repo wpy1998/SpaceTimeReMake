@@ -21,7 +21,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Common.Entity.Cookies;
+import com.haixi.spacetime.Entity.Cookies;
 import com.haixi.spacetime.Common.Others.FileOperation;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.R;
@@ -32,9 +32,8 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
-import static com.haixi.spacetime.Common.Entity.Cookies.birthday;
-import static com.haixi.spacetime.Common.Entity.Cookies.setMessage;
-import static com.haixi.spacetime.Common.Entity.Cookies.userName;
+import static com.haixi.spacetime.Entity.Cookies.owner;
+import static com.haixi.spacetime.Entity.User.setMessage;
 
 public class CompleteMessageFragment extends BasicFragment implements View.OnClickListener {
     private FragmentCompleteMessageBinding binding;
@@ -72,9 +71,9 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_complete_message_nextPage:
-                userName = binding.fragmentCompleteMessageName.getText().toString();
-                Cookies.gender = gender.getText().toString();
-                birthday = binding.fragmentCompleteMessageTime.getText().toString();
+                owner.userName = binding.fragmentCompleteMessageName.getText().toString();
+                owner.gender = gender.getText().toString();
+                owner.birthday = binding.fragmentCompleteMessageTime.getText().toString();
                 okHttpAction.editUserMessage(intentAction_EditUserMessage, intentAction);
                 break;
             case R.id.fragment_complete_message_gender:
@@ -156,7 +155,7 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
                     try {
                         JSONObject object = new JSONObject(data);
                         String data1 = object.getString("data");
-                        setMessage(data1);
+                        setMessage(data1, owner);
                         ARouter.getInstance()
                                 .build("/spaceTime/main")
                                 .navigation();

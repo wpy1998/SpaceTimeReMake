@@ -1,4 +1,4 @@
-package com.haixi.spacetime.DynamicModel.Entity;
+package com.haixi.spacetime.Entity;
 
 import com.haixi.spacetime.R;
 
@@ -79,6 +79,16 @@ public class DynamicCookies {
         dynamic6.tags.add(s3);
         dynamic6.tags.add(s4);
         circleDynamics.add(dynamic6);
+
+        Dynamic dynamic7 = new Dynamic(7);
+        dynamic7.imageId = R.drawable.daniel;
+        dynamic7.name = "Daniel";
+        dynamic7.content = "每当我为世界的现状感到沮丧时，我就会想到伦敦希思罗机场" +
+                "的接机大厅。很多人都开始觉得，我们生活在一个充满贪婪与憎恨的世界里，" +
+                "但我却不这么认为。";
+        dynamic7.tags = new ArrayList<>();
+        dynamic7.tags.add(s5);
+        circleDynamics.add(dynamic7);
 
         refreshTag();
     }

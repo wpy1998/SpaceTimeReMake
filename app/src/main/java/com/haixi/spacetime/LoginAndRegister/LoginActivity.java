@@ -36,7 +36,7 @@ public class LoginActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         binding=DataBindingUtil.setContentView(this,R.layout.activity_login);
         activityList0.add(this);
-        setStatusBarColor(this, R.color.colorWhite);
+        setStatusBarColor(this, R.color.colorWhite, false);
         Intent intentFront = getIntent();
         choosePath(intentFront.getStringExtra("path"));
     }

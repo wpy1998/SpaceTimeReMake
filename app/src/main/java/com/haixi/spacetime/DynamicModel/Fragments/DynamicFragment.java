@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.Others.Adapter.FragmentAdapter;
 import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.DynamicModel.Entity.DynamicCookies;
+import com.haixi.spacetime.Entity.DynamicCookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentDynamicBinding;
 

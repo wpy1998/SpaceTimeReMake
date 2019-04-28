@@ -24,7 +24,7 @@ import com.haixi.spacetime.UserModel.Components.TurnComponent;
 import com.haixi.spacetime.databinding.FragmentSettingBinding;
 
 import static com.haixi.spacetime.Common.BasicActivity.closeCUT;
-import static com.haixi.spacetime.Common.Entity.Cookies.initCookies;
+import static com.haixi.spacetime.Entity.Cookies.initCookies;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
@@ -108,7 +108,14 @@ public class SettingFragment extends BasicFragment implements
             }
         });
 
-        aboutUs.setOnClickListener(this);
+        aboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build("/spaceTime/forbidden")
+                        .navigation();
+            }
+        });
         return binding.getRoot();
     }
 

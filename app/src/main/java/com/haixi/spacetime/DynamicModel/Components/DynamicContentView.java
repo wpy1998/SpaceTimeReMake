@@ -9,11 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.haixi.spacetime.DynamicModel.Entity.Dynamic;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.haixi.spacetime.Entity.Dynamic;
+import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
 
-import static com.haixi.spacetime.Common.Entity.Cookies.ownerId;
+import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
@@ -34,8 +36,12 @@ public class DynamicContentView extends LinearLayout
     public DynamicContentView(Context context, Dynamic dynamic){
         super(context);
         this.dynamic = dynamic;
+        if (dynamic.user == null){
+            dynamic.user = new User();
+            dynamic.user.userId = -1;
+        }
         init(context);
-        if (dynamic.getUserId() == ownerId){
+        if (dynamic.user.userId == owner.userId){
             binding.dynamicContentViewMainView.removeView(titleView);
         }
     }
@@ -65,6 +71,7 @@ public class DynamicContentView extends LinearLayout
         binding.dynamicContentViewLike.setOnClickListener(this);
         binding.dynamicContentViewComment.setOnClickListener(this);
         binding.dynamicContentViewText.setOnClickListener(this);
+        titleView.setOnClickListener(this);
     }
 
     @Override
@@ -86,6 +93,13 @@ public class DynamicContentView extends LinearLayout
                 }
                 break;
             case R.id.dynamicContentView_text:
+                break;
+            case R.id.dynamicContentView_titleView:
+                ARouter.getInstance()
+                        .build("/spaceTime/user")
+                        .withString("path", "user")
+                        .withInt("userId", dynamic.user.userId)
+                        .navigation();
                 break;
             default:
                 Toast.makeText(getContext(), "waiting for coming true",

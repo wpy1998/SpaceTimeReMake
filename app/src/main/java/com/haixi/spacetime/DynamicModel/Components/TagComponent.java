@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.haixi.spacetime.DynamicModel.Entity.DynamicCookies;
+import com.haixi.spacetime.Entity.DynamicCookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentTagBinding;
 

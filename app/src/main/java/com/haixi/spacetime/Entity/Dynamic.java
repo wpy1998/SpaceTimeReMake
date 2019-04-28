@@ -1,4 +1,4 @@
-package com.haixi.spacetime.DynamicModel.Entity;
+package com.haixi.spacetime.Entity;
 
 import java.util.List;
 
@@ -6,15 +6,15 @@ public class Dynamic {
     public List<String> tags;
     public int imageId;
     public String name;
-    private int userId = 0;
+    public User user;
     public String content;
 
     public Dynamic(int userId){
-        this.userId = userId;
-    }
-
-    public int getUserId(){
-        return userId;
+        if (user == null){
+            user = new User();
+            user.userId = -1;
+        }
+        this.user.userId = userId;
     }
 
     public boolean isTag(String tag){

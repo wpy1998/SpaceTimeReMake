@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.DynamicModel.Components.DynamicContentView;
 import com.haixi.spacetime.DynamicModel.Components.UserComponent;
-import com.haixi.spacetime.DynamicModel.Entity.Dynamic;
+import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentFollowBinding;
 

@@ -13,19 +13,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.haixi.spacetime.Common.Entity.User;
+import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.DynamicModel.Components.TagComponent;
 import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.DynamicModel.Entity.Dynamic;
-import com.haixi.spacetime.DynamicModel.Entity.DynamicCookies;
+import com.haixi.spacetime.Entity.Dynamic;
+import com.haixi.spacetime.Entity.DynamicCookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.DynamicModel.Components.DynamicContentView;
 import com.haixi.spacetime.databinding.FragmentSocialBinding;
 
 import java.util.List;
 
-import static com.haixi.spacetime.Common.Entity.Cookies.ownerId;
 import static com.haixi.spacetime.Common.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Cookies.owner;
 
 @SuppressLint("ValidFragment")
 public class SocialFragment extends BasicFragment{
@@ -37,7 +37,7 @@ public class SocialFragment extends BasicFragment{
 
     public SocialFragment(){
         user = new User();
-        user.userId = -2;
+        user.userId = -1;
     }
 
     public SocialFragment(User user){
@@ -58,7 +58,7 @@ public class SocialFragment extends BasicFragment{
 
         refreshDynamic();
 
-        if (user.userId == ownerId) return binding.getRoot();
+        if (user.userId == owner.userId) return binding.getRoot();
 
         refreshTag();
 
@@ -106,7 +106,7 @@ public class SocialFragment extends BasicFragment{
     }
 
     private void drawFragment(){
-        if (user.userId != ownerId){
+        if (user.userId != owner.userId){
             setMargin(binding.fragmentSocialTop, 0, 43,
                     0, 0, false);
         }

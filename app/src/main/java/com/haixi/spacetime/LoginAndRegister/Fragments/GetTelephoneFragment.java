@@ -16,13 +16,13 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.Common.OkHttpAction;
-import com.haixi.spacetime.Common.Entity.Cookies;
+import com.haixi.spacetime.Entity.Cookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentGetTelephoneBinding;
 
 import org.json.JSONObject;
 
-import static com.haixi.spacetime.Common.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setHW;

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Common.Entity.Cookies;
+import com.haixi.spacetime.Entity.Cookies;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.Common.BasicFragment;
@@ -27,8 +27,8 @@ import com.haixi.spacetime.databinding.FragmentLoginBeginBinding;
 
 import org.json.JSONObject;
 
-import static com.haixi.spacetime.Common.Entity.Cookies.password;
-import static com.haixi.spacetime.Common.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Entity.Cookies.password;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.isReset;
 import static com.haixi.spacetime.Common.Settings.setH;
@@ -66,15 +66,6 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
         binding.loginLogin.setOnClickListener(this);
         binding.loginRegisterNewAccount.setOnClickListener(this);
         binding.loginTelephoneArea.setOnClickListener(this);
-
-        binding.loginTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance()
-                        .build("/spaceTime/forbidden")
-                        .navigation();
-            }
-        });
 
         areaCode = binding.loginTelephoneArea;
 

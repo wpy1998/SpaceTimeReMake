@@ -10,19 +10,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.haixi.spacetime.Common.Entity.Cookies.token;
-import static com.haixi.spacetime.Common.Entity.Cookies.phoneNumber;
-import static com.haixi.spacetime.Common.Entity.Cookies.gender;
-import static com.haixi.spacetime.Common.Entity.Cookies.major;
-import static com.haixi.spacetime.Common.Entity.Cookies.comeFrom;
-import static com.haixi.spacetime.Common.Entity.Cookies.birthday;
-import static com.haixi.spacetime.Common.Entity.Cookies.interests;
-import static com.haixi.spacetime.Common.Entity.Cookies.profession;
-import static com.haixi.spacetime.Common.Entity.Cookies.school;
-import static com.haixi.spacetime.Common.Entity.Cookies.userName;
-import static com.haixi.spacetime.Common.Entity.Cookies.labels;
-import static com.haixi.spacetime.Common.Entity.Cookies.password;
-import static com.haixi.spacetime.Common.Entity.Cookies.newPassword;
+import static com.haixi.spacetime.Entity.Cookies.owner;
+import static com.haixi.spacetime.Entity.Cookies.token;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Entity.Cookies.password;
+import static com.haixi.spacetime.Entity.Cookies.newPassword;
 import static com.haixi.spacetime.Common.Others.ForbiddenActivity.logout;
 
 public class OkHttpAction {
@@ -227,15 +219,15 @@ public class OkHttpAction {
                 try {
                     OkHttpClient client = new OkHttpClient();
                     RequestBody body = new FormBody.Builder()
-                            .add("username", userName)
-                            .add("gender", gender)
-                            .add("birthday", birthday)
-                            .add("comeFrom", comeFrom)
-                            .add("profession", profession)
-                            .add("school", school)
-                            .add("major", major)
-                            .add("interests", interests)
-                            .add("labels", labels).build();
+                            .add("username", owner.userName)
+                            .add("gender", owner.gender)
+                            .add("birthday", owner.birthday)
+                            .add("comeFrom", owner.comeFrom)
+                            .add("profession", owner.profession)
+                            .add("school", owner.school)
+                            .add("major", owner.major)
+                            .add("interests", owner.interests)
+                            .add("labels", owner.labels).build();
                     Request request = new Request.Builder().url(web + "/users/" + phoneNumber)
                             .addHeader("Authorization", token).put(body).build();
                     Response response = client.newCall(request).execute();

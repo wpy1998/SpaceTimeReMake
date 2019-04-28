@@ -24,14 +24,15 @@ import com.haixi.spacetime.databinding.FragmentRegisterBeginBinding;
 
 import org.json.JSONObject;
 
-import static com.haixi.spacetime.Common.Entity.Cookies.password;
-import static com.haixi.spacetime.Common.Entity.Cookies.phoneNumber;
-import static com.haixi.spacetime.Common.Entity.Cookies.setMessage;
-import static com.haixi.spacetime.Common.Entity.Cookies.token;
+import static com.haixi.spacetime.Entity.Cookies.owner;
+import static com.haixi.spacetime.Entity.Cookies.password;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Entity.Cookies.token;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.User.setMessage;
 
 public class RegisterBeginFragment extends BasicFragment implements View.OnClickListener {
     private FragmentRegisterBeginBinding binding;
@@ -63,15 +64,6 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
         binding.registerBeginNextPage.setOnClickListener(this);
         binding.registerBeginAreaCode.setOnClickListener(this);
         binding.registerBeginAreaCode.setOnClickListener(this);
-
-        binding.registerBeginTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance()
-                        .build("/spaceTime/forbidden")
-                        .navigation();
-            }
-        });
 
         areaCode=binding.registerBeginAreaCode;
         return binding.getRoot();
@@ -208,7 +200,7 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        setMessage(data1);
+                        setMessage(data1, owner);
                         password = binding.registerBeginSetPassword.getText().toString();
                         okHttpAction.authorizeWithPassword(intentAction_getToken, intentAction);
                     }catch (Exception e){

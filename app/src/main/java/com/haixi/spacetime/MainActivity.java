@@ -1,5 +1,9 @@
 package com.haixi.spacetime;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,26 +16,46 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.CircleModel.Fragments.CircleFragment;
 import com.haixi.spacetime.Common.BasicActivity;
+import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.DynamicModel.Fragments.DynamicFragment;
 import com.haixi.spacetime.UserModel.Fragments.UserFragment;
 import com.haixi.spacetime.databinding.ActivityMainBinding;
 
+import org.json.JSONObject;
+
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Entity.Cookies.owner;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Entity.User.setMessage;
 
 @Route(path = "/spaceTime/main")
 public class MainActivity extends BasicActivity implements View.OnClickListener {
     private ActivityMainBinding binding;
-    Fragment browser, personal, circle;
+    DynamicFragment browser;
+    UserFragment personal;
+    CircleFragment circle;
+    private final String intentAction = "com.haixi.spacetime.MainActivity";
+    private final int intentAction_getUserMessage = 1;
+    private IntentFilter intentFilter;
+    private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
+    private OkHttpAction okHttpAction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        okHttpAction = new OkHttpAction(this);
+        intentFilter = new IntentFilter();
+        userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
+        intentFilter.addAction(intentAction);
+        registerReceiver(userInfoBroadcastReceiver, intentFilter);
+        okHttpAction.getUserMessage(phoneNumber, intentAction_getUserMessage, intentAction);
+
         closeL_R_W();
         browser = new DynamicFragment();
         circle = new CircleFragment();
-        personal = new UserFragment();
+        personal = new UserFragment(owner);
         originFragment = browser;
         replaceFragment(R.id.main_fragment);
         activityList1.add(this);
@@ -45,6 +69,12 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         binding.mainB3.setOnClickListener(this);
 
         binding.mainBrowser.performClick();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(userInfoBroadcastReceiver);
+        super.onDestroy();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -61,9 +91,9 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         }
         originFragment = fragment;
         if (originFragment != browser){
-            setStatusBarColor(this, R.color.colorBlue);
+            setStatusBarColor(this, R.color.colorBlue, false);
         }else {
-            setStatusBarColor(this, R.color.colorWhite);
+            setStatusBarColor(this, R.color.colorWhite, true);
         }
     }
 
@@ -83,6 +113,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainCircle.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person_lighting);
+                personal.user = owner;
                 switchFragment(personal);
                 break;
             case R.id.main_browser:
@@ -103,6 +134,33 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 break;
             default:
                 break;
+        }
+    }
+
+    private class UserInfoBroadcastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction(), data;
+            if (!action.equals(intentAction)){
+                return;
+            }
+
+            int type = intent.getIntExtra("type", 0);
+            switch (type){
+                case intentAction_getUserMessage:
+                    data = intent.getStringExtra("data");
+                    try{
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        setMessage(data1, owner);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

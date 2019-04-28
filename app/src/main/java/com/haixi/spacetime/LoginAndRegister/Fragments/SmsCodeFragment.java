@@ -24,7 +24,7 @@ import com.haixi.spacetime.databinding.FragmentSmsCodeBinding;
 
 import org.json.JSONObject;
 
-import static com.haixi.spacetime.Common.Entity.Cookies.token;
+import static com.haixi.spacetime.Entity.Cookies.token;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.isReset;
 import static com.haixi.spacetime.Common.Settings.setH;
