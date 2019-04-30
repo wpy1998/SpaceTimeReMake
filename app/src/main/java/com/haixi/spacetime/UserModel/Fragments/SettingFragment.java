@@ -21,6 +21,7 @@ import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Components.ChooseComponent;
 import com.haixi.spacetime.UserModel.Components.TurnComponent;
+import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.FragmentSettingBinding;
 
 import static com.haixi.spacetime.Common.BasicActivity.closeCUT;
@@ -28,6 +29,8 @@ import static com.haixi.spacetime.Entity.Cookies.initCookies;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Entity.Cookies.resultCode;
 
 public class SettingFragment extends BasicFragment implements
         View.OnClickListener {
@@ -73,10 +76,9 @@ public class SettingFragment extends BasicFragment implements
         editUserMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance()
-                        .build("/spaceTime/user")
-                        .withString("path", "editUserMessage")
-                        .navigation();
+                Intent intent = new Intent(getActivity(), UserActivity.class);
+                intent.putExtra("path", "changeUserMessage");
+                startActivityForResult(intent, resultCode);
             }
         });
 

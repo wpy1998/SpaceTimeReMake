@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.haixi.spacetime.Entity.DynamicCookies;
+import com.haixi.spacetime.Entity.Cookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentTagBinding;
 
@@ -22,6 +22,8 @@ public class TagComponent extends LinearLayout{
     private ComponentTagBinding binding;
     private boolean isChoosen;
     private String intentAction;
+    private int intentAction_Type;
+    public int circleId;
     private IntentFilter intentFilter;
     private ControlBroadcastReceiver controlBroadcastReceiver;
 
@@ -52,8 +54,9 @@ public class TagComponent extends LinearLayout{
         return name;
     }
 
-    public void setIntent(String intentAction){
+    public void setIntent(String intentAction, int type){
         this.intentAction = intentAction;
+        intentAction_Type = type;
         if (controlBroadcastReceiver != null)
             getContext().unregisterReceiver(controlBroadcastReceiver);
         registerControlReceiver();
@@ -68,9 +71,10 @@ public class TagComponent extends LinearLayout{
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                DynamicCookies.currentTag = name;
                 Intent intent = new Intent(intentAction);
                 intent.putExtra("name", name);
+                intent.putExtra("circleId", circleId);
+                intent.putExtra("type", intentAction_Type);
                 getContext().sendBroadcast(intent);
             }
         });

@@ -40,12 +40,15 @@ public class EditUserComponent extends LinearLayout {
     }
 
     public void drawComponent(){
+        setMargin(binding.componentEditUserView, 20, 0, 20, 0, false);
+
         setHW(binding.componentEditUserTitle, 30, 41);
-        setMargin(binding.componentEditUserTitle, 20, 18, 0,
+        setMargin(binding.componentEditUserTitle, 0, 18, 0,
                 18, true);
         setTextSize(binding.componentEditUserTitle, 20);
 
-        binding.componentEditUserContent.getLayoutParams().height = getPx(26);
+        setH(binding.componentEditUserContent, 26);
+        binding.componentEditUserContent.setMaxWidth(getPx(233));
         setMargin(binding.componentEditUserContent, 17, 20, 0,
                 20, true);
         setTextSize(binding.componentEditUserContent, 18);
@@ -59,11 +62,11 @@ public class EditUserComponent extends LinearLayout {
         }
 
         setHW(binding.componentEditUserNext, 24, 24);
-        setMargin(binding.componentEditUserNext, 20, 21, 20,
+        setMargin(binding.componentEditUserNext, 20, 21, 0,
                 21, false);
 
         setH(binding.componentEditUserLine, 2);
-        setMargin(binding.componentEditUserLine, 20, 5, 20,
+        setMargin(binding.componentEditUserLine, 0, 5, 0,
                 5, false);
     }
 }

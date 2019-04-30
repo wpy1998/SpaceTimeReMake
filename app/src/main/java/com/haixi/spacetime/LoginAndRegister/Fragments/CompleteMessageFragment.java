@@ -21,7 +21,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Entity.Cookies;
 import com.haixi.spacetime.Common.Others.FileOperation;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.R;
@@ -74,7 +73,7 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
                 owner.userName = binding.fragmentCompleteMessageName.getText().toString();
                 owner.gender = gender.getText().toString();
                 owner.birthday = binding.fragmentCompleteMessageTime.getText().toString();
-                okHttpAction.editUserMessage(intentAction_EditUserMessage, intentAction);
+                okHttpAction.changeUserMessage(intentAction_EditUserMessage, intentAction);
                 break;
             case R.id.fragment_complete_message_gender:
                 new AlertDialog.Builder(getContext()).setTitle("请选择您的性别").setIcon(
@@ -126,7 +125,7 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("requestCode = " + requestCode + ", resultCode = " + resultCode);
+        System.out.println("resultCode = " + requestCode + ", resultCode = " + resultCode);
         if (requestCode == 1 && resultCode == -1){
             Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };

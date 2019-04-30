@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.CircleModel.Components.CircleComponent;
 import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Entity.Circle;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentAddCircleBinding;
 
@@ -32,8 +33,8 @@ public class AddCircleFragment extends BasicFragment{
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_circle,
                 null, false);
         mainView = binding.getRoot().findViewById(R.id.titleSecondCircle_container);
-        addCircleID = new CircleComponent(getContext(), "圈子ID添加");
-        createCircle = new CircleComponent(getContext(), "创建圈子");
+        addCircleID = new CircleComponent(getContext(), new Circle("圈子ID添加"));
+        createCircle = new CircleComponent(getContext(), new Circle("创建圈子"));
         mainView.addView(addCircleID);
         mainView.addView(createCircle);
 

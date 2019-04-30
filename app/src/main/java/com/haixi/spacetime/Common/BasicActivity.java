@@ -1,6 +1,10 @@
 package com.haixi.spacetime.Common;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,8 +30,12 @@ import static com.haixi.spacetime.Common.Settings.update;
 public class BasicActivity extends AppCompatActivity {
     public static List<Activity> activityList0 = new ArrayList<Activity>();
     public static List<Activity> activityList1 = new ArrayList<Activity>();
-    public Fragment originFragment;
+    public BasicFragment originFragment;
     public String fragmentName = null;
+    protected BroadcastReceiver userInfoBroadcastReceiver;
+    protected OkHttpAction okHttpAction;
+    protected IntentFilter intentFilter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ActionBar actionBar=getSupportActionBar();
@@ -38,6 +46,14 @@ public class BasicActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 
         update(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (userInfoBroadcastReceiver != null){
+            unregisterReceiver(userInfoBroadcastReceiver);
+        }
+        super.onDestroy();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -84,7 +100,7 @@ public class BasicActivity extends AppCompatActivity {
 
     protected void replaceFragment(int id){
         if (originFragment == null){
-            originFragment = new Fragment();
+            originFragment = new BasicFragment();
         }
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

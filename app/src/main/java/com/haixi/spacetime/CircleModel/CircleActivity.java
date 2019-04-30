@@ -11,6 +11,7 @@ import com.haixi.spacetime.CircleModel.Fragments.AddCircleFragment;
 import com.haixi.spacetime.CircleModel.Fragments.CircleMessageFragment;
 import com.haixi.spacetime.CircleModel.Fragments.CreateCircleFragment;
 import com.haixi.spacetime.Common.BasicActivity;
+import com.haixi.spacetime.Entity.Circle;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ActivityCircleBinding;
 
@@ -31,15 +32,16 @@ public class CircleActivity extends BasicActivity {
     }
 
     private void choosePath(String path) {
-        String data;
         switch (path){
             case "addCircle":
                 originFragment = new AddCircleFragment();
                 replaceFragment(R.id.circle_frameLayout);
                 break;
             case "circleMessage":
-                data = getIntent().getStringExtra("data");
-                originFragment = new CircleMessageFragment(data);
+                Circle circle = new Circle();
+                circle.id = getIntent().getIntExtra("circleId", 0);
+                circle.name = getIntent().getStringExtra("circleName");
+                originFragment = new CircleMessageFragment(circle);
                 replaceFragment(R.id.circle_frameLayout);
                 break;
             case "createCircle":

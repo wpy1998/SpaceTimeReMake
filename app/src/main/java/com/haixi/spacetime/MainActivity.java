@@ -16,6 +16,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.CircleModel.Fragments.CircleFragment;
 import com.haixi.spacetime.Common.BasicActivity;
+import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.DynamicModel.Fragments.DynamicFragment;
 import com.haixi.spacetime.UserModel.Fragments.UserFragment;
@@ -33,14 +34,11 @@ import static com.haixi.spacetime.Entity.User.setMessage;
 @Route(path = "/spaceTime/main")
 public class MainActivity extends BasicActivity implements View.OnClickListener {
     private ActivityMainBinding binding;
-    DynamicFragment browser;
-    UserFragment personal;
-    CircleFragment circle;
+    private DynamicFragment browser;
+    private UserFragment personal;
+    private CircleFragment circle;
     private final String intentAction = "com.haixi.spacetime.MainActivity";
     private final int intentAction_getUserMessage = 1;
-    private IntentFilter intentFilter;
-    private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
-    private OkHttpAction okHttpAction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,14 +69,15 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         binding.mainBrowser.performClick();
     }
 
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(userInfoBroadcastReceiver);
-        super.onDestroy();
+    public void refresh(int tag){
+        if (tag == 3){
+            binding.mainPersonal.performClick();
+            return;
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    void switchFragment(Fragment fragment){
+    void switchFragment(BasicFragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragment != originFragment){
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -115,6 +114,10 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainPersonal.setImageResource(R.drawable.person_lighting);
                 personal.user = owner;
                 switchFragment(personal);
+                if (isFastClick()){
+                    return;
+                }
+                okHttpAction.getUserMessage(phoneNumber, intentAction_getUserMessage, intentAction);
                 break;
             case R.id.main_browser:
                 fragmentName = "browser";
@@ -137,6 +140,18 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         }
     }
 
+    private final int MIN_DELAY_TIME = 1000;
+    private long lastClickTime;
+    public boolean isFastClick() {//false代表不是连续触屏
+        boolean flag = true;
+        long currentClickTime = System.currentTimeMillis();
+        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
+            flag = false;
+        }
+        lastClickTime = currentClickTime;
+        return flag;
+    }
+
     private class UserInfoBroadcastReceiver extends BroadcastReceiver{
 
         @Override
@@ -154,6 +169,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                         JSONObject object = new JSONObject(data);
                         String data1 = object.getString("data");
                         setMessage(data1, owner);
+                        personal.refresh();
                     }catch (Exception e){
                         e.printStackTrace();
                     }

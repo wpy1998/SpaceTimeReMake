@@ -28,7 +28,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CircleModel.CodeActivity"></activity>
+
+        <activity android:name=".CircleModel.CodeActivity" />
         <activity android:name=".Common.Others.ForbiddenActivity" />
 
         <meta-data

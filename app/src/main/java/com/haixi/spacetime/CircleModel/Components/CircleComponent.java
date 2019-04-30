@@ -1,63 +1,128 @@
 package com.haixi.spacetime.CircleModel.Components;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.haixi.spacetime.Common.OkHttpAction;
+import com.haixi.spacetime.Entity.Circle;
+import com.haixi.spacetime.Entity.Dynamic;
+import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentCircleBinding;
+
+import org.json.JSONObject;
 
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.User.setMessage;
 
 public class CircleComponent extends LinearLayout {
     private ComponentCircleBinding binding;
-    private String name;
+    private Circle circle;
+    private User user;
     private String intentAction = "";
     private int intentAction_type;
-    public CircleComponent(Context context, String name) {
+
+    private OkHttpAction okHttpAction;
+    private IntentFilter intentFilter;
+    private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
+
+    public CircleComponent(Context context, Circle circle) {
         super(context);
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.component_circle, this, true);
-        this.name = name;
+        this.circle = circle;
+        binding.componentCircleName.setText(this.circle.name);
         drawComponent();
-        initLinearLayout();
     }
 
-    public CircleComponent(Context context, String name, int imageId){
+    public CircleComponent(Context context, User user){
         super(context);
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.component_circle, this, true);
-        this.name = name;
+        this.user = user;
         drawComponent();
-        initLinearLayout();
-        drawImage(imageId);
+        drawImage(user.imageId);
+        binding.componentCircleName.setText(user.phoneNumber);
+        intentAction = "com.haixi.spacetime.CircleModel.Components.CircleComponent"
+                + this.user.phoneNumber;
+        intentAction_type = 1;
+        okHttpAction = new OkHttpAction(getContext());
+        intentFilter = new IntentFilter();
+        userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
+        intentFilter.addAction(intentAction);
+        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
+        okHttpAction.getUserMessage(this.user.phoneNumber, intentAction_type, intentAction);
     }
 
-    private void initLinearLayout(){
-        binding.componentCircleName.setText(name);
+    @Override
+    protected void onDetachedFromWindow() {
+        if (userInfoBroadcastReceiver!= null){
+            getContext().unregisterReceiver(userInfoBroadcastReceiver);
+        }
+        super.onDetachedFromWindow();
     }
 
     private void drawComponent(){
         setH(binding.componentCircleName, 30);
-        setMargin(binding.componentCircleName, 0, 19, 0, 10, false);
+        setMargin(binding.componentCircleName,0,19,0,10,false);
         setTextSize(binding.componentCircleName, 20);
 
         setH(binding.componentCircleLine, 1);
     }
 
+    //以下函数应用于circleMessageFragment添加用户
     private void drawImage(int imageId){
         setHW(binding.componentCircleImage, 50, 50);
         setMargin(binding.componentCircleImage, 0, 10, 15, 9, false);
 
+        if (imageId == 0) imageId = R.drawable.william;
         binding.componentCircleImage.setImageResource(imageId);
     }
 
+    private class UserInfoBroadcastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (!action.equals(intentAction)){
+                return;
+            }
+            int type = intent.getIntExtra("type", 0);
+            if (type == intentAction_type){
+                String data = intent.getStringExtra("data");
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    String data1 = jsonObject.getString("data");
+                    setMessage(data1, user);
+                    binding.componentCircleName.setText(user.userName);
+
+                    binding.componentCircleMainView.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ARouter.getInstance()
+                                    .build("/spaceTime/user")
+                                    .withString("path", "user")
+                                    .withInt("userId", user.userId)
+                                    .navigation();
+                        }
+                    });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //以下函数应用于circleFragment添加圈子
     public void setIntentAction(String intentAction, int intentAction_type){
         this.intentAction = intentAction;
         this.intentAction_type = intentAction_type;
@@ -70,7 +135,8 @@ public class CircleComponent extends LinearLayout {
             public void onClick(View v) {
                 if (intentAction.equals("")) return;
                 Intent intent = new Intent(intentAction);
-                intent.putExtra("data", name);
+                intent.putExtra("circleId", circle.id);
+                intent.putExtra("circleName", circle.name);
                 intent.putExtra("type", intentAction_type);
                 getContext().sendBroadcast(intent);
             }

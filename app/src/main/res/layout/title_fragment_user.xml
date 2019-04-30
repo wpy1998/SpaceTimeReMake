@@ -50,11 +50,14 @@
                     android:layout_weight="1"
                     android:gravity="top"/>
             </LinearLayout>
-            <Button
+            <TextView
                 android:text="设置"
                 android:textColor="#ffffff"
                 android:background="@drawable/setting_button_style"
                 android:id="@+id/fragment_user_setting"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

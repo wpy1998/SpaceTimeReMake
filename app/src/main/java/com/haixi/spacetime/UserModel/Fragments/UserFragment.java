@@ -1,6 +1,7 @@
 package com.haixi.spacetime.UserModel.Fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,18 +14,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.CircleImageView;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.DynamicModel.Fragments.SocialFragment;
 import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.MainActivity;
 import com.haixi.spacetime.R;
+import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.FragmentUserBinding;
 
 import static com.haixi.spacetime.Common.Settings.setH;
@@ -33,17 +33,17 @@ import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Cookies.resultCode;
 
 @SuppressLint("ValidFragment")
 public class UserFragment extends BasicFragment implements View.OnClickListener {
     private FragmentUserBinding binding;
 
-    private Button setting;
-    private TextView dynamic, message, name, ageLocation;
+    private TextView dynamic, message, name, ageLocation, setting;
     private LinearLayout userView, chooseView;
     private ImageView gender;
     private CircleImageView image;
-    private SocialFragment userDynamic;
+    private BasicFragment userDynamic;
     private MessageFragment userMessage;
 
     public User user;
@@ -51,6 +51,9 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
 
     public UserFragment(User user){
         this.user = user;
+        if (this.user == null){
+            this.user = new User();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -71,16 +74,9 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         image = binding.getRoot().findViewById(R.id.fragment_user_image);
         gender = binding.getRoot().findViewById(R.id.fragment_user_gender);
 
+
         userDynamic = new SocialFragment(user);
-        userMessage = new MessageFragment();
-        if (user.userId != owner.userId){
-            setting.setText("关注");
-            isFollow = false;
-        }else {
-            setting.setText("设置");
-            name.setText(owner.userName);
-            ageLocation.setText(owner.comeFrom);
-        }
+        userMessage = new MessageFragment(user);
 
         drawFragment();
         setting.setOnClickListener(this);
@@ -88,7 +84,27 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         message.setOnClickListener(this);
 
         dynamic.performClick();
+        refresh();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.refresh(3);
+    }
+
+    @Override
+    public void refresh() {
+        if (user.userId != owner.userId){
+            setting.setText("未关注");
+            isFollow = false;
+        }else {
+            setting.setText("用户设置");
+            name.setText(owner.userName);
+            ageLocation.setText(owner.comeFrom);
+        }
     }
 
     private void replaceFragment(Fragment fragment){
@@ -103,15 +119,14 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         switch (v.getId()){
             case R.id.fragment_user_setting:
                 if (user.userId == owner.userId){
-                    ARouter.getInstance()
-                            .build("/spaceTime/user")
-                            .withString("path", "setting")
-                            .navigation();
+                    Intent intent = new Intent(getActivity(), UserActivity.class);
+                    intent.putExtra("path", "setting");
+                    startActivityForResult(intent, resultCode);
                 }else if(!isFollow){
                     setting.setText("已关注");
                     isFollow = true;
                 }else {
-                    setting.setText("关注");
+                    setting.setText("未关注");
                     isFollow = false;
                 }
                 break;
@@ -119,20 +134,13 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                 dynamic.setTextColor(getResources().getColor(R.color.colorBlue));
                 message.setTextColor(getResources().getColor(R.color.colorBlack));
                 replaceFragment(userDynamic);
-                setting.setText("设置");
                 break;
             case R.id.fragment_user_message:
                 dynamic.setTextColor(getResources().getColor(R.color.colorBlack));
                 message.setTextColor(getResources().getColor(R.color.colorBlue));
                 replaceFragment(userMessage);
-                if (user.userId != owner.userId){
-                    setting.setText("关注");
-                    isFollow = false;
-                }
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true",
-                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }

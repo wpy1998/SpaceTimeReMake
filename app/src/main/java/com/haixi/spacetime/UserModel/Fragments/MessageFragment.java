@@ -1,5 +1,6 @@
 package com.haixi.spacetime.UserModel.Fragments;
 
+import android.annotation.SuppressLint;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentMessageBinding;
 
@@ -17,9 +19,17 @@ import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
 import static com.haixi.spacetime.Common.Settings.windowsWidth;
+import static com.haixi.spacetime.Entity.Cookies.owner;
 
+@SuppressLint("ValidFragment")
 public class MessageFragment extends BasicFragment {
     private FragmentMessageBinding binding;
+    private User user;
+
+    public MessageFragment(User user){
+        this.user = user;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
@@ -27,7 +37,15 @@ public class MessageFragment extends BasicFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message,
                 null, false);
         drawView();
+        refresh();
         return binding.getRoot();
+    }
+
+    @Override
+    public void refresh() {
+        binding.fragmentMessageGraduationContent.setText(user.school + " | " + user.major);
+        binding.fragmentMessageBagContent.setText(user.profession + " | " + user.position);
+        binding.fragmentMessageProjectContent.setText(user.signature);
     }
 
     private void drawView() {

@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.Others.Adapter.FragmentAdapter;
 import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.Entity.DynamicCookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentDynamicBinding;
 
@@ -25,6 +24,10 @@ import java.util.List;
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Cookies.circleDynamics;
+import static com.haixi.spacetime.Entity.Cookies.initData;
+import static com.haixi.spacetime.Entity.Cookies.initDynamic;
+import static com.haixi.spacetime.Entity.Cookies.ownerDynamics;
 
 public class DynamicFragment extends BasicFragment implements View.OnClickListener{
     private FragmentDynamicBinding binding;
@@ -39,7 +42,7 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dynamic,
                 null, false);
-        DynamicCookies.initData();
+        initData();
 
         viewPager = binding.getRoot().findViewById(R.id.fragment_topic_viewPager);
         fragments = new ArrayList<Fragment>();

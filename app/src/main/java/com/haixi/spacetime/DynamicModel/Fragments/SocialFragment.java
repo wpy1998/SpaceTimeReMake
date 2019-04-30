@@ -13,15 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.haixi.spacetime.Entity.Cookies;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.DynamicModel.Components.TagComponent;
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.Entity.Dynamic;
-import com.haixi.spacetime.Entity.DynamicCookies;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.DynamicModel.Components.DynamicContentView;
+import com.haixi.spacetime.DynamicModel.Components.DynamicComponent;
 import com.haixi.spacetime.databinding.FragmentSocialBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.haixi.spacetime.Common.Settings.setMargin;
@@ -30,14 +31,15 @@ import static com.haixi.spacetime.Entity.Cookies.owner;
 @SuppressLint("ValidFragment")
 public class SocialFragment extends BasicFragment{
     private FragmentSocialBinding binding;
-    private List<TagComponent> tagComponents;
     private final String intentAction = "com.haixi.spacetime.DynamicModel" +
             ".Fragments.SocialFragment";
+    private final int intentAction_selectTag = 1, intentAction_getDynamic = 2;
     private User user;
+    private String currentTag = "全部";
+    private List<Dynamic> dynamics;
 
     public SocialFragment(){
-        user = new User();
-        user.userId = -1;
+        this.user = null;
     }
 
     public SocialFragment(User user){
@@ -55,41 +57,31 @@ public class SocialFragment extends BasicFragment{
         intentFilter = new IntentFilter();
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
+        dynamics = new ArrayList<Dynamic>();
 
         refreshDynamic();
-
-        if (user.userId == owner.userId) return binding.getRoot();
-
+        if (user != null){
+            binding.fragmentSocialView.removeView(binding.fragmentSocialTagView);
+            binding.fragmentSocialView.removeView(binding.fragmentSocialTop);
+            return binding.getRoot();
+        }
         refreshTag();
-
         return binding.getRoot();
-    }
-
-    private void addDynamicContent(Dynamic dynamic){
-        DynamicContentView dynamicContentView = new DynamicContentView(getContext(),dynamic);
-        binding.fragmentSocialMainView.addView(dynamicContentView);
     }
 
     private void refreshDynamic(){
         binding.fragmentSocialMainView.removeAllViews();
-        int number = 0;
-        for (Dynamic dynamic: DynamicCookies.circleDynamics){
-            if (number == 10) break;
-            if (dynamic.isTag(DynamicCookies.currentTag)){
-                addDynamicContent(dynamic);
-                number++;
+        if (user != null){
+            for (Dynamic dynamic: dynamics){
+                DynamicComponent dynamicComponent = new DynamicComponent(getContext(),dynamic);
+                binding.fragmentSocialMainView.addView(dynamicComponent);
             }
-        }
-    }
-
-    private void refreshTag(){
-        binding.fragmentSocialTagView.removeAllViews();
-        for (String tag: DynamicCookies.tags){
-            TagComponent tagComponent = new TagComponent(getContext(), tag);
-            tagComponent.setIntent(intentAction);
-            binding.fragmentSocialTagView.addView(tagComponent);
-            if (tagComponent.getName().equals(DynamicCookies.currentTag)) {
-                tagComponent.refresh();
+        }else {
+            for (Dynamic dynamic: dynamics){
+                if (dynamic.isTag(currentTag)) {
+                    DynamicComponent dynamicComponent = new DynamicComponent(getContext(),dynamic);
+                    binding.fragmentSocialMainView.addView(dynamicComponent);
+                }
             }
         }
     }
@@ -101,14 +93,36 @@ public class SocialFragment extends BasicFragment{
             if (!action.equals(intentAction)){
                 return;
             }
-            refreshDynamic();
+            int type = intent.getIntExtra("type", 0);
+            switch (type){
+                case intentAction_selectTag:
+                    currentTag = intent.getStringExtra("name");
+                    refreshDynamic();
+                    break;
+                case intentAction_getDynamic:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    private void drawFragment(){
-        if (user.userId != owner.userId){
-            setMargin(binding.fragmentSocialTop, 0, 43,
-                    0, 0, false);
+    //user！=owner时使用
+    private void refreshTag(){
+        binding.fragmentSocialTagView.removeAllViews();
+        for (String tag: Cookies.tags){
+            TagComponent tagComponent = new TagComponent(getContext(), tag);
+            tagComponent.setIntent(intentAction, 0);
+            binding.fragmentSocialTagView.addView(tagComponent);
+            if (tagComponent.getName().equals(currentTag)) {
+                tagComponent.refresh();
+            }
         }
+    }
+
+    //非User时使用
+    private void drawFragment(){
+        setMargin(binding.fragmentSocialTop, 0, 43,
+                0, 0, false);
     }
 }

@@ -77,7 +77,8 @@ public class SmsCodeFragment extends BasicFragment {
         return binding.getRoot();
     }
 
-    void refresh(){
+    @Override
+    public void refresh(){
         chooseArea.setText("");
         chooseArea.setInputType(InputType.TYPE_CLASS_NUMBER);
     }

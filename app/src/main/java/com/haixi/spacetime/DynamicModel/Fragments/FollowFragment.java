@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.DynamicModel.Components.DynamicContentView;
+import com.haixi.spacetime.DynamicModel.Components.DynamicComponent;
 import com.haixi.spacetime.DynamicModel.Components.UserComponent;
 import com.haixi.spacetime.Entity.Dynamic;
+import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentFollowBinding;
 
@@ -35,7 +36,7 @@ public class FollowFragment extends BasicFragment {
         drawFragment();
         dynamics = new ArrayList<Dynamic>();
 
-        String s1 = "吃鸡党", s2 = "大社联", s3 = "俱乐部", s4 = "潮牌", s5 = "王者荣耀";
+        String s1 = "吃鸡党", s2 = "大社联", s3 = "俱乐部", s4 = "潮牌";
         Dynamic dynamic1 = new Dynamic(0);
         dynamic1.imageId = R.drawable.jack;
         dynamic1.tags = new ArrayList<>();
@@ -84,21 +85,27 @@ public class FollowFragment extends BasicFragment {
         dynamics.add(dynamic6);
         addDynamicContent(dynamic6);
 
-        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
-        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
-        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
-        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
-        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
-        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
-        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
-        binding.fragmentFollowUserView.addView(new UserComponent(getContext()));
+        User all = new User();
+        all.userId = 0;
+        UserComponent allComponent = new UserComponent(getContext(), all);
+        allComponent.setImage(R.drawable.ic_user_all);
+        allComponent.setIntent(intentAction);
+        binding.fragmentFollowUserView.addView(allComponent);
+        for (int i = 1; i < 10; i++){
+            User user = new User();
+            user.userId = i;
+            UserComponent userComponent = new UserComponent(getContext(), user);
+            userComponent.setIntent(intentAction);
+            binding.fragmentFollowUserView.addView(userComponent);
+        }
+        allComponent.performClick();
         return binding.getRoot();
     }
 
     private void addDynamicContent(Dynamic dynamic){
-        DynamicContentView dynamicContentView = new DynamicContentView(getContext(),dynamic);
+        DynamicComponent dynamicComponent = new DynamicComponent(getContext(),dynamic);
         dynamics.add(dynamic);
-        binding.fragmentFollowMainView.addView(dynamicContentView);
+        binding.fragmentFollowMainView.addView(dynamicComponent);
     }
 
     private void drawFragment(){

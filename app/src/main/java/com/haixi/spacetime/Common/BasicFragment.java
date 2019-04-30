@@ -1,8 +1,10 @@
 package com.haixi.spacetime.Common;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 public class BasicFragment extends Fragment {
     protected BroadcastReceiver userInfoBroadcastReceiver = null;
@@ -17,6 +19,9 @@ public class BasicFragment extends Fragment {
         super.onDestroyView();
     }
 
+    public void refresh(){
+    }
+
     private static final int MIN_DELAY_TIME = 2000;
     private long lastClickTime;
     public boolean isFastClick() {//false代表不是连续触屏
@@ -26,6 +31,9 @@ public class BasicFragment extends Fragment {
             flag = false;
         }
         lastClickTime = currentClickTime;
+        if (flag){
+            Toast.makeText(getContext(), "请求次数过多，请稍等片刻", Toast.LENGTH_SHORT).show();
+        }
         return flag;
     }
 }

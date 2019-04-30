@@ -21,7 +21,7 @@ import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
 
-public class DynamicContentView extends LinearLayout
+public class DynamicComponent extends LinearLayout
         implements View.OnClickListener {
     private DynamicContentViewBinding binding;
     private Context context;
@@ -33,20 +33,21 @@ public class DynamicContentView extends LinearLayout
 
     public Dynamic dynamic;
 
-    public DynamicContentView(Context context, Dynamic dynamic){
+    public DynamicComponent(Context context, Dynamic dynamic){
         super(context);
         this.dynamic = dynamic;
+        if (this.dynamic == null) this.dynamic = new Dynamic(-1);
         if (dynamic.user == null){
             dynamic.user = new User();
             dynamic.user.userId = -1;
         }
-        init(context);
+        initComponent(context);
         if (dynamic.user.userId == owner.userId){
             binding.dynamicContentViewMainView.removeView(titleView);
         }
     }
 
-    private void init(Context context){
+    private void initComponent(Context context){
         this.context = context;
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.dynamic_content_view, this, true);
@@ -102,8 +103,6 @@ public class DynamicContentView extends LinearLayout
                         .navigation();
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true",
-                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }

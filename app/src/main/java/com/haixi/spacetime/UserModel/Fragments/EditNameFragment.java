@@ -1,15 +1,16 @@
 package com.haixi.spacetime.UserModel.Fragments;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentEditNameBinding;
 
@@ -17,8 +18,9 @@ import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Cookies.owner;
 
-public class FragmentEditName extends Fragment implements View.OnClickListener {
+public class EditNameFragment extends BasicFragment implements View.OnClickListener {
     private FragmentEditNameBinding binding;
     @Nullable
     @Override
@@ -26,13 +28,14 @@ public class FragmentEditName extends Fragment implements View.OnClickListener {
             container, @Nullable Bundle savedInstanceState) {
         binding= DataBindingUtil.inflate(inflater, R.layout.fragment_edit_name,
                 null, false);
-        init();
+        drawFragment();
+        binding.editNameContent.setText(owner.userName);
         binding.editNameBack.setOnClickListener(this);
         binding.editNameSave.setOnClickListener(this);
         return binding.getRoot();
     }
 
-    private void init() {
+    private void drawFragment() {
         binding.editNameTitleView.getLayoutParams().height = getPx(58);
 
         setHW(binding.editNameBack, 24, 24);
@@ -56,16 +59,16 @@ public class FragmentEditName extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.feedback_back:
+            case R.id.edit_name_back:
                 getActivity().finish();
                 break;
-            case R.id.feedback_save:
+            case R.id.edit_name_save:
                 String message = binding.editNameContent.getText().toString();
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                owner.userName = message;
+                Toast.makeText(getContext(), "已保存到本地, 提交后即可保存",
+                        Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(getContext(), "waiting for coming true",
-                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }

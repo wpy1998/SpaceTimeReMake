@@ -18,8 +18,12 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.CircleModel.Components.CircleComponent;
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.Common.OkHttpAction;
+import com.haixi.spacetime.Entity.Circle;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentCircleBinding;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setMargin;
@@ -30,7 +34,7 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
     private FragmentCircleBinding binding;
     private LinearLayout mainView;
     private final String intentAction = "com.haixi.spacetime.CircleModel.Fragments.CircleFragment";
-    private final int intentAction_getCircleData = 1, intentAction_addCircle = 2;
+    private final int intentAction_turnToCircle = 1, intentAction_getUserCircles = 2;
     private IntentFilter intentFilter;
     private OkHttpAction okHttpAction;
     @Nullable
@@ -44,16 +48,17 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
         userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
-
         okHttpAction = new OkHttpAction(getContext());
-        mainView = binding.getRoot().findViewById(R.id.titleSecondCircle_container);
+
+        okHttpAction.getUserCircles(intentAction_getUserCircles, intentAction);
         drawView();
-        setCircle("吃鸡小分队");
-        setCircle("王者战队");
-        setCircle("大社联");
-        setCircle("15届软院学生会");
-        setCircle("漫圈");
-        setCircle("潮牌圈");
+        mainView = binding.getRoot().findViewById(R.id.titleSecondCircle_container);
+//        addCircle("吃鸡小分队");
+//        addCircle("王者战队");
+//        addCircle("大社联");
+//        addCircle("15届软院学生会");
+//        addCircle("漫圈");
+//        addCircle("潮牌圈");
 
         binding.fragmentCircleAdd.setOnClickListener(this);
 
@@ -90,9 +95,9 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
         }
     }
 
-    private void setCircle(String name){
-        CircleComponent view = new CircleComponent(getContext(), name);
-        view.setIntentAction(intentAction, intentAction_getCircleData);
+    private void addCircle(Circle circle){
+        CircleComponent view = new CircleComponent(getContext(), circle);
+        view.setIntentAction(intentAction, intentAction_turnToCircle);
         mainView.addView(view);
     }
 
@@ -105,13 +110,32 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
             }
             int type = intent.getIntExtra("type", 0);
             switch (type){
-                case intentAction_getCircleData:
-                    data = intent.getStringExtra("data");
+                case intentAction_turnToCircle:
+                    String circleName = intent.getStringExtra("circleName");
+                    int circleId = intent.getIntExtra("circleId", -1);
                     ARouter.getInstance()
                             .build("/spaceTime/circle")
                             .withString("path", "circleMessage")
-                            .withString("data", data)
+                            .withString("circleName", circleName)
+                            .withInt("circleId", circleId)
                             .navigation();
+                    break;
+                case intentAction_getUserCircles:
+                    data = intent.getStringExtra("data");
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String circles = object.getString("data");
+                        JSONArray array = new JSONArray(circles);
+                        for (int i = 0; i < array.length(); i++){
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            Circle circle = new Circle();
+                            circle.name = jsonObject.getString("name");
+                            circle.id = jsonObject.getInt("id");
+                            addCircle(circle);
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     break;
