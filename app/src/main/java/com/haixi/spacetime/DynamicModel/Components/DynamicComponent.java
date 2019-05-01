@@ -17,6 +17,7 @@ import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
 
+import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.getPx;
@@ -33,18 +34,12 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
     private boolean isLike = false;
 
     public Dynamic dynamic;
+    public TextView text;
 
     public DynamicComponent(Context context, Dynamic dynamic, User user){
         super(context);
         this.context = context;
         this.dynamic = dynamic;
-        initComponent();
-        if (user != null && user.phoneNumber.equals(phoneNumber)){
-            binding.dynamicContentViewMainView.removeView(titleView);
-        }
-    }
-
-    private void initComponent(){
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.dynamic_content_view, this, true);
         titleView = binding.getRoot()
@@ -55,11 +50,13 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
                 .findViewById(R.id.dynamicContentView_userName);
         publishTime = binding.getRoot()
                 .findViewById(R.id.dynamicContentView_publishTime);
+        text = binding.dynamicContentViewText;
         drawView();
 
-        addTag(dynamic.circle.name);
+        binding.dynamicContentViewTag.setText("#" + dynamic.circle.name);
 
-        if (dynamic.imageId == -1) dynamic.imageId = R.drawable.william;
+        if (dynamic.imageId == -1)
+            dynamic.imageId = R.drawable.william;
         userImage.setImageResource(dynamic.imageId);
         userName.setText(dynamic.user.userName);
         binding.dynamicContentViewText.setText(dynamic.content);
@@ -67,7 +64,10 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
 
         binding.dynamicContentViewLike.setOnClickListener(this);
         binding.dynamicContentViewComment.setOnClickListener(this);
-        binding.dynamicContentViewText.setOnClickListener(this);
+        binding.dynamicContentViewTag.setOnClickListener(this);
+        if (user != null && user.phoneNumber.equals(phoneNumber)){
+            binding.dynamicContentViewMainView.removeView(titleView);
+        }
     }
 
     @Override
@@ -88,32 +88,12 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
                     binding.dynamicContentViewLikeNumber.setText("" + dynamic.likeCount);
                 }
                 break;
-            case R.id.dynamicContentView_text:
-                ARouter.getInstance()
-                        .build("/spaceTime/dynamic")
-                        .withString("path", "comment")
-                        .withObject("dynamic", dynamic)
-                        .navigation();
+            case R.id.dynamic_content_view_tag:
+                Toast.makeText(getContext(), dynamic.circle.name, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
         }
-    }
-
-    private void addTag(final String tag){
-        TextView textView = new TextView(getContext());
-        binding.dynamicContentViewTag.addView(textView);
-        textView.setText("#" + tag);
-        textView.setTextColor(getResources().getColor(R.color.colorBlue));
-        textView.getLayoutParams().height = getPx(20);
-        setMargin(textView, 5, 5, 5, 5, false);
-
-        textView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), tag, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void drawView() {
@@ -152,7 +132,9 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
                 20, 20, true);
         setTextSize(binding.dynamicContentViewCommentNumber, 14);
 
-        setMargin(binding.dynamicContentViewHorizontalScrollView, 20, 0,
-                20, 0, true);
+        setH(binding.dynamicContentViewTag, 20);
+        setMargin(binding.dynamicContentViewTag, 20, 5,
+                20, 5, false);
+        setTextSize(binding.dynamicContentViewTag, 14);
     }
 }

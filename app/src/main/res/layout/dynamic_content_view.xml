@@ -20,19 +20,12 @@
             android:layout_height="wrap_content">
         </RelativeLayout>
 
-        <HorizontalScrollView
-            android:scrollbars="none"
-            android:id="@+id/dynamicContentView_horizontalScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:scrollbars="none"
-                android:orientation="horizontal"
-                android:id="@+id/dynamic_content_view_tag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </LinearLayout>
-        </HorizontalScrollView>
+        <TextView
+            android:id="@+id/dynamic_content_view_tag"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlue"/>
 
         <LinearLayout
             android:orientation="horizontal"

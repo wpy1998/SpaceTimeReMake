@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.DynamicModel.Components.DynamicComponent;
@@ -19,8 +20,10 @@ import com.haixi.spacetime.databinding.FragmentCommentBinding;
 public class CommentFragment extends BasicFragment {
     private FragmentCommentBinding binding;
     private Dynamic dynamic;
-    public CommentFragment(Dynamic dynamic){
+    private String message;
+    public CommentFragment(Dynamic dynamic, String message){
         this.dynamic = dynamic;
+        this.message = message;
     }
     @Nullable
     @Override
@@ -28,8 +31,11 @@ public class CommentFragment extends BasicFragment {
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment,
                 null, false);
-        binding.fragmentCommentMainView.
-                addView(new DynamicComponent(getContext(), dynamic, null));
+        DynamicComponent dynamicComponent = new DynamicComponent(getContext(), dynamic, null);
+        binding.fragmentCommentMainView.addView(dynamicComponent);
+        TextView textView = new TextView(getContext());
+        textView.setText(message);
+        binding.fragmentCommentMainView.addView(textView);
         return binding.getRoot();
     }
 }

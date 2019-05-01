@@ -1,18 +1,9 @@
 package com.haixi.spacetime.Entity;
 
-import android.content.Context;
-
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.facade.service.SerializationService;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
-@Route(path = "/spaceTime/dynamic/json")
-public class Dynamic implements SerializationService {
+public class Dynamic{
     public int imageId = -1;
     public String imageUrls;
     public String content;
@@ -24,9 +15,13 @@ public class Dynamic implements SerializationService {
     public Circle circle;
     public User user;
 
+    public Dynamic(){
+        user = new User();
+        circle = new Circle();
+    }
+
+
     public static void setDynamic(Dynamic dynamic, JSONObject jsonObject) throws JSONException {
-        dynamic.user = new User();
-        dynamic.circle = new Circle();
         dynamic.commentCount = jsonObject.getInt("commentCount");
         dynamic.content = jsonObject.getString("content");
         dynamic.dynamicId = jsonObject.getInt("id");
@@ -42,23 +37,41 @@ public class Dynamic implements SerializationService {
         dynamic.user.userName = jsonObject.getString("publisherUsername");
     }
 
-    @Override
-    public <T> T json2Object(String input, Class<T> clazz) {
-        return null;
+    public String getJSONString(){
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("circle.name", circle.name);
+            jsonObject.put("circle.id", circle.id);
+            jsonObject.put("user.userName", user.userName);
+            jsonObject.put("user.phoneNumber", user.phoneNumber);
+            jsonObject.put("imageId",imageId);
+            jsonObject.put("content", content);
+            jsonObject.put("likeCount", likeCount);
+            jsonObject.put("dynamicId", dynamicId);
+            jsonObject.put("commentCount", commentCount);
+            jsonObject.put("publishTime", publishTime);
+            return jsonObject.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
-    @Override
-    public String object2Json(Object instance) {
-        return null;
-    }
-
-    @Override
-    public <T> T parseObject(String input, Type clazz) {
-        return null;
-    }
-
-    @Override
-    public void init(Context context) {
-
+    public static void getDynamic(Dynamic dynamic, String json){
+        try {
+            JSONObject object = new JSONObject(json);
+            dynamic.circle.name = object.getString("circle.name");
+            dynamic.circle.id = object.getInt("circle.id");
+            dynamic.user.userName = object.getString("user.userName");
+            dynamic.user.phoneNumber = object.getString("user.phoneNumber");
+            dynamic.imageId = object.getInt("imageId");
+            dynamic.content = object.getString("content");
+            dynamic.likeCount = object.getInt("likeCount");
+            dynamic.dynamicId = object.getInt("dynamicId");
+            dynamic.commentCount = object.getInt("commentCount");
+            dynamic.publishTime = object.getString("publishTime");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

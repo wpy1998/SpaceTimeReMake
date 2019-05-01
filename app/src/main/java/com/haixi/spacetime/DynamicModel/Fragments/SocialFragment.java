@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.Entity.Circle;
 import com.haixi.spacetime.Entity.User;
@@ -149,6 +150,17 @@ public class SocialFragment extends BasicFragment{
                 intent.putExtra("userTelephone", dynamicComponent.dynamic.user.phoneNumber);
                 intent.putExtra("userName", dynamicComponent.dynamic.user.userName);
                 startActivityForResult(intent, resultCode);
+            }
+        });
+
+        dynamicComponent.text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build("/spaceTime/dynamic")
+                        .withString("path", "comment")
+                        .withString("dynamic", dynamicComponent.dynamic.getJSONString())
+                        .navigation();
             }
         });
     }
