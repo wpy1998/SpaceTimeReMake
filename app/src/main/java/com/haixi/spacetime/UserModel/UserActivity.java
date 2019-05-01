@@ -46,29 +46,36 @@ public class UserActivity extends BasicActivity {
         choosePath(fragmentName, intentFront);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void choosePath(String path, Intent intent) {
         switch (path){
             case "changeUserMessage":
+                setStatusBarColor(this, R.color.colorWhite, true);
                 originFragment = new EditUserFragment();
                 replaceFragment(R.id.user_frameLayout);
                 break;
             case "feedback":
+                setStatusBarColor(this, R.color.colorWhite, true);
                 originFragment = new FeedbackFragment();
                 replaceFragment(R.id.user_frameLayout);
                 break;
             case "setting":
+                setStatusBarColor(this, R.color.colorWhite, true);
                 originFragment = new SettingFragment();
                 replaceFragment(R.id.user_frameLayout);
                 break;
             case "editName":
+                setStatusBarColor(this, R.color.colorWhite, true);
                 originFragment = new EditNameFragment();
                 replaceFragment(R.id.user_frameLayout);
                 break;
             case "editSign":
+                setStatusBarColor(this, R.color.colorWhite, true);
                 originFragment = new EditSignFragment();
                 replaceFragment(R.id.user_frameLayout);
                 break;
             case "user":
+                setStatusBarColor(this, R.color.colorBlue, false);
                 User user = new User();
                 user.phoneNumber = intent.getStringExtra("userTelephone");
                 user.userName = intent.getStringExtra("userName");

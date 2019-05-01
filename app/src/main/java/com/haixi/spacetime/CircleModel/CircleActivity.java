@@ -25,6 +25,7 @@ public class CircleActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,
                 R.layout.activity_circle);
+        setStatusBarColor(this, R.color.colorBlue, false);
 
         Intent intentFront = getIntent();
         String path = intentFront.getStringExtra("path");

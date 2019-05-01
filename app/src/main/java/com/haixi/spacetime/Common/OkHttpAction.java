@@ -338,6 +338,70 @@ public class OkHttpAction {
         }).start();
     }
 
+    //get获取动态的评论
+    public void getDynamicComments(final int id, final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    String url = web + "/circles/activities/" + id + "/comment";
+                    Request request = new Request.Builder()
+                            .addHeader("Authorization", token).url(url).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //post评论动态
+    public void commentInDynamic(final int id, final String comment, final int type,
+                                 final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder()
+                            .add("comment", comment).build();
+                    Request request = new Request.Builder().url(web + "/circles/activities/" + id
+                            + "/comment")
+                            .addHeader("Authorization", token).post(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //post点赞动态
+    public void likeDynamic(final int id, final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder().build();
+                    Request request = new Request.Builder().url(web + "/circles/activities/" + id
+                            + "/like")
+                            .addHeader("Authorization", token).post(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     //get获取查询的用户的动态
     public void getUserDynamic(final String phoneNumber, final int type, final String intentAction){
         new Thread(new Runnable() {

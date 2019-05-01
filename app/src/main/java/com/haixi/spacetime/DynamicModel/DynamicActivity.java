@@ -28,6 +28,7 @@ public class DynamicActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,
                 R.layout.activity_dynamic);
+        setStatusBarColor(this, R.color.colorWhite, true);
 
         Intent intentFront = getIntent();
         String path = intentFront.getStringExtra("path");
