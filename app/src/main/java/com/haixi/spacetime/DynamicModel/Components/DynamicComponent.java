@@ -1,6 +1,7 @@
 package com.haixi.spacetime.DynamicModel.Components;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
+import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
 
 import static com.haixi.spacetime.Entity.Cookies.owner;
@@ -20,35 +22,29 @@ import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 
-public class DynamicComponent extends LinearLayout
-        implements View.OnClickListener {
+public class DynamicComponent extends LinearLayout implements View.OnClickListener {
     private DynamicContentViewBinding binding;
     private Context context;
-    private LinearLayout titleView;
+    public LinearLayout titleView;
     private TextView userName, publishTime;
     private ImageView userImage;
     private boolean isLike = false;
-    private int likeNumber, commentNumber;
 
     public Dynamic dynamic;
 
-    public DynamicComponent(Context context, Dynamic dynamic){
+    public DynamicComponent(Context context, Dynamic dynamic, User user){
         super(context);
+        this.context = context;
         this.dynamic = dynamic;
-        if (this.dynamic == null) this.dynamic = new Dynamic(-1);
-        if (dynamic.user == null){
-            dynamic.user = new User();
-            dynamic.user.userId = -1;
-        }
-        initComponent(context);
-        if (dynamic.user.userId == owner.userId){
+        initComponent();
+        if (user != null && user.phoneNumber.equals(phoneNumber)){
             binding.dynamicContentViewMainView.removeView(titleView);
         }
     }
 
-    private void initComponent(Context context){
-        this.context = context;
+    private void initComponent(){
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.dynamic_content_view, this, true);
         titleView = binding.getRoot()
@@ -61,18 +57,17 @@ public class DynamicComponent extends LinearLayout
                 .findViewById(R.id.dynamicContentView_publishTime);
         drawView();
 
-        for (String tag: dynamic.tags){
-            addTag(tag);
-        }
+        addTag(dynamic.circle.name);
+
+        if (dynamic.imageId == -1) dynamic.imageId = R.drawable.william;
         userImage.setImageResource(dynamic.imageId);
-        userName.setText(dynamic.name);
+        userName.setText(dynamic.user.userName);
         binding.dynamicContentViewText.setText(dynamic.content);
-        publishTime.setText("1天前");
+        publishTime.setText(dynamic.publishTime);
 
         binding.dynamicContentViewLike.setOnClickListener(this);
         binding.dynamicContentViewComment.setOnClickListener(this);
         binding.dynamicContentViewText.setOnClickListener(this);
-        titleView.setOnClickListener(this);
     }
 
     @Override
@@ -83,23 +78,21 @@ public class DynamicComponent extends LinearLayout
                     isLike = false;
                     binding.dynamicContentViewLike.
                             setImageResource(R.drawable.ic_like);
-                    likeNumber--;
-                    binding.dynamicContentViewLikeNumber.setText("" + likeNumber);
+                    dynamic.likeCount--;
+                    binding.dynamicContentViewLikeNumber.setText("" + dynamic.likeCount);
                 }else {
                     isLike = true;
                     binding.dynamicContentViewLike.
                             setImageResource(R.drawable.ic_like_lighting);
-                    likeNumber++;
-                    binding.dynamicContentViewLikeNumber.setText("" + likeNumber);
+                    dynamic.likeCount++;
+                    binding.dynamicContentViewLikeNumber.setText("" + dynamic.likeCount);
                 }
                 break;
             case R.id.dynamicContentView_text:
-                break;
-            case R.id.dynamicContentView_titleView:
                 ARouter.getInstance()
-                        .build("/spaceTime/user")
-                        .withString("path", "user")
-                        .withInt("userId", dynamic.user.userId)
+                        .build("/spaceTime/dynamic")
+                        .withString("path", "comment")
+                        .withObject("dynamic", dynamic)
                         .navigation();
                 break;
             default:

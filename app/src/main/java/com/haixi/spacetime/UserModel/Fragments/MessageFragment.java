@@ -41,6 +41,10 @@ public class MessageFragment extends BasicFragment {
         return binding.getRoot();
     }
 
+    public void setUser(User user){
+        this.user = user;
+    }
+
     @Override
     public void refresh() {
         binding.fragmentMessageGraduationContent.setText(user.school + " | " + user.major);

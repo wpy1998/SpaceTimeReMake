@@ -211,8 +211,8 @@ public class OkHttpAction {
     }
 
     //post将用户添加至圈子中
-    public void addUserToCircle(final int circleId, final String phoneNumber, final String
-            qrCodeContext, final int type, final String intentAction){
+    public void addUserToCircle(final int circleId, final String qrCodeContext,
+                                final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -338,14 +338,96 @@ public class OkHttpAction {
         }).start();
     }
 
+    //get获取查询的用户的动态
+    public void getUserDynamic(final String phoneNumber, final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    String url = web + "/circles/activities/members/" + phoneNumber;
+                    Request request = new Request.Builder()
+                            .addHeader("Authorization", token).url(url).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     //get获取用户所属的社交圈的基础信息
-    public void getUserCircles(final int type, final String intentAction){
+    public void getUserCircles(final String phoneNumber, final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();
                     String url = web + "/users/" + phoneNumber + "/circles";
+                    Request request = new Request.Builder()
+                            .addHeader("Authorization", token).url(url).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //get获取用户在特定社交圈中可见的社交圈动态
+    public void getOwnerOneVisibleCircleDynamic(final int socialCircleId, final int type,
+                                       final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    String url = web + "/users/" + phoneNumber + "/circles/" + socialCircleId
+                            + "/visible-activities";
+                    Request request = new Request.Builder()
+                            .addHeader("Authorization", token).url(url).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //get获取所有用户加入的社交圈中可见的动态
+    public void getOwnerAllVisibleCircleDynamic(final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    String url = web + "/users/" + phoneNumber + "/circles/visible-activities";
+                    Request request = new Request.Builder()
+                            .addHeader("Authorization", token).url(url).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //get获取用户关注者的动态
+    public void getOwnerFollowUser(final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    String url = web + "/users/" + phoneNumber + "/following/activities";
                     Request request = new Request.Builder()
                             .addHeader("Authorization", token).url(url).build();
                     Response response = client.newCall(request).execute();

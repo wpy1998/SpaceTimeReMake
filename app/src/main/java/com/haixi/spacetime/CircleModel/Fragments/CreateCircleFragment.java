@@ -92,8 +92,8 @@ public class CreateCircleFragment extends BasicFragment implements View.OnClickL
                         ARouter.getInstance()
                                 .build("/spaceTime/circle")
                                 .withString("path", "circleMessage")
-                                .withString("name", name)
-                                .withInt("id", id)
+                                .withString("circleName", name)
+                                .withInt("circleId", id)
                                 .navigation();
                     }catch (Exception e){
                         e.printStackTrace();

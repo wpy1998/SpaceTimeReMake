@@ -3,7 +3,6 @@ package com.haixi.spacetime.Entity;
 import org.json.JSONObject;
 
 public class User {
-    public int userId;
     public String phoneNumber;
     public String gender;
     public String major;
@@ -21,7 +20,6 @@ public class User {
     public int imageId;
 
     public User(){
-        userId = -1;
         phoneNumber = null;
         avatar = null;
         gender = null;
@@ -41,7 +39,6 @@ public class User {
     public static void setMessage(String data, User user){
         try{
             JSONObject object1 = new JSONObject(data);
-            user.userId = object1.getInt("id");
             user.birthday = object1.getString("birthday");
             String year, month, day;
             year = user.birthday.substring(0, 4);

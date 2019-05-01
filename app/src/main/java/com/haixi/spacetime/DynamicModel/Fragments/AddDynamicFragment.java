@@ -29,6 +29,7 @@ import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 
 public class AddDynamicFragment extends BasicFragment implements View.OnClickListener {
     private FragmentAddDynamicBinding binding;
@@ -49,7 +50,7 @@ public class AddDynamicFragment extends BasicFragment implements View.OnClickLis
         userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
-        okHttpAction.getUserCircles(intentAction_getUserCircles, intentAction);
+        okHttpAction.getUserCircles(phoneNumber,intentAction_getUserCircles, intentAction);
         circle = new Circle();
         circle.id = -1;
 
@@ -105,9 +106,10 @@ public class AddDynamicFragment extends BasicFragment implements View.OnClickLis
                         JSONArray array = new JSONArray(circles);
                         for (int i = 0; i < array.length(); i++){
                             JSONObject jsonObject = array.getJSONObject(i);
-                            String circleName = jsonObject.getString("name");
-                            TagComponent tagComponent = new TagComponent(getContext(), circleName);
-                            tagComponent.circleId = jsonObject.getInt("id");
+                            Circle circle = new Circle();
+                            circle.name = jsonObject.getString("name");
+                            circle.id = jsonObject.getInt("id");
+                            TagComponent tagComponent = new TagComponent(getContext(), circle);
                             tagComponent.setIntent(intentAction, intentAction_circleName);
                             binding.fragmentAddDynamicCircle
                                     .addView(tagComponent);

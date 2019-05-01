@@ -1,5 +1,6 @@
 package com.haixi.spacetime.DynamicModel.Fragments;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.Others.Adapter.FragmentAdapter;
 import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.DynamicModel.DynamicActivity;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentDynamicBinding;
 
@@ -26,15 +28,17 @@ import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
 import static com.haixi.spacetime.Entity.Cookies.circleDynamics;
 import static com.haixi.spacetime.Entity.Cookies.initData;
-import static com.haixi.spacetime.Entity.Cookies.initDynamic;
 import static com.haixi.spacetime.Entity.Cookies.ownerDynamics;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Entity.Cookies.resultCode;
+import static com.haixi.spacetime.Entity.Cookies.token;
 
 public class DynamicFragment extends BasicFragment implements View.OnClickListener{
     private FragmentDynamicBinding binding;
     private FragmentAdapter fragmentAdapter;
-    private List<Fragment> fragments;
+    private List<BasicFragment> fragments;
     private ViewPager viewPager;
-    private Fragment collectionF;
+    private BasicFragment collectionF;
     private SocialFragment recommendF;
     @Nullable
     @Override
@@ -45,7 +49,7 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
         initData();
 
         viewPager = binding.getRoot().findViewById(R.id.fragment_topic_viewPager);
-        fragments = new ArrayList<Fragment>();
+        fragments = new ArrayList<BasicFragment>();
         recommendF = new SocialFragment();
         collectionF = new FollowFragment();
         fragments.add(recommendF);
@@ -86,6 +90,20 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        refresh();
+    }
+
+    @Override
+    public void refresh() {
+        if (token == null || recommendF == null){
+            return;
+        }
+        recommendF.refresh();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragmentDynamic_socialCircle:
@@ -99,10 +117,9 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.fragmentDynamic_add:
-                ARouter.getInstance()
-                        .build("/spaceTime/topic")
-                        .withString("path", "addDynamic")
-                        .navigation();
+                Intent intent = new Intent(getContext(), DynamicActivity.class);
+                intent.putExtra("path", "addDynamic");
+                startActivityForResult(intent, resultCode);
                 break;
             default:
                 Toast.makeText(getContext(), "waiting for coming true",

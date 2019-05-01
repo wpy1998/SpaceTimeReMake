@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.haixi.spacetime.Common.Settings.update;
+import static com.haixi.spacetime.Entity.Cookies.resultCode;
 
 public class BasicActivity extends AppCompatActivity {
     public static List<Activity> activityList0 = new ArrayList<Activity>();
@@ -80,6 +81,8 @@ public class BasicActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
+        Intent intent = new Intent();
+        this.setResult(resultCode, intent);
         super.finish();
         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
     }

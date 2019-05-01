@@ -9,11 +9,11 @@
             android:layout_height="match_parent"
             android:background="@color/colorBackGround">
             <include layout="@layout/title_fragment_user"/>
-            <RelativeLayout
+            <FrameLayout
                 android:id="@+id/fragment_user_mainView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </RelativeLayout>
+                android:layout_height="match_parent">
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 </layout>

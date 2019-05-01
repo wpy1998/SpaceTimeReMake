@@ -72,7 +72,7 @@ public class UserComponent extends LinearLayout {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(intentAction);
-                intent.putExtra("userId", user.userId);
+                intent.putExtra("userTelephone", user.phoneNumber);
                 getContext().sendBroadcast(intent);
             }
         });
@@ -84,8 +84,8 @@ public class UserComponent extends LinearLayout {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(intentAction)){
-                int data = intent.getIntExtra("userId", 0);
-                if (data == user.userId){
+                String data = intent.getStringExtra("userTelephone");
+                if (data.equals(user.phoneNumber)){
                     if (!isChoose) refresh();
                 }else {
                     if (isChoose) refresh();

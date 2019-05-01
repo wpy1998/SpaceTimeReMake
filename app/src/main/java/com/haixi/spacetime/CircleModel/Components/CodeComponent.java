@@ -2,6 +2,7 @@ package com.haixi.spacetime.CircleModel.Components;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
@@ -16,21 +17,24 @@ import static com.haixi.spacetime.Common.Settings.setTextSize;
 public class CodeComponent extends LinearLayout {
     private ComponentCodeBinding binding;
     private String name;
-    public CodeComponent(Context context, String name) {
+    private Bitmap bitmap;
+    public CodeComponent(Context context, String name, Bitmap bitmap) {
         super(context);
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.component_code, this, true);
         this.name = name;
+        this.bitmap = bitmap;
         drawComponent();
         initComponent();
     }
 
     private void initComponent(){
         binding.codeTheme.setText(name);
+        binding.codeImage.setImageBitmap(bitmap);
     }
 
     private void drawComponent(){
-        setHW(binding.codeImage, 160, 160);
+        setHW(binding.codeImage, 300, 300);
         setMargin(binding.codeImage, 0, 40, 0, 0, false);
 
         setH(binding.codeTheme, 36);

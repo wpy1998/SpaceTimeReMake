@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.haixi.spacetime.CircleModel.CircleActivity;
 import com.haixi.spacetime.CircleModel.Components.CircleComponent;
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.Common.OkHttpAction;
@@ -29,6 +30,8 @@ import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
+import static com.haixi.spacetime.Entity.Cookies.resultCode;
 
 public class CircleFragment extends BasicFragment implements View.OnClickListener {
     private FragmentCircleBinding binding;
@@ -49,8 +52,8 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
         okHttpAction = new OkHttpAction(getContext());
+        okHttpAction.getUserCircles(phoneNumber,intentAction_getUserCircles, intentAction);
 
-        okHttpAction.getUserCircles(intentAction_getUserCircles, intentAction);
         drawView();
         mainView = binding.getRoot().findViewById(R.id.titleSecondCircle_container);
 //        addCircle("吃鸡小分队");
@@ -65,28 +68,25 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
         return binding.getRoot();
     }
 
-    private void drawView() {
-        setH(binding.fragmentCircleTitle, 40);
-        setMargin(binding.fragmentCircleTitle, 15, 10, 0,
-                10, false);
-        setTextSize(binding.fragmentCircleTitle, 24);
+    @Override
+    public void refresh() {
+        okHttpAction = new OkHttpAction(getContext());
+        okHttpAction.getUserCircles(phoneNumber, intentAction_getUserCircles, intentAction);
+    }
 
-        setHW(binding.fragmentCircleAdd, 30, 30);
-        setMargin(binding.fragmentCircleAdd, 0, 15, 25,
-                15, false);
-
-        setMargin(binding.getRoot().findViewById(R.id.titleSecondCircle_container),
-                15, 0, 15, 0, false);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        refresh();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragmentCircle_add:
-                ARouter.getInstance()
-                        .build("/spaceTime/circle")
-                        .withString("path", "addCircle")
-                        .navigation();
+                Intent intent = new Intent(getContext(), CircleActivity.class);
+                intent.putExtra("path", "addCircle");
+                startActivityForResult(intent, resultCode);
                 break;
             default:
                 Toast.makeText(getContext(), "waiting for coming true",
@@ -120,9 +120,11 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
                             .withInt("circleId", circleId)
                             .navigation();
                     break;
+
                 case intentAction_getUserCircles:
                     data = intent.getStringExtra("data");
                     try {
+                        mainView.removeAllViews();
                         JSONObject object = new JSONObject(data);
                         String circles = object.getString("data");
                         JSONArray array = new JSONArray(circles);
@@ -137,9 +139,24 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
                         e.printStackTrace();
                     }
                     break;
+
                 default:
                     break;
             }
         }
+    }
+
+    private void drawView() {
+        setH(binding.fragmentCircleTitle, 40);
+        setMargin(binding.fragmentCircleTitle, 15, 10, 0,
+                10, false);
+        setTextSize(binding.fragmentCircleTitle, 24);
+
+        setHW(binding.fragmentCircleAdd, 30, 30);
+        setMargin(binding.fragmentCircleAdd, 0, 15, 25,
+                15, false);
+
+        setMargin(binding.getRoot().findViewById(R.id.titleSecondCircle_container),
+                15, 0, 15, 0, false);
     }
 }

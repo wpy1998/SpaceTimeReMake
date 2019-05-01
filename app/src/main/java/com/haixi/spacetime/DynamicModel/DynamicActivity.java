@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.BasicActivity;
 import com.haixi.spacetime.DynamicModel.Fragments.CommentFragment;
 import com.haixi.spacetime.DynamicModel.Fragments.FollowFragment;
+import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.DynamicModel.Fragments.AddDynamicFragment;
 import com.haixi.spacetime.databinding.ActivityDynamicBinding;
@@ -28,6 +31,9 @@ public class DynamicActivity extends BasicActivity {
         choosePath(path);
     }
 
+    @Autowired(name = "dynamic")
+    private Dynamic dynamic;
+
     private void choosePath(String path){
         switch (path){
             case "addDynamic":
@@ -38,7 +44,8 @@ public class DynamicActivity extends BasicActivity {
                 originFragment = new FollowFragment();
                 replaceFragment(R.id.topic_frameLayout);
             case "comment":
-                originFragment = new CommentFragment();
+                ARouter.getInstance().inject(this);
+                originFragment = new CommentFragment(dynamic);
                 replaceFragment(R.id.topic_frameLayout);
             default:
                 replaceFragment(R.id.topic_frameLayout);

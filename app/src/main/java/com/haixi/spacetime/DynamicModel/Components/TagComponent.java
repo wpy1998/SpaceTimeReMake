@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.haixi.spacetime.Entity.Circle;
 import com.haixi.spacetime.Entity.Cookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentTagBinding;
@@ -23,21 +24,20 @@ public class TagComponent extends LinearLayout{
     private boolean isChoosen;
     private String intentAction;
     private int intentAction_Type;
-    public int circleId;
     private IntentFilter intentFilter;
     private ControlBroadcastReceiver controlBroadcastReceiver;
 
-    private String name;
+    private Circle circle;
 
-    public TagComponent(Context context, String name) {
+    public TagComponent(Context context, Circle circle) {
         super(context);
         this.context = context;
         this.context = context;
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.component_tag, this, true);
         drawLinearLayout();
-        this.name = name;
-        binding.tagViewName.setText(name);
+        this.circle = circle;
+        binding.tagViewName.setText(circle.name);
 
         isChoosen = true;
         refresh();
@@ -51,7 +51,7 @@ public class TagComponent extends LinearLayout{
     }
 
     public String getName(){
-        return name;
+        return circle.name;
     }
 
     public void setIntent(String intentAction, int type){
@@ -72,8 +72,8 @@ public class TagComponent extends LinearLayout{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(intentAction);
-                intent.putExtra("name", name);
-                intent.putExtra("circleId", circleId);
+                intent.putExtra("name", circle.name);
+                intent.putExtra("circleId", circle.id);
                 intent.putExtra("type", intentAction_Type);
                 getContext().sendBroadcast(intent);
             }
@@ -96,7 +96,8 @@ public class TagComponent extends LinearLayout{
             String action = intent.getAction();
             if (action.equals(intentAction)){
                 String data = intent.getStringExtra("name");
-                if (name.equals(data)){
+                int circleId = intent.getIntExtra("circleId", -1);
+                if (circle.name.equals(data) && circleId == circle.id){
                     if (!isChoosen) refresh();
                 }else {
                     if (isChoosen) refresh();

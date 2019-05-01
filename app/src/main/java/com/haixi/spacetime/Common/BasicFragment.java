@@ -22,7 +22,7 @@ public class BasicFragment extends Fragment {
     public void refresh(){
     }
 
-    private static final int MIN_DELAY_TIME = 2000;
+    private static final int MIN_DELAY_TIME = 100;
     private long lastClickTime;
     public boolean isFastClick() {//false代表不是连续触屏
         boolean flag = true;

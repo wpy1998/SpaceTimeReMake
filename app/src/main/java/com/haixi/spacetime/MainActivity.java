@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.CircleModel.Fragments.CircleFragment;
@@ -39,10 +40,12 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
     private CircleFragment circle;
     private final String intentAction = "com.haixi.spacetime.MainActivity";
     private final int intentAction_getUserMessage = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+
         okHttpAction = new OkHttpAction(this);
         intentFilter = new IntentFilter();
         userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
@@ -67,13 +70,6 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         binding.mainB3.setOnClickListener(this);
 
         binding.mainBrowser.performClick();
-    }
-
-    public void refresh(int tag){
-        if (tag == 3){
-            binding.mainPersonal.performClick();
-            return;
-        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -106,6 +102,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person);
                 switchFragment(circle);
+                circle.refresh();
                 break;
             case R.id.main_personal:
                 fragmentName = "personal";
@@ -114,9 +111,6 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainPersonal.setImageResource(R.drawable.person_lighting);
                 personal.user = owner;
                 switchFragment(personal);
-                if (isFastClick()){
-                    return;
-                }
                 okHttpAction.getUserMessage(phoneNumber, intentAction_getUserMessage, intentAction);
                 break;
             case R.id.main_browser:
@@ -125,6 +119,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth_lighting);
                 binding.mainPersonal.setImageResource(R.drawable.person);
                 switchFragment(browser);
+                browser.refresh();
                 break;
             case R.id.main_b1:
                 binding.mainCircle.performClick();
@@ -140,7 +135,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         }
     }
 
-    private final int MIN_DELAY_TIME = 1000;
+    private final int MIN_DELAY_TIME = 100;
     private long lastClickTime;
     public boolean isFastClick() {//false代表不是连续触屏
         boolean flag = true;
@@ -169,7 +164,6 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                         JSONObject object = new JSONObject(data);
                         String data1 = object.getString("data");
                         setMessage(data1, owner);
-                        personal.refresh();
                     }catch (Exception e){
                         e.printStackTrace();
                     }

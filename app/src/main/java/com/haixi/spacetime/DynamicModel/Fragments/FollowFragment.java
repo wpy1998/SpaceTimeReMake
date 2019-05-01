@@ -36,64 +36,15 @@ public class FollowFragment extends BasicFragment {
         drawFragment();
         dynamics = new ArrayList<Dynamic>();
 
-        String s1 = "吃鸡党", s2 = "大社联", s3 = "俱乐部", s4 = "潮牌";
-        Dynamic dynamic1 = new Dynamic(0);
-        dynamic1.imageId = R.drawable.jack;
-        dynamic1.tags = new ArrayList<>();
-        dynamic1.tags.add(s1);
-        dynamic1.tags.add(s2);
-        dynamics.add(dynamic1);
-        addDynamicContent(dynamic1);
-
-        Dynamic dynamic2 = new Dynamic(0);
-        dynamic2.imageId = R.drawable.william;
-        dynamic2.tags = new ArrayList<>();
-        dynamic2.tags.add(s1);
-        dynamic2.tags.add(s3);
-        dynamics.add(dynamic2);
-        addDynamicContent(dynamic2);
-
-        Dynamic dynamic3 = new Dynamic(0);
-        dynamic3.imageId = R.drawable.daniel;
-        dynamic3.tags = new ArrayList<>();
-        dynamic3.tags.add(s1);
-        dynamic3.tags.add(s4);
-        dynamics.add(dynamic3);
-        addDynamicContent(dynamic3);
-
-        Dynamic dynamic4 = new Dynamic(0);
-        dynamic4.imageId = R.drawable.jack;
-        dynamic4.tags = new ArrayList<>();
-        dynamic4.tags.add(s2);
-        dynamic4.tags.add(s3);
-        dynamics.add(dynamic4);
-        addDynamicContent(dynamic4);
-
-        Dynamic dynamic5 = new Dynamic(0);
-        dynamic5.imageId = R.drawable.william;
-        dynamic5.tags = new ArrayList<>();
-        dynamic5.tags.add(s2);
-        dynamic5.tags.add(s4);
-        dynamics.add(dynamic5);
-        addDynamicContent(dynamic5);
-
-        Dynamic dynamic6 = new Dynamic(0);
-        dynamic6.imageId = R.drawable.daniel;
-        dynamic6.tags = new ArrayList<>();
-        dynamic6.tags.add(s3);
-        dynamic6.tags.add(s4);
-        dynamics.add(dynamic6);
-        addDynamicContent(dynamic6);
-
         User all = new User();
-        all.userId = 0;
+        all.phoneNumber = "aaaa0";
         UserComponent allComponent = new UserComponent(getContext(), all);
         allComponent.setImage(R.drawable.ic_user_all);
         allComponent.setIntent(intentAction);
         binding.fragmentFollowUserView.addView(allComponent);
         for (int i = 1; i < 10; i++){
             User user = new User();
-            user.userId = i;
+            user.phoneNumber = "aaaa" + i;
             UserComponent userComponent = new UserComponent(getContext(), user);
             userComponent.setIntent(intentAction);
             binding.fragmentFollowUserView.addView(userComponent);
@@ -103,7 +54,7 @@ public class FollowFragment extends BasicFragment {
     }
 
     private void addDynamicContent(Dynamic dynamic){
-        DynamicComponent dynamicComponent = new DynamicComponent(getContext(),dynamic);
+        DynamicComponent dynamicComponent = new DynamicComponent(getContext(),dynamic, null);
         dynamics.add(dynamic);
         binding.fragmentFollowMainView.addView(dynamicComponent);
     }

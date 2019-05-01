@@ -111,7 +111,8 @@ public class CircleComponent extends LinearLayout {
                             ARouter.getInstance()
                                     .build("/spaceTime/user")
                                     .withString("path", "user")
-                                    .withInt("userId", user.userId)
+                                    .withString("userTelephone", user.phoneNumber)
+                                    .withString("userName", user.userName)
                                     .navigation();
                         }
                     });

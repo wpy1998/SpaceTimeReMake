@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Common.Others.FileOperation;
 import com.haixi.spacetime.Common.OkHttpAction;
+import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.databinding.FragmentCompleteMessageBinding;
@@ -70,6 +71,7 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_complete_message_nextPage:
+                owner = new User();
                 owner.userName = binding.fragmentCompleteMessageName.getText().toString();
                 owner.gender = gender.getText().toString();
                 owner.birthday = binding.fragmentCompleteMessageTime.getText().toString();
@@ -105,7 +107,7 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
                                 year = calendar.get(Calendar.YEAR);
                                 month = calendar.get(Calendar.MONTH);
                                 dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                                time.setText(year + "年" + (month + 1) + "月" + dayOfMonth + "日");
+                                time.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                             }
                         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH));

@@ -74,14 +74,6 @@ public class LoginBeginFragment extends BasicFragment implements View.OnClickLis
         String password1 = pref.getString("password", "");
         binding.loginTelephoneNumber.setText(account1);
         binding.loginPassword.setText(password1);
-        binding.loginTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance()
-                        .build("/spaceTime/forbidden")
-                        .navigation();
-            }
-        });
 
         return binding.getRoot();
     }

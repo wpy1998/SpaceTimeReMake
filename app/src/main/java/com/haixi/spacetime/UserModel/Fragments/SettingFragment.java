@@ -24,13 +24,17 @@ import com.haixi.spacetime.UserModel.Components.TurnComponent;
 import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.FragmentSettingBinding;
 
+import org.json.JSONObject;
+
 import static com.haixi.spacetime.Common.BasicActivity.closeCUT;
 import static com.haixi.spacetime.Entity.Cookies.initCookies;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
+import static com.haixi.spacetime.Entity.User.setMessage;
 
 public class SettingFragment extends BasicFragment implements
         View.OnClickListener {
@@ -41,7 +45,7 @@ public class SettingFragment extends BasicFragment implements
     private ChooseComponent openNotification;
 
     private final String intentAction = "com.example.spacetime.UserModel.Fragments.SettingFragment";
-    private final int intentAction_exitAccount = 1;
+    private final int intentAction_exitAccount = 1, intentAction_getOwnerMessage = 2;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
@@ -52,8 +56,6 @@ public class SettingFragment extends BasicFragment implements
         userInfoBroadcastReceiver = new UserBroadcastReceiver();
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
-
-        okHttpAction = new OkHttpAction(getContext());
 
         title = binding.getRoot().findViewById(R.id.fragment_setting_title);
         back = binding.getRoot().findViewById(R.id.fragment_setting_back);
@@ -122,6 +124,13 @@ public class SettingFragment extends BasicFragment implements
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        okHttpAction = new OkHttpAction(getContext());
+        okHttpAction.getUserMessage(phoneNumber, intentAction_getOwnerMessage, intentAction);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_setting_exit:
@@ -132,6 +141,40 @@ public class SettingFragment extends BasicFragment implements
                 break;
             default:
                 break;
+        }
+    }
+
+    private class UserBroadcastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction(), data;
+            if (!action.equals(intentAction)){
+                return;
+            }
+            int type = intent.getIntExtra("type", 0);
+            switch (type){
+                case intentAction_exitAccount:
+                    if (isFastClick()) return;
+                    ARouter.getInstance()
+                            .build("/spaceTime/start")
+                            .withInt("type", 1)
+                            .navigation();
+                    initCookies();
+                    closeCUT();
+                    break;
+                case intentAction_getOwnerMessage:
+                    data = intent.getStringExtra("data");
+                    try{
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        setMessage(data1, owner);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -157,29 +200,5 @@ public class SettingFragment extends BasicFragment implements
 
         TextView theme = title.findViewById(R.id.fragment_setting_title);
         setTextSize(theme, 30);
-    }
-
-    private class UserBroadcastReceiver extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (!action.equals(intentAction)){
-                return;
-            }
-            int type = intent.getIntExtra("type", 0);
-            switch (type){
-                case intentAction_exitAccount:
-                    if (isFastClick()) return;
-                    ARouter.getInstance()
-                            .build("/spaceTime/start")
-                            .withInt("type", 1)
-                            .navigation();
-                    initCookies();
-                    closeCUT();
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 }

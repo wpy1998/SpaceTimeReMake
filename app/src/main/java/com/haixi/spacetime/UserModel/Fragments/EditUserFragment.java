@@ -1,6 +1,9 @@
 package com.haixi.spacetime.UserModel.Fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +22,8 @@ import com.haixi.spacetime.UserModel.Components.EditUserComponent;
 import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.FragmentEditUserBinding;
 
+import org.json.JSONObject;
+
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.getPx;
@@ -26,12 +31,15 @@ import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
 import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
+import static com.haixi.spacetime.Entity.User.setMessage;
 
 public class EditUserFragment extends BasicFragment implements View.OnClickListener {
     private FragmentEditUserBinding binding;
     private TextView save, title;
     private ImageView back;
     private EditUserComponent userImage, userName, userAge, userArea, userSign;
+    private final String intentAction = "com.haixi.spacetime.UserModel.Fragments.EditUserFragment";
+    private final int intentAction_changeUserMessage = 1;
 
     @Nullable
     @Override
@@ -39,7 +47,10 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
             container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_user,
                 null, false);
-        okHttpAction = new OkHttpAction(getContext());
+        intentFilter = new IntentFilter();
+        userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
+        intentFilter.addAction(intentAction);
+        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
 
         title = binding.getRoot().findViewById(R.id.fragmentEditUser_title);
         save = binding.getRoot().findViewById(R.id.fragmentEditUser_save);
@@ -105,13 +116,38 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
                 getActivity().finish();
                 break;
             case R.id.fragmentEditUser_save:
-                UserActivity userActivity = (UserActivity) getActivity();
-                String intentAction1 = userActivity.getIntentAction();
-                okHttpAction.changeUserMessage(0, intentAction1);
-                Toast.makeText(getContext(), "用户信息已保存", Toast.LENGTH_SHORT).show();
+                okHttpAction = new OkHttpAction(getContext());
+                okHttpAction.changeUserMessage(intentAction_changeUserMessage, intentAction);
                 break;
             default:
                 break;
+        }
+    }
+
+    private class UserInfoBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction(), data;
+            if (!action.equals(intentAction)){
+                return;
+            }
+            int type = intent.getIntExtra("type", 0);
+            switch (type){
+                case intentAction_changeUserMessage:
+                    data = intent.getStringExtra("data");
+                    try{
+                        JSONObject object = new JSONObject(data);
+                        String data1 = object.getString("data");
+                        setMessage(data1, owner);
+                        Toast.makeText(getContext(), "用户信息已保存", Toast.LENGTH_SHORT).show();
+                        getActivity().finish();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

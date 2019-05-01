@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.haixi.spacetime.CircleModel.Components.CircleComponent;
 import com.haixi.spacetime.CircleModel.Components.CodeComponent;
+import com.haixi.spacetime.CircleModel.ZXingUtils;
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.Entity.Circle;
@@ -32,6 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setMargin;
@@ -47,7 +50,9 @@ public class CircleMessageFragment extends BasicFragment implements View.OnClick
     private CodeComponent codeComponent;
     private final String intentAction = "com.haixi.spacetime.CircleModel.Fragments." +
             "CircleMessageFragment";
-    private final int intentAction_getCircleUserData = 1;
+    private final int intentAction_getCircleUserData = 1, intentAction_QRContent = 2;
+    private Bitmap bitmap = null;
+    private String qrContent = null;
 
     private List<User> users;
 
@@ -71,6 +76,7 @@ public class CircleMessageFragment extends BasicFragment implements View.OnClick
         drawFragment();
         users = new ArrayList<User>();
         okHttpAction.getCircleUserMessage(circle.id, intentAction_getCircleUserData, intentAction);
+        okHttpAction.getCodeMessage(circle.id, intentAction_QRContent, intentAction);
         refresh();
 
         binding.circleMessageBack.setOnClickListener(this);
@@ -93,7 +99,8 @@ public class CircleMessageFragment extends BasicFragment implements View.OnClick
                 getActivity().finish();
                 break;
             case R.id.circleMessage_right:
-                codeComponent = new CodeComponent(getContext(), circle.name);
+                if (bitmap == null) return;
+                codeComponent = new CodeComponent(getContext(), circle.name, bitmap);
                 builder = new AlertDialog.Builder(getContext());
                 builder.setView(codeComponent);
                 builder.show();
@@ -135,6 +142,24 @@ public class CircleMessageFragment extends BasicFragment implements View.OnClick
                         e.printStackTrace();
                     }
                     break;
+
+                case intentAction_QRContent:
+                    try {
+                        data = intent.getStringExtra("data");
+                        JSONObject jsonObject = new JSONObject(data);
+                        qrContent = jsonObject.getString("data");
+                        JSONObject object = new JSONObject();
+                        object.put("QRContent", qrContent);
+                        object.put("circleId", circle.id);
+                        object.put("circleName", circle.name);
+                        String message = object.toString();
+                        bitmap = ZXingUtils.createQRImage(message,
+                                getPx(300), getPx(300));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+
                 default:
                     break;
             }
