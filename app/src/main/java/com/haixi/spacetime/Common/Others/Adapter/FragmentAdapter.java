@@ -5,12 +5,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.DynamicModel.Fragments.SocialFragment;
 
 import java.util.List;
 
 public class FragmentAdapter extends FragmentStatePagerAdapter {
-    private List<BasicFragment> fragments;
-    public FragmentAdapter(FragmentManager fm, List<BasicFragment> fragments) {
+    private List<SocialFragment> fragments;
+    public FragmentAdapter(FragmentManager fm, List<SocialFragment> fragments) {
         super(fm);
         this.fragments = fragments;
     }

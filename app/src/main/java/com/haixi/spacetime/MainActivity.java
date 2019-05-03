@@ -58,7 +58,6 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         circle = new CircleFragment();
         personal = new UserFragment(owner);
         originFragment = browser;
-        replaceFragment(R.id.main_fragment);
         activityList1.add(this);
         drawActivity();
 
@@ -73,18 +72,26 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    void switchFragment(BasicFragment fragment){
+    void switchFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragment != originFragment){
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            if (!fragment.isAdded()){
-                transaction.hide(originFragment).add(R.id.main_fragment,fragment);
-            }else {
-                transaction.hide(originFragment).show(fragment);
-            }
-            transaction.commitAllowingStateLoss();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        if (!browser.isAdded()){
+            transaction.add(R.id.main_fragment, browser);
         }
-        originFragment = fragment;
+        if (!personal.isAdded()){
+            transaction.add(R.id.main_fragment, personal);
+        }
+        if (!circle.isAdded()){
+            transaction.add(R.id.main_fragment, circle);
+        }
+        if (originFragment == browser){
+            transaction.hide(personal).hide(circle).show(browser);
+        }else if (originFragment == circle){
+            transaction.hide(personal).hide(browser).show(circle);
+        }else {
+            transaction.hide(browser).hide(circle).show(personal);
+        }
+        transaction.commitAllowingStateLoss();
         if (originFragment != browser){
             setStatusBarColor(this, R.color.colorBlue, false);
         }else {
@@ -101,7 +108,8 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainCircle.setImageResource(R.drawable.ic_talk_lighting);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                switchFragment(circle);
+                originFragment = circle;
+                switchFragment();
                 circle.refresh();
                 break;
             case R.id.main_personal:
@@ -110,7 +118,8 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person_lighting);
                 personal.user = owner;
-                switchFragment(personal);
+                originFragment = personal;
+                switchFragment();
                 okHttpAction.getUserMessage(phoneNumber, intentAction_getUserMessage, intentAction);
                 break;
             case R.id.main_browser:
@@ -118,7 +127,8 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainCircle.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth_lighting);
                 binding.mainPersonal.setImageResource(R.drawable.person);
-                switchFragment(browser);
+                originFragment = browser;
+                switchFragment();
                 browser.refresh();
                 break;
             case R.id.main_b1:
@@ -164,6 +174,8 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                         JSONObject object = new JSONObject(data);
                         String data1 = object.getString("data");
                         setMessage(data1, owner);
+                        personal.setUser(owner);
+                        personal.refresh();
                     }catch (Exception e){
                         e.printStackTrace();
                     }

@@ -35,10 +35,10 @@ public class CodeComponent extends LinearLayout {
 
     private void drawComponent(){
         setHW(binding.codeImage, 300, 300);
-        setMargin(binding.codeImage, 0, 40, 0, 0, false);
+        setMargin(binding.codeImage, 0, 0, 0, 0, false);
 
         setH(binding.codeTheme, 36);
-        setMargin(binding.codeTheme, 0, 15, 0, 40, true);
+        setMargin(binding.codeTheme, 0, 0, 0, 30, true);
         setTextSize(binding.codeTheme, 25);
 
         setHW(binding.codeDownImage, 30, 30);

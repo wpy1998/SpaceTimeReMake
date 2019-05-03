@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -20,14 +19,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.haixi.spacetime.CircleImageView;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.Entity.User;
-import com.haixi.spacetime.DynamicModel.Fragments.SocialFragment;
 import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.MainActivity;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.FragmentUserBinding;
@@ -52,7 +48,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     private ImageView gender;
     private CircleImageView image;
 
-    private SocialFragment userDynamic;
+    private UserDynamicFragment userDynamic;
     private MessageFragment userMessage;
     public User user;
     private boolean isFollow;
@@ -87,7 +83,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         image = binding.getRoot().findViewById(R.id.fragment_user_image);
         gender = binding.getRoot().findViewById(R.id.fragment_user_gender);
 
-        userDynamic = new SocialFragment(user);
+        userDynamic = new UserDynamicFragment(user);
         userMessage = new MessageFragment(user);
 
         drawFragment();
@@ -123,14 +119,18 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         }
     }
 
-    private void replaceFragment(BasicFragment fragment){
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    private void switchFragment(BasicFragment fragment){
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         if (!userMessage.isAdded()){
-            transaction.add(R.id.fragment_user_mainView, userMessage);
+            transaction.add(R.id.fragment_user_mainView, userMessage).hide(userMessage);
         }
         if (!userDynamic.isAdded()){
-            transaction.add(R.id.fragment_user_mainView, userDynamic);
+            transaction.add(R.id.fragment_user_mainView, userDynamic).hide(userDynamic);
         }
         if (fragment == userDynamic){
             transaction.hide(userMessage).show(fragment);
@@ -160,12 +160,12 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
             case R.id.fragment_user_dynamic:
                 dynamic.setTextColor(getResources().getColor(R.color.colorBlue));
                 message.setTextColor(getResources().getColor(R.color.colorBlack));
-                replaceFragment(userDynamic);
+                switchFragment(userDynamic);
                 break;
             case R.id.fragment_user_message:
                 dynamic.setTextColor(getResources().getColor(R.color.colorBlack));
                 message.setTextColor(getResources().getColor(R.color.colorBlue));
-                replaceFragment(userMessage);
+                switchFragment(userMessage);
                 break;
             default:
                 break;

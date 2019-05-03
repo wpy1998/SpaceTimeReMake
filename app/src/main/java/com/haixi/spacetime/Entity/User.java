@@ -20,19 +20,19 @@ public class User {
     public int imageId;
 
     public User(){
-        phoneNumber = null;
-        avatar = null;
-        gender = null;
-        major = null;
-        comeFrom = null;
+        phoneNumber = "";
+        avatar = "";
+        gender = "";
+        major = "";
+        comeFrom = "";
 //        birthday = null;
-        interests = null;
-        profession = null;
-        position = null;
-        school = null;
-        userName = null;
-        labels = null;
-        signature = null;
+        interests = "";
+        profession = "";
+        position = "";
+        school = "";
+        userName = "";
+        labels = "";
+        signature = "";
         imageId = 0;
     }
 

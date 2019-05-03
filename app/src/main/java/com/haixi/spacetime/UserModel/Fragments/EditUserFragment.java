@@ -4,8 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.Common.OkHttpAction;
+import com.haixi.spacetime.Common.Others.FileOperation;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Components.EditUserComponent;
 import com.haixi.spacetime.UserModel.UserActivity;
@@ -91,8 +95,40 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
             }
         });
 
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //设定结果返回
+                startActivityForResult(i, 2);
+            }
+        });
+
         refresh();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("resultCode = " + requestCode + ", resultCode = " + resultCode);
+        if (requestCode == 2 && resultCode == -1){
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            //获取选择照片的数据视图
+            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            //从数据视图中获取已选择图片的路径
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            System.out.println("picturePath = " + picturePath);
+            cursor.close();
+            FileOperation.setBitmap(picturePath);
+            userImage.setImage(FileOperation.bitmap);
+        }
+        refresh();
     }
 
     @Override
@@ -101,12 +137,6 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
         userAge.setContent(owner.birthday);
         userArea.setContent(owner.comeFrom);
         userSign.setContent(owner.signature);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        refresh();
     }
 
     @Override

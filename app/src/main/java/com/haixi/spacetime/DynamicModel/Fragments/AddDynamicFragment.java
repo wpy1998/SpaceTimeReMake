@@ -109,7 +109,7 @@ public class AddDynamicFragment extends BasicFragment implements View.OnClickLis
                             Circle circle = new Circle();
                             circle.name = jsonObject.getString("name");
                             circle.id = jsonObject.getInt("id");
-                            TagComponent tagComponent = new TagComponent(getContext(), circle);
+                            TagComponent tagComponent = new TagComponent(getContext(), circle, i);
                             tagComponent.setIntent(intentAction, intentAction_circleName);
                             binding.fragmentAddDynamicCircle
                                     .addView(tagComponent);

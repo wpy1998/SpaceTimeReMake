@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -28,11 +30,12 @@ public class TagComponent extends LinearLayout{
     private ControlBroadcastReceiver controlBroadcastReceiver;
 
     private Circle circle;
+    private int size;
 
-    public TagComponent(Context context, Circle circle) {
+    public TagComponent(Context context, Circle circle, int size) {
         super(context);
         this.context = context;
-        this.context = context;
+        this.size = size;
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.component_tag, this, true);
         drawLinearLayout();
@@ -75,6 +78,7 @@ public class TagComponent extends LinearLayout{
                 intent.putExtra("name", circle.name);
                 intent.putExtra("circleId", circle.id);
                 intent.putExtra("type", intentAction_Type);
+                intent.putExtra("size", size);
                 getContext().sendBroadcast(intent);
             }
         });

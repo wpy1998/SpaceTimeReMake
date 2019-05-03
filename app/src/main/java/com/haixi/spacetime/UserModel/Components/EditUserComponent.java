@@ -2,6 +2,7 @@ package com.haixi.spacetime.UserModel.Components;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
@@ -32,6 +33,11 @@ public class EditUserComponent extends LinearLayout {
 
     public void setImage(int imageId){
         binding.componentEditUserImage.setImageResource(imageId);
+        isSetImage = true;
+    }
+
+    public void setImage(Bitmap bitmap){
+        binding.componentEditUserImage.setImageBitmap(bitmap);
         isSetImage = true;
     }
 

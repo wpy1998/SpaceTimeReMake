@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.DynamicModel.Components.DynamicComponent;
-import com.haixi.spacetime.DynamicModel.Components.UserComponent;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
@@ -35,21 +34,6 @@ public class FollowFragment extends BasicFragment {
                 null, false);
         drawFragment();
         dynamics = new ArrayList<Dynamic>();
-
-        User all = new User();
-        all.phoneNumber = "aaaa0";
-        UserComponent allComponent = new UserComponent(getContext(), all);
-        allComponent.setImage(R.drawable.ic_user_all);
-        allComponent.setIntent(intentAction);
-        binding.fragmentFollowUserView.addView(allComponent);
-        for (int i = 1; i < 10; i++){
-            User user = new User();
-            user.phoneNumber = "aaaa" + i;
-            UserComponent userComponent = new UserComponent(getContext(), user);
-            userComponent.setIntent(intentAction);
-            binding.fragmentFollowUserView.addView(userComponent);
-        }
-        allComponent.performClick();
         return binding.getRoot();
     }
 

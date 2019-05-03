@@ -29,15 +29,6 @@ public class Cookies {
     public static List<String> tags;
     public static int currentUserId;
 
-    private static boolean isReset = false;
-
-    public static void initData(){
-        if (isReset){
-            return;
-        }
-        isReset = true;
-    }
-
     public static boolean isExistTag(String tag){
         for (String tag1: tags){
             if (tag.equals(tag1)){
