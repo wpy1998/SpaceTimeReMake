@@ -134,6 +134,7 @@ public class SettingFragment extends BasicFragment implements
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_setting_exit:
+                okHttpAction = new OkHttpAction(getContext());
                 okHttpAction.exitAccount(intentAction_exitAccount, intentAction);
                 break;
             case R.id.fragment_setting_back:

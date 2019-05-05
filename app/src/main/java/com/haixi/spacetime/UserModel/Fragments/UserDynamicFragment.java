@@ -34,7 +34,6 @@ import java.util.List;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.setW;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
-import static com.haixi.spacetime.Entity.Cookies.resultCode;
 import static com.haixi.spacetime.Entity.Cookies.token;
 import static com.haixi.spacetime.Entity.Dynamic.setDynamic;
 
@@ -50,7 +49,6 @@ public class UserDynamicFragment extends BasicFragment {
 
     public UserDynamicFragment(User user){
         this.user = user;
-        intentAction = intentAction + "." + user.phoneNumber;
     }
 
     @Nullable
@@ -59,16 +57,14 @@ public class UserDynamicFragment extends BasicFragment {
             container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_dynamic,
                 null, false);
-        drawFragment();
-        okHttpAction = new OkHttpAction(getContext());
+        intentAction = intentAction + "." + user.phoneNumber;
         userInfoBroadcastReceiver = new ControlBroadcastReceiver();
         intentFilter = new IntentFilter();
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
+        drawFragment();
         dynamics = new ArrayList<>();
         tags = new ArrayList<>();
-        okHttpAction.getUserDynamic(phoneNumber, intentAction_getDynamic, intentAction);
-
         refresh();
         return binding.getRoot();
     }
@@ -76,12 +72,11 @@ public class UserDynamicFragment extends BasicFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        refresh();
     }
 
     @Override
     public void refresh() {
-        if (token == null){
+        if (token.equals(null)){
             return;
         }
         okHttpAction = new OkHttpAction(getContext());
@@ -92,13 +87,6 @@ public class UserDynamicFragment extends BasicFragment {
             okHttpAction.getUserCircles(user.phoneNumber, intentAction_getCircle, intentAction);
             okHttpAction.getUserDynamic(user.phoneNumber, intentAction_getDynamic, intentAction);
         }
-    }
-
-    public void setUser(User user){
-        if (this.user == null)
-            return;
-        this.user = user;
-        refresh();
     }
 
     private void refreshDynamic(){

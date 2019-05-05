@@ -46,14 +46,8 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
-        okHttpAction = new OkHttpAction(this);
-        intentFilter = new IntentFilter();
-        userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
-        intentFilter.addAction(intentAction);
-        registerReceiver(userInfoBroadcastReceiver, intentFilter);
-        okHttpAction.getUserMessage(phoneNumber, intentAction_getUserMessage, intentAction);
-
         closeL_R_W();
+        owner.phoneNumber = phoneNumber;
         browser = new DynamicFragment();
         circle = new CircleFragment();
         personal = new UserFragment(owner);
@@ -117,10 +111,10 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainCircle.setImageResource(R.drawable.ic_talk);
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person_lighting);
-                personal.user = owner;
                 originFragment = personal;
+                personal.refresh();
                 switchFragment();
-                okHttpAction.getUserMessage(phoneNumber, intentAction_getUserMessage, intentAction);
+//                okHttpAction.getUserMessage(phoneNumber, intentAction_getUserMessage, intentAction);
                 break;
             case R.id.main_browser:
                 fragmentName = "browser";
@@ -142,47 +136,6 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 break;
             default:
                 break;
-        }
-    }
-
-    private final int MIN_DELAY_TIME = 100;
-    private long lastClickTime;
-    public boolean isFastClick() {//false代表不是连续触屏
-        boolean flag = true;
-        long currentClickTime = System.currentTimeMillis();
-        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
-            flag = false;
-        }
-        lastClickTime = currentClickTime;
-        return flag;
-    }
-
-    private class UserInfoBroadcastReceiver extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction(), data;
-            if (!action.equals(intentAction)){
-                return;
-            }
-
-            int type = intent.getIntExtra("type", 0);
-            switch (type){
-                case intentAction_getUserMessage:
-                    data = intent.getStringExtra("data");
-                    try{
-                        JSONObject object = new JSONObject(data);
-                        String data1 = object.getString("data");
-                        setMessage(data1, owner);
-                        personal.setUser(owner);
-                        personal.refresh();
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
-                default:
-                    break;
-            }
         }
     }
 

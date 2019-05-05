@@ -1,4 +1,4 @@
-package com.haixi.spacetime.Common.Others;
+package com.haixi.spacetime.Common;
 
 import android.content.Context;
 import android.graphics.Bitmap;

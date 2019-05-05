@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haixi.spacetime.CircleImageView;
 import com.haixi.spacetime.Common.OkHttpAction;
@@ -53,11 +54,11 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     public User user;
     private boolean isFollow;
     private String intentAction = "com.haixi.spacetime.UserModel.Fragments.UserFragment";
-    private final int intentAction_getUserMessage = 1;
+    private final int intentAction_getUserMessage = 1, intentAction_isFollowing = 2,
+        intentAction_followed = 3;
 
     public UserFragment(User user){
         this.user = user;
-        intentAction = intentAction + "." + user.phoneNumber;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -67,10 +68,13 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user,
                 null, false);
+        intentAction = intentAction + "." + user.phoneNumber;
         intentFilter = new IntentFilter();
         userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
+        okHttpAction = new OkHttpAction(getContext());
+        okHttpAction.getUserMessage(user.phoneNumber, intentAction_getUserMessage, intentAction);
 
         setting = binding.getRoot().findViewById(R.id.fragment_user_setting);
         dynamic = binding.getRoot().findViewById(R.id.fragment_user_dynamic);
@@ -83,12 +87,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         image = binding.getRoot().findViewById(R.id.fragment_user_image);
         gender = binding.getRoot().findViewById(R.id.fragment_user_gender);
 
-        userDynamic = new UserDynamicFragment(user);
-        userMessage = new MessageFragment(user);
-
         drawFragment();
-        okHttpAction = new OkHttpAction(getContext());
-        okHttpAction.getUserMessage(user.phoneNumber, intentAction_getUserMessage, intentAction);
         setting.setOnClickListener(this);
         dynamic.setOnClickListener(this);
         message.setOnClickListener(this);
@@ -99,46 +98,45 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        okHttpAction = new OkHttpAction(getContext());
         okHttpAction.getUserMessage(user.phoneNumber, intentAction_getUserMessage, intentAction);
     }
 
     @Override
     public void refresh() {
-        if (!user.phoneNumber.equals(phoneNumber)){
-            userDynamic.setUser(user);
-            userMessage.setUser(user);
-            setting.setText("未关注");
-            name.setText(user.userName);
-            ageLocation.setText(user.comeFrom);
-            isFollow = false;
-        }else {
+        if (user.phoneNumber.equals(phoneNumber)){
             setting.setText("用户设置");
             name.setText(owner.userName);
             ageLocation.setText(owner.comeFrom);
+        }else {
+            if (user.isFollowing){
+                setting.setText("已关注");
+            }else {
+                setting.setText("未关注");
+            }
+            name.setText(user.userName);
+            ageLocation.setText(user.comeFrom);
+            isFollow = false;
         }
-    }
-
-    public void setUser(User user){
-        this.user = user;
     }
 
     private void switchFragment(BasicFragment fragment){
+        if (fragment == null){
+            return;
+        }
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         if (!userMessage.isAdded()){
-            transaction.add(R.id.fragment_user_mainView, userMessage).hide(userMessage);
+            transaction.add(R.id.fragment_user_mainView, userMessage);
         }
         if (!userDynamic.isAdded()){
-            transaction.add(R.id.fragment_user_mainView, userDynamic).hide(userDynamic);
+            transaction.add(R.id.fragment_user_mainView, userDynamic);
         }
         if (fragment == userDynamic){
-            transaction.hide(userMessage).show(fragment);
+            transaction.hide(userMessage).show(userDynamic);
         }else {
-            transaction.hide(userDynamic).show(fragment);
+            transaction.hide(userDynamic).show(userMessage);
         }
         transaction.commitAllowingStateLoss();
-        fragment.refresh();
     }
 
     @Override
@@ -149,12 +147,8 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                     Intent intent = new Intent(getActivity(), UserActivity.class);
                     intent.putExtra("path", "setting");
                     startActivityForResult(intent, resultCode);
-                }else if(!isFollow){
-                    setting.setText("已关注");
-                    isFollow = true;
-                }else {
-                    setting.setText("未关注");
-                    isFollow = false;
+                }else{
+                    okHttpAction.followUser(user.phoneNumber, intentAction_followed, intentAction);
                 }
                 break;
             case R.id.fragment_user_dynamic:
@@ -186,12 +180,51 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                     try{
                         JSONObject object = new JSONObject(data);
                         String data1 = object.getString("data");
-                        setMessage(data1, user);
+                        if (user.phoneNumber.equals(owner.phoneNumber)){
+                            setMessage(data1, owner);
+                            user = owner;
+                        } else {
+                            setMessage(data1, user);
+                        }
+                        userDynamic = new UserDynamicFragment(user);
+                        userMessage = new MessageFragment(user);
+                        binding.fragmentUserMainView.removeAllViews();
+                        dynamic.performClick();
+                        if (!user.phoneNumber.equals(owner.phoneNumber)){
+                            okHttpAction.isFollowingUser(user.phoneNumber,
+                                    intentAction_isFollowing, intentAction);
+                            return;
+                        }
                         refresh();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
                     break;
+
+                case intentAction_isFollowing:
+                    data = intent.getStringExtra("data");
+                    try {
+                        JSONObject jsonObject = new JSONObject(data);
+                        user.isFollowing = jsonObject.getBoolean("data");
+                        refresh();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case intentAction_followed:
+                    data = intent.getStringExtra("data");
+                    try {
+                        JSONObject jsonObject = new JSONObject(data);
+                        String data1 = jsonObject.getString("data");
+                        JSONObject object = new JSONObject(data1);
+                        user.isFollowing = object.getBoolean("followed");
+                        refresh();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+
                 default:
                     break;
             }

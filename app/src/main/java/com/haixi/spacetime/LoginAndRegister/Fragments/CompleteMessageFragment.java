@@ -21,7 +21,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Common.Others.FileOperation;
+import com.haixi.spacetime.Common.FileOperation;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;

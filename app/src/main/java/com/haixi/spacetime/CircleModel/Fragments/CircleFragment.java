@@ -1,5 +1,6 @@
 package com.haixi.spacetime.CircleModel.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,7 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
     private final int intentAction_turnToCircle = 1, intentAction_getUserCircles = 2;
     private IntentFilter intentFilter;
     private OkHttpAction okHttpAction;
+    @SuppressLint("ResourceAsColor")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
@@ -56,15 +59,18 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
 
         drawView();
         mainView = binding.getRoot().findViewById(R.id.titleSecondCircle_container);
-//        addCircle("吃鸡小分队");
-//        addCircle("王者战队");
-//        addCircle("大社联");
-//        addCircle("15届软院学生会");
-//        addCircle("漫圈");
-//        addCircle("潮牌圈");
-
         binding.fragmentCircleAdd.setOnClickListener(this);
-
+        binding.fragmentCircleSwipeRefreshLayout
+                .setProgressBackgroundColorSchemeColor(R.color.colorWhite);
+        binding.fragmentCircleSwipeRefreshLayout.setColorSchemeResources(R.color.colorBackGround,
+                R.color.colorBlue, R.color.colorWhite);
+        binding.fragmentCircleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout
+                .OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
         return binding.getRoot();
     }
 
@@ -135,6 +141,7 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
                             circle.id = jsonObject.getInt("id");
                             addCircle(circle);
                         }
+                        binding.fragmentCircleSwipeRefreshLayout.setRefreshing(false);
                     }catch (Exception e){
                         e.printStackTrace();
                     }

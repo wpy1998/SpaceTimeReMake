@@ -1,5 +1,6 @@
 package com.haixi.spacetime.DynamicModel.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,7 @@ public class PageFragment extends BasicFragment {
     private List<Dynamic> dynamics;
     private List<Circle> tags;
 
+    @SuppressLint("ResourceAsColor")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -71,6 +74,18 @@ public class PageFragment extends BasicFragment {
         dynamics = new ArrayList<>();
         tags = new ArrayList<>();
         refresh();
+
+        binding.fragmentPageSwipeRefreshLayout
+                .setProgressBackgroundColorSchemeColor(R.color.colorWhite);
+        binding.fragmentPageSwipeRefreshLayout.setColorSchemeResources(R.color.colorBackGround,
+                R.color.colorBlue, R.color.colorWhite);
+        binding.fragmentPageSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout
+                .OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
         return binding.getRoot();
     }
 
@@ -82,6 +97,12 @@ public class PageFragment extends BasicFragment {
         okHttpAction = new OkHttpAction(getContext());
         okHttpAction.getUserCircles(phoneNumber, intentAction_getCircle, intentAction);
         okHttpAction.getOwnerAllVisibleCircleDynamic(intentAction_getDynamic, intentAction);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        refresh();
     }
 
     public void refreshViewPager(){
@@ -157,6 +178,7 @@ public class PageFragment extends BasicFragment {
             }
             tagComponents.add(tagComponent);
         }
+        binding.fragmentPageSwipeRefreshLayout.setRefreshing(false);
     }
 
     private synchronized void synTagAndDynamic(){

@@ -607,6 +607,26 @@ public class OkHttpAction {
         }).start();
     }
 
+    //get查看是否关注某人
+    public void  isFollowingUser(final String phoneNumber, final int type, final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    String url = web + "/users/" + phoneNumber + "/following";
+                    Request request = new Request.Builder().addHeader("Authorization", token)
+                            .url(url).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     //post 关注某人
     public void followUser(final String userPhoneNumber, final int type, final String intentAction){
         new Thread(new Runnable() {

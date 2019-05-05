@@ -1,17 +1,21 @@
 package com.haixi.spacetime.Common;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.haixi.spacetime.R;
 
@@ -46,7 +51,30 @@ public class BasicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.
+                WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED || ContextCompat.
+                checkSelfPermission(this, Manifest.permission.
+                WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.
+                    WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},1);
+        }
+
         update(this);
+    }
+
+    @Override
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "拒绝权限该程序将无法正常使用",
+                            Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            default:
+        }
     }
 
     @Override

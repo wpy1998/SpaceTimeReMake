@@ -1,40 +1,45 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <ScrollView
-        android:scrollbars="none"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite">
-        <LinearLayout
-            android:orientation="vertical"
+        android:id="@+id/fragmentCircle_SwipeRefreshLayout">
+        <ScrollView
+            android:scrollbars="none"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorBlue">
+            android:background="@color/colorWhite">
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/colorBlue">
-                <TextView
-                    android:text="圈子薄"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:id="@+id/fragmentCircle_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:src="@drawable/add_white"
-                    android:id="@+id/fragmentCircle_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorBlue">
+                    <TextView
+                        android:text="圈子薄"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:id="@+id/fragmentCircle_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:src="@drawable/add_white"
+                        android:id="@+id/fragmentCircle_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            <include layout="@layout/title_second_circle"/>
-        </LinearLayout>
-    </ScrollView>
+                <include layout="@layout/title_second_circle"/>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

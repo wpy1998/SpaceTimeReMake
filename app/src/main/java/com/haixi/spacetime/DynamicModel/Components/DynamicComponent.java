@@ -1,7 +1,9 @@
 package com.haixi.spacetime.DynamicModel.Components;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
+
+import org.json.JSONObject;
 
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Entity.Cookies.owner;
@@ -31,13 +36,21 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
     public LinearLayout titleView;
     private TextView userName, publishTime;
     private ImageView userImage;
-    private boolean isLike = false;
+    private String intentAction = "com.haixi.spacetime.DynamicModel.Components.DynamicComponent";
+    private IntentFilter intentFilter;
+    private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
+    private OkHttpAction okHttpAction;
 
     public Dynamic dynamic;
     public TextView text;
 
     public DynamicComponent(Context context, Dynamic dynamic, User user){
         super(context);
+        intentFilter = new IntentFilter();
+        userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
+        intentFilter.addAction(intentAction);
+        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
+
         this.context = context;
         this.dynamic = dynamic;
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),
@@ -54,13 +67,7 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
         drawView();
 
         binding.dynamicContentViewTag.setText("#" + dynamic.circle.name);
-
-        if (dynamic.imageId == -1)
-            dynamic.imageId = R.drawable.william;
-        userImage.setImageResource(dynamic.imageId);
-        userName.setText(dynamic.user.userName);
-        binding.dynamicContentViewText.setText(dynamic.content);
-        publishTime.setText(dynamic.publishTime);
+        refreshData();
 
         binding.dynamicContentViewLike.setOnClickListener(this);
         binding.dynamicContentViewComment.setOnClickListener(this);
@@ -71,28 +78,71 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
     }
 
     @Override
+    protected void onDetachedFromWindow() {
+        getContext().unregisterReceiver(userInfoBroadcastReceiver);
+        super.onDetachedFromWindow();
+    }
+
+    private void refreshData(){
+        if (dynamic.imageId == -1)
+            dynamic.imageId = R.drawable.william;
+        userImage.setImageResource(dynamic.imageId);
+        userName.setText(dynamic.user.userName);
+        binding.dynamicContentViewText.setText(dynamic.content);
+        publishTime.setText(dynamic.publishTime);
+        binding.dynamicContentViewCommentNumber.setText("" + dynamic.commentCount);
+        binding.dynamicContentViewLikeNumber.setText("" + dynamic.likeCount);
+        if (dynamic.liked){
+            binding.dynamicContentViewLike.
+                    setImageResource(R.drawable.ic_like_lighting);
+        }else {
+            binding.dynamicContentViewLike.
+                    setImageResource(R.drawable.ic_like);
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.dynamicContentView_like:
-                if (isLike){
-                    isLike = false;
-                    binding.dynamicContentViewLike.
-                            setImageResource(R.drawable.ic_like);
-                    dynamic.likeCount--;
-                    binding.dynamicContentViewLikeNumber.setText("" + dynamic.likeCount);
-                }else {
-                    isLike = true;
-                    binding.dynamicContentViewLike.
-                            setImageResource(R.drawable.ic_like_lighting);
-                    dynamic.likeCount++;
-                    binding.dynamicContentViewLikeNumber.setText("" + dynamic.likeCount);
-                }
+                okHttpAction = new OkHttpAction(getContext());
+                okHttpAction.likeDynamic(dynamic.dynamicId, dynamic.dynamicId, intentAction);
                 break;
             case R.id.dynamic_content_view_tag:
                 Toast.makeText(getContext(), dynamic.circle.name, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
+        }
+    }
+
+    private class UserInfoBroadcastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (!action.equals(intentAction)){
+                return;
+            }
+            int type = intent.getIntExtra("type", 0);
+            if (type != dynamic.dynamicId){
+                return;
+            }
+            try {
+                String data = intent.getStringExtra("data");
+                JSONObject jsonObject = new JSONObject(data);
+                String data1 = jsonObject.getString("data");
+                JSONObject object = new JSONObject(data1);
+                dynamic.liked = object.getBoolean("liked");
+
+                if (dynamic.liked){
+                    (dynamic.likeCount)++;
+                }else {
+                    (dynamic.likeCount)--;
+                }
+                refreshData();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

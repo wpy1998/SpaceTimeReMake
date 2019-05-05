@@ -14,12 +14,14 @@ public class Cookies {
     public static String phoneNumber;
     public static String newPassword = null;
 
+    public final String filePath = "";
+
     public static final int resultCode = 1;
 
     public static void initCookies(){
         token = null;
         password = null;
-        owner = null;
+        owner = new User();
         phoneNumber = null;
         newPassword = null;
     }

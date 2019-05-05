@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.haixi.spacetime.Common.BasicFragment;
 import com.haixi.spacetime.Common.OkHttpAction;
-import com.haixi.spacetime.Common.Others.FileOperation;
+import com.haixi.spacetime.Common.FileOperation;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Components.EditUserComponent;
 import com.haixi.spacetime.UserModel.UserActivity;

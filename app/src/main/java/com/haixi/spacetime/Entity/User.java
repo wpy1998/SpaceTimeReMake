@@ -16,6 +16,7 @@ public class User {
     public String userName;
     public String labels;
     public String signature;
+    public boolean isFollowing;
 
     public int imageId;
 
