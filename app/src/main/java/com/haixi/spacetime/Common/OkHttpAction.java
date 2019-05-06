@@ -2,16 +2,32 @@ package com.haixi.spacetime.Common;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Authenticator;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Credentials;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.Route;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import static com.haixi.spacetime.Common.BitmapUtils.compressImageUpload;
+import static com.haixi.spacetime.Common.BitmapUtils.deleteCacheFile;
+import static com.haixi.spacetime.Entity.Cookies.accessKeyId;
+import static com.haixi.spacetime.Entity.Cookies.accessKeySecret;
 import static com.haixi.spacetime.Entity.Cookies.owner;
+import static com.haixi.spacetime.Entity.Cookies.securityToken;
 import static com.haixi.spacetime.Entity.Cookies.token;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 import static com.haixi.spacetime.Entity.Cookies.password;
@@ -146,6 +162,29 @@ public class OkHttpAction {
                             .add("smsCode", smsCode).build();
                     Request request = new Request.Builder()
                             .url(web + "/auth/token/authorize-with-sms-code").post(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //get获取访问图片的授权信息
+    public void getImageToken(final int type, final String intentAction){
+        if (securityToken != null && accessKeyId != null && accessKeySecret != null){
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .addHeader("Authorization", token)
+                            .url(web + "/auth/token/image").build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();
                     sendBroadcast(action, type, intentAction);
@@ -537,11 +576,7 @@ public class OkHttpAction {
             @Override
             public void run() {
                 try {
-                    HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLogger());
-                    logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-                    OkHttpClient client = new OkHttpClient.Builder()
-                            .addNetworkInterceptor(logInterceptor)
-                            .addInterceptor(new LogInterceptor()).build();
+                    OkHttpClient client = new OkHttpClient.Builder().build();
                     RequestBody body = new FormBody.Builder()
                             .add("username", owner.userName)
                             .add("gender", owner.gender)
@@ -569,18 +604,42 @@ public class OkHttpAction {
     }
 
     //put 设置头像
-    public void setAvatar(final int type, final String intentAction){
+    public void setAvatar(final String picturePath, final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    String url = web + "/auth/sms-code?phoneNumber=" + phoneNumber;
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody body = RequestBody.create(URLENCODED, url);
-                    Request request = new Request.Builder().url(url).put(body).build();
-                    Response response = client.newCall(request).execute();
-                    String action = response.body().string();
-                    sendBroadcast(action, type, intentAction);
+                try{
+                    String path = compressImageUpload(picturePath);
+                    HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLogger());
+                    logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    File file = new File(path);
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .addNetworkInterceptor(logInterceptor)
+                            .addInterceptor(new LogInterceptor())
+                            .connectTimeout(10, TimeUnit.SECONDS)
+                            .writeTimeout(180, TimeUnit.SECONDS)
+                            .readTimeout(180, TimeUnit.SECONDS)
+                            .build();
+                    RequestBody formBody = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("avatar", file.getName(),
+                                    RequestBody.create(MediaType.parse("*/*"), file))
+                            .build();
+                    Request request = new Request.Builder().url(web + "/users/" + phoneNumber +
+                            "/avatar").addHeader("Authorization", token).put(formBody).build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            deleteCacheFile();
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String action = response.body().string();
+                            sendBroadcast(action, type, intentAction);
+                            deleteCacheFile();
+                        }
+                    });
                 }catch (Exception e){
                     e.printStackTrace();
                 }

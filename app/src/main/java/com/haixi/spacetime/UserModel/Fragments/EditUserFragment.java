@@ -43,7 +43,7 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
     private ImageView back;
     private EditUserComponent userImage, userName, userAge, userArea, userSign;
     private final String intentAction = "com.haixi.spacetime.UserModel.Fragments.EditUserFragment";
-    private final int intentAction_changeUserMessage = 1;
+    private final int intentAction_changeUserMessage = 1, intentAction_setAvatar = 2;
 
     @Nullable
     @Override
@@ -110,6 +110,7 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
         return binding.getRoot();
     }
 
+    String picturePath = null;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("resultCode = " + requestCode + ", resultCode = " + resultCode);
@@ -122,7 +123,7 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
             cursor.moveToFirst();
             //从数据视图中获取已选择图片的路径
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
+            picturePath = cursor.getString(columnIndex);
             System.out.println("picturePath = " + picturePath);
             cursor.close();
             FileOperation.setBitmap(picturePath);
@@ -148,6 +149,10 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
             case R.id.fragmentEditUser_save:
                 okHttpAction = new OkHttpAction(getContext());
                 okHttpAction.changeUserMessage(intentAction_changeUserMessage, intentAction);
+                if (picturePath != null){
+                    okHttpAction.setAvatar(picturePath, intentAction_setAvatar, intentAction);
+                    picturePath = null;
+                }
                 break;
             default:
                 break;
@@ -174,6 +179,10 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                    break;
+                case intentAction_setAvatar:
+                    data = intent.getStringExtra("data");
+                    Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;

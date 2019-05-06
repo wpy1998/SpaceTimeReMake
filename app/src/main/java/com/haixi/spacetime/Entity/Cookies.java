@@ -13,8 +13,9 @@ public class Cookies {
     public static User owner = new User();
     public static String phoneNumber;
     public static String newPassword = null;
-
-    public final String filePath = "";
+    public static String accessKeyId;
+    public static String accessKeySecret;
+    public static String securityToken;
 
     public static final int resultCode = 1;
 
@@ -31,12 +32,14 @@ public class Cookies {
     public static List<String> tags;
     public static int currentUserId;
 
-    public static boolean isExistTag(String tag){
-        for (String tag1: tags){
-            if (tag.equals(tag1)){
-                return true;//存在
-            }
+    public static void setImageToken(String data){
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            accessKeyId = jsonObject.getString("accessKeyId");
+            accessKeySecret = jsonObject.getString("accessKeySecret");
+            securityToken = jsonObject.getString("securityToken");
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return false;
     }
 }

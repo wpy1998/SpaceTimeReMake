@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
+import static com.haixi.spacetime.Entity.Cookies.setImageToken;
 import static com.haixi.spacetime.Entity.User.setMessage;
 
 @SuppressLint("ValidFragment")
@@ -55,12 +57,13 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     private boolean isFollow;
     private String intentAction = "com.haixi.spacetime.UserModel.Fragments.UserFragment";
     private final int intentAction_getUserMessage = 1, intentAction_isFollowing = 2,
-        intentAction_followed = 3;
+        intentAction_followed = 3, intentAction_getImageToken = 4;
 
     public UserFragment(User user){
         this.user = user;
     }
 
+    @SuppressLint("ResourceAsColor")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
     @Override
@@ -75,6 +78,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
         okHttpAction = new OkHttpAction(getContext());
         okHttpAction.getUserMessage(user.phoneNumber, intentAction_getUserMessage, intentAction);
+        okHttpAction.getImageToken(intentAction_getImageToken, intentAction);
 
         setting = binding.getRoot().findViewById(R.id.fragment_user_setting);
         dynamic = binding.getRoot().findViewById(R.id.fragment_user_dynamic);
@@ -92,6 +96,18 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         dynamic.setOnClickListener(this);
         message.setOnClickListener(this);
         dynamic.performClick();
+
+        binding.fragmentUserSwipeRefreshLayout
+                .setProgressBackgroundColorSchemeColor(R.color.colorWhite);
+        binding.fragmentUserSwipeRefreshLayout.setColorSchemeResources(R.color.colorBackGround,
+                R.color.colorBlue, R.color.colorWhite);
+        binding.fragmentUserSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout
+                .OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
         return binding.getRoot();
     }
 
@@ -103,6 +119,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
 
     @Override
     public void refresh() {
+        binding.fragmentUserSwipeRefreshLayout.setRefreshing(false);
         if (user.phoneNumber.equals(phoneNumber)){
             setting.setText("用户设置");
             name.setText(owner.userName);
@@ -223,6 +240,11 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                    break;
+
+                case intentAction_getImageToken:
+                    data = intent.getStringExtra("data");
+                    setImageToken(data);
                     break;
 
                 default:

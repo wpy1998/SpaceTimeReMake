@@ -48,5 +48,4 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-zxing:1.1.9@aar'
     implementation project(':zxing-lib')
     implementation 'com.youth.banner:banner:1.4.10'
-    implementation 'com.github.ly-android:PermissionUtils:1.0.3'
 }
