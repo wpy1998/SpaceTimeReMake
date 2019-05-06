@@ -1,11 +1,9 @@
 package com.haixi.spacetime.Entity;
 
-import com.haixi.spacetime.R;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Cookies {
     public static String token = null;
@@ -17,7 +15,16 @@ public class Cookies {
     public static String accessKeySecret;
     public static String securityToken;
 
+    public static String filePath = "/storage/emulated/0/SpaceTime/Picture/";
+
     public static final int resultCode = 1;
+
+    public static Bitmap bitmap;
+
+    public static void setBitmap(String path){
+        bitmap = BitmapFactory.decodeFile(path);
+    }
+
 
     public static void initCookies(){
         token = null;
@@ -26,15 +33,12 @@ public class Cookies {
         phoneNumber = null;
         newPassword = null;
     }
-    public static List<Dynamic> circleDynamics = new ArrayList<Dynamic>();
-    public static List<Dynamic> followDynamics = new ArrayList<Dynamic>();
-    public static List<Dynamic> ownerDynamics = new ArrayList<Dynamic>();
-    public static List<String> tags;
-    public static int currentUserId;
 
     public static void setImageToken(String data){
         try {
-            JSONObject jsonObject = new JSONObject(data);
+            JSONObject object = new JSONObject(data);
+            String data1 = object.getString("data");
+            JSONObject jsonObject = new JSONObject(data1);
             accessKeyId = jsonObject.getString("accessKeyId");
             accessKeySecret = jsonObject.getString("accessKeySecret");
             securityToken = jsonObject.getString("securityToken");

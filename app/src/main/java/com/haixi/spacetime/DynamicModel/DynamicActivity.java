@@ -17,7 +17,6 @@ import com.haixi.spacetime.databinding.ActivityDynamicBinding;
 import org.json.JSONObject;
 
 import static com.haixi.spacetime.Entity.Dynamic.getDynamic;
-import static com.haixi.spacetime.Entity.Dynamic.setDynamic;
 
 @Route(path = "/spaceTime/dynamic")
 public class DynamicActivity extends BasicActivity {

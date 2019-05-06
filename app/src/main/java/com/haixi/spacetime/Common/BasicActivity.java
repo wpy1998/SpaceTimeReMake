@@ -27,10 +27,12 @@ import android.widget.Toast;
 
 import com.haixi.spacetime.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.haixi.spacetime.Common.Settings.update;
+import static com.haixi.spacetime.Entity.Cookies.filePath;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
 
 public class BasicActivity extends AppCompatActivity {
@@ -52,11 +54,29 @@ public class BasicActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.
-                WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED || ContextCompat.
-                checkSelfPermission(this, Manifest.permission.
-                WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+                CAMERA)!= PackageManager.PERMISSION_GRANTED){
+
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.
-                    WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},1);
+                    CAMERA},1);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.
+                WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+
+            ActivityCompat.requestPermissions(this,new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.
+                READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+
+            ActivityCompat.requestPermissions(this,new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE},1);
+        }
+
+        File fileDir = new File(filePath);
+        if (!fileDir.exists()) {
+            fileDir.mkdir();
         }
 
         update(this);

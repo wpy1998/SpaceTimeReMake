@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haixi.spacetime.CircleImageView;
+import com.haixi.spacetime.Common.FileOperation;
 import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.Common.BasicFragment;
@@ -32,14 +35,21 @@ import com.haixi.spacetime.databinding.FragmentUserBinding;
 
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import static com.haixi.spacetime.Common.Settings.setH;
 import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.getPx;
+import static com.haixi.spacetime.Entity.Cookies.accessKeyId;
+import static com.haixi.spacetime.Entity.Cookies.accessKeySecret;
+import static com.haixi.spacetime.Entity.Cookies.filePath;
 import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
+import static com.haixi.spacetime.Entity.Cookies.securityToken;
 import static com.haixi.spacetime.Entity.Cookies.setImageToken;
 import static com.haixi.spacetime.Entity.User.setMessage;
 
@@ -57,7 +67,9 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     private boolean isFollow;
     private String intentAction = "com.haixi.spacetime.UserModel.Fragments.UserFragment";
     private final int intentAction_getUserMessage = 1, intentAction_isFollowing = 2,
-        intentAction_followed = 3, intentAction_getImageToken = 4;
+        intentAction_followed = 3, intentAction_getImageToken = 4, intentAction_setImage = 5;
+
+    private FileOperation fileOperation;
 
     public UserFragment(User user){
         this.user = user;
@@ -76,6 +88,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
         intentFilter.addAction(intentAction);
         getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
+        fileOperation = new FileOperation(getContext());
         okHttpAction = new OkHttpAction(getContext());
         okHttpAction.getUserMessage(user.phoneNumber, intentAction_getUserMessage, intentAction);
         okHttpAction.getImageToken(intentAction_getImageToken, intentAction);
@@ -134,6 +147,19 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
             ageLocation.setText(user.comeFrom);
             isFollow = false;
         }
+
+        boolean end = fileOperation.isFileExist(user.avatar);
+        if (end){
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(filePath + user.avatar);
+                Bitmap bitmap  = BitmapFactory.decodeStream(fis);
+                image.setImageBitmap(bitmap);
+                fis.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void switchFragment(BasicFragment fragment){
@@ -183,9 +209,10 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         }
     }
 
+    private Bitmap bitmap;
     private class UserInfoBroadcastReceiver extends BroadcastReceiver{
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, final Intent intent) {
             String action = intent.getAction(), data;
             if (!action.equals(intentAction)){
                 return;
@@ -245,6 +272,23 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                 case intentAction_getImageToken:
                     data = intent.getStringExtra("data");
                     setImageToken(data);
+                    boolean end = fileOperation.isFileExist(user.avatar);
+                    if (owner.avatar != "" && end == false){
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                fileOperation.downloadPicture(accessKeyId, accessKeySecret, securityToken,
+                                        owner.avatar);
+                                Intent intent1 = new Intent(intentAction);
+                                intent1.putExtra("type", intentAction_setImage);
+                                getContext().sendBroadcast(intent1);
+                            }
+                        }).start();
+                    }
+                    break;
+
+                case intentAction_setImage:
+                    refresh();
                     break;
 
                 default:

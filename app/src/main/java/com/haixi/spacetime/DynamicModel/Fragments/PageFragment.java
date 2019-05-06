@@ -94,6 +94,7 @@ public class PageFragment extends BasicFragment {
         if (token == null){
             return;
         }
+        currentCircle.name = "全部";
         okHttpAction = new OkHttpAction(getContext());
         okHttpAction.getUserCircles(phoneNumber, intentAction_getCircle, intentAction);
         okHttpAction.getOwnerAllVisibleCircleDynamic(intentAction_getDynamic, intentAction);

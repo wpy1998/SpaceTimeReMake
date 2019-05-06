@@ -32,7 +32,9 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
+import static com.haixi.spacetime.Entity.Cookies.bitmap;
 import static com.haixi.spacetime.Entity.Cookies.owner;
+import static com.haixi.spacetime.Entity.Cookies.setBitmap;
 import static com.haixi.spacetime.Entity.User.setMessage;
 
 public class CompleteMessageFragment extends BasicFragment implements View.OnClickListener {
@@ -140,8 +142,8 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
             String picturePath = cursor.getString(columnIndex);
             System.out.println("picturePath = " + picturePath);
             cursor.close();
-            FileOperation.setBitmap(picturePath);
-            binding.fragmentCompleteMessageImage.setImageBitmap(FileOperation.bitmap);
+            setBitmap(picturePath);
+            binding.fragmentCompleteMessageImage.setImageBitmap(bitmap);
         }
     }
 

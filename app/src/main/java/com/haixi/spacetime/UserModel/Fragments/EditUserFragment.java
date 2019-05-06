@@ -33,8 +33,10 @@ import static com.haixi.spacetime.Common.Settings.setMargin;
 import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Common.Settings.setHW;
 import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Cookies.bitmap;
 import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
+import static com.haixi.spacetime.Entity.Cookies.setBitmap;
 import static com.haixi.spacetime.Entity.User.setMessage;
 
 public class EditUserFragment extends BasicFragment implements View.OnClickListener {
@@ -126,8 +128,8 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
             picturePath = cursor.getString(columnIndex);
             System.out.println("picturePath = " + picturePath);
             cursor.close();
-            FileOperation.setBitmap(picturePath);
-            userImage.setImage(FileOperation.bitmap);
+            setBitmap(picturePath);
+            userImage.setImage(bitmap);
         }
         refresh();
     }
