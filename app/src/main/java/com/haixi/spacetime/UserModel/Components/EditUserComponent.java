@@ -9,11 +9,11 @@ import android.widget.LinearLayout;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentEditUserBinding;
 
-import static com.haixi.spacetime.Common.Settings.setH;
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.getPx;
-import static com.haixi.spacetime.Common.Settings.setHW;
-import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Settings.setH;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.getPx;
+import static com.haixi.spacetime.Entity.Settings.setHW;
+import static com.haixi.spacetime.Entity.Settings.setTextSize;
 
 public class EditUserComponent extends LinearLayout {
     private ComponentEditUserBinding binding;

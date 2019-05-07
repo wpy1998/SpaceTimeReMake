@@ -16,13 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.haixi.spacetime.CircleModel.Components.CircleComponent;
 import com.haixi.spacetime.CircleModel.Components.CodeComponent;
 import com.haixi.spacetime.CircleModel.ZXingUtils;
-import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.Common.OkHttpAction;
+import com.haixi.spacetime.Entity.BasicFragment;
+import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.Entity.Circle;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
@@ -34,11 +33,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.haixi.spacetime.Common.Settings.getPx;
-import static com.haixi.spacetime.Common.Settings.setH;
-import static com.haixi.spacetime.Common.Settings.setHW;
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Settings.getPx;
+import static com.haixi.spacetime.Entity.Settings.setH;
+import static com.haixi.spacetime.Entity.Settings.setHW;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.setTextSize;
 
 @SuppressLint("ValidFragment")
 public class CircleMessageFragment extends BasicFragment implements View.OnClickListener {

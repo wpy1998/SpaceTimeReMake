@@ -9,17 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Entity.BasicFragment;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentMessageBinding;
 
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.getPx;
-import static com.haixi.spacetime.Common.Settings.setHW;
-import static com.haixi.spacetime.Common.Settings.setTextSize;
-import static com.haixi.spacetime.Common.Settings.windowsWidth;
-import static com.haixi.spacetime.Entity.Cookies.owner;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.getPx;
+import static com.haixi.spacetime.Entity.Settings.setHW;
+import static com.haixi.spacetime.Entity.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Settings.windowsWidth;
 
 @SuppressLint("ValidFragment")
 public class MessageFragment extends BasicFragment {

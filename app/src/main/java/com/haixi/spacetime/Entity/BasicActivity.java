@@ -1,9 +1,8 @@
-package com.haixi.spacetime.Common;
+package com.haixi.spacetime.Entity;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -31,7 +29,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.haixi.spacetime.Common.Settings.update;
+import static com.haixi.spacetime.Entity.Settings.update;
 import static com.haixi.spacetime.Entity.Cookies.filePath;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
 

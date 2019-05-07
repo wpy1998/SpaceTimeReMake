@@ -9,10 +9,10 @@ import android.widget.LinearLayout;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentCodeBinding;
 
-import static com.haixi.spacetime.Common.Settings.setH;
-import static com.haixi.spacetime.Common.Settings.setHW;
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Settings.setH;
+import static com.haixi.spacetime.Entity.Settings.setHW;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.setTextSize;
 
 public class CodeComponent extends LinearLayout {
     private ComponentCodeBinding binding;

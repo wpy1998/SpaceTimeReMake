@@ -38,6 +38,7 @@ public class Dynamic{
         dynamic.circle.id = jsonObject.getInt("socialCircleId");
         dynamic.user.userName = jsonObject.getString("publisherUsername");
         dynamic.liked = jsonObject.getBoolean("liked");
+        dynamic.imageUrls = jsonObject.getString("imageUrls");
     }
 
     public String getJSONString(){
@@ -54,6 +55,7 @@ public class Dynamic{
             jsonObject.put("commentCount", commentCount);
             jsonObject.put("publishTime", publishTime);
             jsonObject.put("liked", liked);
+            jsonObject.put("imageUrls", imageUrls);
             return jsonObject.toString();
         }catch (Exception e){
             e.printStackTrace();
@@ -74,6 +76,7 @@ public class Dynamic{
             dynamic.dynamicId = object.getInt("dynamicId");
             dynamic.commentCount = object.getInt("commentCount");
             dynamic.publishTime = object.getString("publishTime");
+            dynamic.imageUrls = object.getString("imageUrls");
         }catch (Exception e){
             e.printStackTrace();
         }

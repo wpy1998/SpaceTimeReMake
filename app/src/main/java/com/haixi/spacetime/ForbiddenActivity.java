@@ -1,11 +1,10 @@
-package com.haixi.spacetime.Common.Others;
+package com.haixi.spacetime;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.haixi.spacetime.Common.BasicActivity;
-import com.haixi.spacetime.R;
+import com.haixi.spacetime.Entity.BasicActivity;
 import com.haixi.spacetime.databinding.ActivityForbiddenBinding;
 
 @Route(path = "/spaceTime/forbidden")

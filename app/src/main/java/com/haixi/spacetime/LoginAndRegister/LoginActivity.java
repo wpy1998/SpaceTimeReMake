@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.haixi.spacetime.Common.BasicActivity;
+import com.haixi.spacetime.Entity.BasicActivity;
 import com.haixi.spacetime.LoginAndRegister.Fragments.GetTelephoneFragment;
 import com.haixi.spacetime.LoginAndRegister.Fragments.SmsCodeFragment;
 import com.haixi.spacetime.LoginAndRegister.Fragments.ResetPasswordFragment;

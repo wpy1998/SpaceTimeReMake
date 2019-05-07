@@ -10,32 +10,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Common.OkHttpAction;
+import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
 
 import org.json.JSONObject;
 
-import static com.haixi.spacetime.Common.Settings.setH;
-import static com.haixi.spacetime.Entity.Cookies.owner;
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.getPx;
-import static com.haixi.spacetime.Common.Settings.setHW;
-import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Settings.setH;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.getPx;
+import static com.haixi.spacetime.Entity.Settings.setHW;
+import static com.haixi.spacetime.Entity.Settings.setTextSize;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 
 public class DynamicComponent extends LinearLayout implements View.OnClickListener {
     private DynamicContentViewBinding binding;
     private Context context;
-    public LinearLayout titleView;
-    private TextView userName, publishTime;
-    private ImageView userImage;
+    private LinearLayout titleView;
+    public TextView userName, circleName;
+    public ImageView userImage, setting;
     private String intentAction = "com.haixi.spacetime.DynamicModel.Components.DynamicComponent";
     private IntentFilter intentFilter;
     private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
@@ -61,17 +57,15 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
                 .findViewById(R.id.dynamicContentView_userImage);
         userName = binding.getRoot()
                 .findViewById(R.id.dynamicContentView_userName);
-        publishTime = binding.getRoot()
-                .findViewById(R.id.dynamicContentView_publishTime);
+        circleName = binding.getRoot()
+                .findViewById(R.id.dynamicContentView_circleName);
+        setting = binding.getRoot().findViewById(R.id.dynamicContentView_Setting);
         text = binding.dynamicContentViewText;
         drawView();
-
-        binding.dynamicContentViewTag.setText("#" + dynamic.circle.name);
         refreshData();
 
         binding.dynamicContentViewLike.setOnClickListener(this);
         binding.dynamicContentViewComment.setOnClickListener(this);
-        binding.dynamicContentViewTag.setOnClickListener(this);
         if (user != null && user.phoneNumber.equals(phoneNumber)){
             binding.dynamicContentViewMainView.removeView(titleView);
         }
@@ -89,9 +83,10 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
         userImage.setImageResource(dynamic.imageId);
         userName.setText(dynamic.user.userName);
         binding.dynamicContentViewText.setText(dynamic.content);
-        publishTime.setText(dynamic.publishTime);
+        circleName.setText(dynamic.circle.name);
         binding.dynamicContentViewCommentNumber.setText("" + dynamic.commentCount);
         binding.dynamicContentViewLikeNumber.setText("" + dynamic.likeCount);
+        binding.dynamicContentViewPublishTime.setText(dynamic.publishTime);
         if (dynamic.liked){
             binding.dynamicContentViewLike.
                     setImageResource(R.drawable.ic_like_lighting);
@@ -107,9 +102,6 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
             case R.id.dynamicContentView_like:
                 okHttpAction = new OkHttpAction(getContext());
                 okHttpAction.likeDynamic(dynamic.dynamicId, dynamic.dynamicId, intentAction);
-                break;
-            case R.id.dynamic_content_view_tag:
-                Toast.makeText(getContext(), dynamic.circle.name, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -156,8 +148,10 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
         setMargin(userName, 0, 10, 0, 8, false);
         setTextSize(userName, 16);
 
-        publishTime.getLayoutParams().height = getPx(20);
-        setTextSize(publishTime, 14);
+        circleName.getLayoutParams().height = getPx(20);
+        setTextSize(circleName, 14);
+
+        setMargin(setting, 0, 0, 20, 0, false);
 
         setMargin(binding.dynamicContentViewText, 16, 19, 16,
                 7, true);
@@ -182,9 +176,9 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
                 20, 20, true);
         setTextSize(binding.dynamicContentViewCommentNumber, 14);
 
-        setH(binding.dynamicContentViewTag, 20);
-        setMargin(binding.dynamicContentViewTag, 20, 5,
-                20, 5, false);
-        setTextSize(binding.dynamicContentViewTag, 14);
+        setH(binding.dynamicContentViewPublishTime, 20);
+        setMargin(binding.dynamicContentViewPublishTime, 0, 13,
+                20, 20, true);
+        setTextSize(binding.dynamicContentViewPublishTime, 14);
     }
 }

@@ -5,20 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.haixi.spacetime.Entity.Circle;
-import com.haixi.spacetime.Entity.Cookies;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ComponentTagBinding;
 
-import static com.haixi.spacetime.Common.Settings.setH;
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Settings.setH;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.setTextSize;
 
 public class TagComponent extends LinearLayout{
     private Context context;

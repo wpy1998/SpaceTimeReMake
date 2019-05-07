@@ -1,6 +1,5 @@
 package com.haixi.spacetime.LoginAndRegister;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,9 +16,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.LoginAndRegister.Fragments.StartFragment;
 import com.haixi.spacetime.LoginAndRegister.Fragments.WelcomeFragment;
-import com.haixi.spacetime.Common.BasicActivity;
+import com.haixi.spacetime.Entity.BasicActivity;
 import com.haixi.spacetime.Entity.Cookies;
-import com.haixi.spacetime.Common.OkHttpAction;
+import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.ActivityStartBinding;
 

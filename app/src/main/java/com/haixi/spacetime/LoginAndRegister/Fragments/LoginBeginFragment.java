@@ -20,20 +20,20 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Entity.Cookies;
-import com.haixi.spacetime.Common.OkHttpAction;
+import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Entity.BasicFragment;
 import com.haixi.spacetime.databinding.FragmentLoginBeginBinding;
 
 import org.json.JSONObject;
 
 import static com.haixi.spacetime.Entity.Cookies.password;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.isReset;
-import static com.haixi.spacetime.Common.Settings.setH;
-import static com.haixi.spacetime.Common.Settings.setHW;
-import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.isReset;
+import static com.haixi.spacetime.Entity.Settings.setH;
+import static com.haixi.spacetime.Entity.Settings.setHW;
+import static com.haixi.spacetime.Entity.Settings.setTextSize;
 
 public class LoginBeginFragment extends BasicFragment implements View.OnClickListener {
     private FragmentLoginBeginBinding binding;

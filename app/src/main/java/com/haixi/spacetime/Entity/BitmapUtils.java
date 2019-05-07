@@ -1,4 +1,4 @@
-package com.haixi.spacetime.Common;
+package com.haixi.spacetime.Entity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,7 +39,7 @@ public class BitmapUtils {
      * @param srcPath
      * @return
      */
-    private static Bitmap getImage(String srcPath) {
+    public static Bitmap getImage(String srcPath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);// 此时返回bm为空

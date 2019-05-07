@@ -1,17 +1,16 @@
-package com.haixi.spacetime.Common;
+package com.haixi.spacetime.Entity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Authenticator;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Credentials;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -19,11 +18,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.Route;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-import static com.haixi.spacetime.Common.BitmapUtils.compressImageUpload;
-import static com.haixi.spacetime.Common.BitmapUtils.deleteCacheFile;
+import static com.haixi.spacetime.Entity.BitmapUtils.compressImageUpload;
+import static com.haixi.spacetime.Entity.BitmapUtils.deleteCacheFile;
 import static com.haixi.spacetime.Entity.Cookies.accessKeyId;
 import static com.haixi.spacetime.Entity.Cookies.accessKeySecret;
 import static com.haixi.spacetime.Entity.Cookies.owner;
@@ -32,7 +30,7 @@ import static com.haixi.spacetime.Entity.Cookies.token;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 import static com.haixi.spacetime.Entity.Cookies.password;
 import static com.haixi.spacetime.Entity.Cookies.newPassword;
-import static com.haixi.spacetime.Common.Others.ForbiddenActivity.logout;
+import static com.haixi.spacetime.ForbiddenActivity.logout;
 
 public class OkHttpAction {
     public final String web = "http://59.110.172.61";
@@ -355,21 +353,45 @@ public class OkHttpAction {
     }
 
     //post在某个圈子中发布动态
-    public void addDynamicToCircle(final int socialCircleId, final String content, final int type,
-                                   final String intentAction){
+    public void addDynamicToCircle(final int socialCircleId, final List<String> fileNames,
+                                   final String content, final int type, final String intentAction){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody body = new FormBody.Builder()
-                            .add("content", content).build();
+                    HttpLoggingInterceptor logInterceptor = new
+                            HttpLoggingInterceptor(new HttpLogger());
+                    logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .addNetworkInterceptor(logInterceptor)
+                            .addInterceptor(new LogInterceptor())
+                            .connectTimeout(10, TimeUnit.SECONDS)
+                            .writeTimeout(180, TimeUnit.SECONDS)
+                            .readTimeout(180, TimeUnit.SECONDS)
+                            .build();
+                    MultipartBody.Builder body = new MultipartBody.Builder()
+                            .addFormDataPart("content", content).setType(MultipartBody.FORM);
+                    for (int i = 0; i < fileNames.size(); i++){
+                        File file = new File(fileNames.get(i));
+                        body.addFormDataPart("images", file.getName(),
+                                RequestBody.create(MediaType.parse("*/*"), file));
+                    }
+                    MultipartBody multipartBody = body.build();
                     Request request = new Request.Builder().url(web + "/circles/" + socialCircleId
                             + "/activities")
-                            .addHeader("Authorization", token).post(body).build();
-                    Response response = client.newCall(request).execute();
-                    String action = response.body().string();
-                    sendBroadcast(action, type, intentAction);
+                            .addHeader("Authorization", token).post(multipartBody).build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            System.out.println("failure***********************************");
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String action = response.toString();
+                            sendBroadcast(action, type, intentAction);
+                        }
+                    });
                 }catch (Exception e){
                     e.printStackTrace();
                 }

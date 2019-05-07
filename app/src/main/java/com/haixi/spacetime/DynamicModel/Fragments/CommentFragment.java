@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Entity.BasicFragment;
 import com.haixi.spacetime.DynamicModel.Components.DynamicComponent;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.R;

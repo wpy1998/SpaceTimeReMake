@@ -15,15 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Entity.BasicFragment;
 import com.haixi.spacetime.DynamicModel.DynamicActivity;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentDynamicBinding;
 
-import static com.haixi.spacetime.Common.Settings.setH;
-import static com.haixi.spacetime.Common.Settings.setHW;
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Settings.setH;
+import static com.haixi.spacetime.Entity.Settings.setHW;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.setTextSize;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
 
 public class DynamicFragment extends BasicFragment implements View.OnClickListener{

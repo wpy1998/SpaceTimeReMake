@@ -18,9 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.Common.OkHttpAction;
-import com.haixi.spacetime.Common.FileOperation;
+import com.haixi.spacetime.Entity.BasicFragment;
+import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Components.EditUserComponent;
 import com.haixi.spacetime.UserModel.UserActivity;
@@ -28,11 +27,11 @@ import com.haixi.spacetime.databinding.FragmentEditUserBinding;
 
 import org.json.JSONObject;
 
-import static com.haixi.spacetime.Common.Settings.setH;
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.getPx;
-import static com.haixi.spacetime.Common.Settings.setHW;
-import static com.haixi.spacetime.Common.Settings.setTextSize;
+import static com.haixi.spacetime.Entity.Settings.setH;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.getPx;
+import static com.haixi.spacetime.Entity.Settings.setHW;
+import static com.haixi.spacetime.Entity.Settings.setTextSize;
 import static com.haixi.spacetime.Entity.Cookies.bitmap;
 import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;

@@ -21,11 +21,10 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Common.FileOperation;
-import com.haixi.spacetime.Common.OkHttpAction;
+import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Entity.BasicFragment;
 import com.haixi.spacetime.databinding.FragmentCompleteMessageBinding;
 
 import org.json.JSONObject;

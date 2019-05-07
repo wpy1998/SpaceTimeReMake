@@ -9,11 +9,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Entity.Circle;
-import com.haixi.spacetime.DynamicModel.Components.TagComponent;
-import com.haixi.spacetime.Common.BasicFragment;
+import com.haixi.spacetime.Entity.BasicFragment;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.DynamicModel.Components.DynamicComponent;
@@ -22,8 +22,7 @@ import com.haixi.spacetime.databinding.FragmentSocialBinding;
 
 import java.util.List;
 
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.setW;
+import static com.haixi.spacetime.Entity.Settings.setW;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
 
 @SuppressLint("ValidFragment")
@@ -60,7 +59,7 @@ public class SocialFragment extends BasicFragment{
     }
 
     private void refreshDynamic_addAction(final DynamicComponent dynamicComponent){
-        dynamicComponent.titleView.setOnClickListener(new View.OnClickListener() {
+        dynamicComponent.userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), UserActivity.class);
@@ -68,6 +67,13 @@ public class SocialFragment extends BasicFragment{
                 intent.putExtra("userTelephone", dynamicComponent.dynamic.user.phoneNumber);
                 intent.putExtra("userName", dynamicComponent.dynamic.user.userName);
                 startActivityForResult(intent, resultCode);
+            }
+        });
+
+        dynamicComponent.userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dynamicComponent.userName.performClick();
             }
         });
 
@@ -79,6 +85,14 @@ public class SocialFragment extends BasicFragment{
                         .withString("path", "comment")
                         .withString("dynamic", dynamicComponent.dynamic.getJSONString())
                         .navigation();
+            }
+        });
+
+        dynamicComponent.setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "waiting for coming true",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

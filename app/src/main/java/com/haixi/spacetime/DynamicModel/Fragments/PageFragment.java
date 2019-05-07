@@ -15,18 +15,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.Common.OkHttpAction;
-import com.haixi.spacetime.Common.Others.Adapter.FragmentAdapter;
-import com.haixi.spacetime.DynamicModel.Components.DynamicComponent;
+import com.haixi.spacetime.Entity.BasicFragment;
+import com.haixi.spacetime.Entity.OkHttpAction;
+import com.haixi.spacetime.Adapter.FragmentAdapter;
 import com.haixi.spacetime.DynamicModel.Components.TagComponent;
 import com.haixi.spacetime.Entity.Circle;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.R;
-import com.haixi.spacetime.UserModel.UserActivity;
 import com.haixi.spacetime.databinding.FragmentPageBinding;
 
 import org.json.JSONArray;
@@ -35,9 +31,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.haixi.spacetime.Common.Settings.getPx;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
-import static com.haixi.spacetime.Entity.Cookies.resultCode;
 import static com.haixi.spacetime.Entity.Cookies.token;
 import static com.haixi.spacetime.Entity.Dynamic.setDynamic;
 
@@ -179,6 +173,7 @@ public class PageFragment extends BasicFragment {
             }
             tagComponents.add(tagComponent);
         }
+        tagComponents.get(0).performClick();
         binding.fragmentPageSwipeRefreshLayout.setRefreshing(false);
     }
 

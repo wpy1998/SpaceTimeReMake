@@ -1,4 +1,4 @@
-package com.haixi.spacetime.Common.Others;
+package com.haixi.spacetime.Entity;
 
 import android.app.Application;
 

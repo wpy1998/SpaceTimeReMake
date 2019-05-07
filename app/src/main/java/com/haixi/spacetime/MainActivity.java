@@ -1,36 +1,25 @@
 package com.haixi.spacetime;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.CircleModel.Fragments.CircleFragment;
-import com.haixi.spacetime.Common.BasicActivity;
-import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.Common.OkHttpAction;
 import com.haixi.spacetime.DynamicModel.Fragments.DynamicFragment;
+import com.haixi.spacetime.Entity.BasicActivity;
 import com.haixi.spacetime.UserModel.Fragments.UserFragment;
 import com.haixi.spacetime.databinding.ActivityMainBinding;
 
-import org.json.JSONObject;
-
-import static com.haixi.spacetime.Common.Settings.setH;
-import static com.haixi.spacetime.Common.Settings.setMargin;
-import static com.haixi.spacetime.Common.Settings.setHW;
+import static com.haixi.spacetime.Entity.Settings.setH;
+import static com.haixi.spacetime.Entity.Settings.setMargin;
+import static com.haixi.spacetime.Entity.Settings.setHW;
 import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
-import static com.haixi.spacetime.Entity.User.setMessage;
 
 @Route(path = "/spaceTime/main")
 public class MainActivity extends BasicActivity implements View.OnClickListener {

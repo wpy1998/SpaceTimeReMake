@@ -3,18 +3,15 @@ package com.haixi.spacetime.DynamicModel;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.haixi.spacetime.Common.BasicActivity;
+import com.haixi.spacetime.Entity.BasicActivity;
 import com.haixi.spacetime.DynamicModel.Fragments.CommentFragment;
 import com.haixi.spacetime.DynamicModel.Fragments.FollowFragment;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.DynamicModel.Fragments.AddDynamicFragment;
 import com.haixi.spacetime.databinding.ActivityDynamicBinding;
-
-import org.json.JSONObject;
 
 import static com.haixi.spacetime.Entity.Dynamic.getDynamic;
 

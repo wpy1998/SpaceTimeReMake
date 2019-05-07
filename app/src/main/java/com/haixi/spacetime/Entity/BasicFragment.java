@@ -1,7 +1,6 @@
-package com.haixi.spacetime.Common;
+package com.haixi.spacetime.Entity;
 
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;

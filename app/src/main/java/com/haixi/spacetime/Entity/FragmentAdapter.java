@@ -1,17 +1,14 @@
-package com.haixi.spacetime.Common.Others.Adapter;
+package com.haixi.spacetime.Entity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.haixi.spacetime.Common.BasicFragment;
-import com.haixi.spacetime.DynamicModel.Fragments.SocialFragment;
-
 import java.util.List;
 
 public class FragmentAdapter extends FragmentStatePagerAdapter {
-    private List<SocialFragment> fragments;
-    public FragmentAdapter(FragmentManager fm, List<SocialFragment> fragments) {
+    private List<Fragment> fragments;
+    public FragmentAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         this.fragments = fragments;
     }

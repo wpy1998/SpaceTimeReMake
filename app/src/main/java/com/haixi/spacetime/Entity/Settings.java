@@ -1,4 +1,4 @@
-package com.haixi.spacetime.Common;
+package com.haixi.spacetime.Entity;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

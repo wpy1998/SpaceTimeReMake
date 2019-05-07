@@ -1,4 +1,4 @@
-package com.haixi.spacetime.Common.Behavior;
+package com.haixi.spacetime;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
