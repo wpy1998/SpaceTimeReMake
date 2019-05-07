@@ -1,4 +1,5 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:id="@+id/dynamicContentView_mainView"
         android:orientation="vertical"
@@ -14,11 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <RelativeLayout
-            android:id="@+id/dynamic_content_view_imageView"
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </RelativeLayout>
+            android:layout_height="50dp"/>
 
         <LinearLayout
             android:orientation="horizontal"

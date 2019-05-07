@@ -10,14 +10,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.haixi.spacetime.Entity.Settings.setH;
 import static com.haixi.spacetime.Entity.Settings.setMargin;
@@ -26,19 +35,26 @@ import static com.haixi.spacetime.Entity.Settings.setHW;
 import static com.haixi.spacetime.Entity.Settings.setTextSize;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 
-public class DynamicComponent extends LinearLayout implements View.OnClickListener {
+public class DynamicComponent extends LinearLayout implements
+        View.OnClickListener,OnBannerListener {
     private DynamicContentViewBinding binding;
     private Context context;
     private LinearLayout titleView;
     public TextView userName, circleName;
     public ImageView userImage, setting;
     private String intentAction = "com.haixi.spacetime.DynamicModel.Components.DynamicComponent";
+    private String intentActionImage = intentAction + ".image";
     private IntentFilter intentFilter;
     private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
     private OkHttpAction okHttpAction;
+    private List<String> paths;
 
     public Dynamic dynamic;
     public TextView text;
+
+    private MyImageLoader mMyImageLoader;
+    private ArrayList<Integer> imagePath;
+    private ArrayList<String> imageTitle;
 
     public DynamicComponent(Context context, Dynamic dynamic, User user){
         super(context);
@@ -63,12 +79,40 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
         text = binding.dynamicContentViewText;
         drawView();
         refreshData();
-
+        paths = new ArrayList<>();
         binding.dynamicContentViewLike.setOnClickListener(this);
         binding.dynamicContentViewComment.setOnClickListener(this);
         if (user != null && user.phoneNumber.equals(phoneNumber)){
             binding.dynamicContentViewMainView.removeView(titleView);
         }
+    }
+
+    private void initData() {
+        imagePath = new ArrayList<>();
+        imageTitle = new ArrayList<>();
+        imagePath.add(R.drawable.william);
+        imagePath.add(R.drawable.jack);
+        imagePath.add(R.drawable.daniel);
+        imageTitle.add("我是海鸟一号");
+        imageTitle.add("我是海鸟二号");
+        imageTitle.add("我是海鸟三号");
+    }
+
+    private void initView() {
+        mMyImageLoader = new MyImageLoader();
+        binding.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+        binding.banner.setImageLoader(mMyImageLoader);
+        binding.banner.setBannerAnimation(Transformer.ZoomOutSlide);
+        binding.banner.setBannerTitles(imageTitle);
+        binding.banner.setDelayTime(3000);
+        binding.banner.isAutoPlay(true);
+        binding.banner.setImages(imagePath).setOnBannerListener(this).start();
+    }
+
+    @Override
+    public void OnBannerClick(int position) {
+        Toast.makeText(getContext(), "你点了第" + (position + 1) +
+                "张轮播图", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -94,6 +138,10 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
             binding.dynamicContentViewLike.
                     setImageResource(R.drawable.ic_like);
         }
+        if (!dynamic.imageUrls.equals("")){
+            initData();
+            initView();
+        }
     }
 
     @Override
@@ -105,6 +153,19 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
                 break;
             default:
                 break;
+        }
+    }
+
+    private class ImageBroadcastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    }
+
+    private class MyImageLoader extends ImageLoader {
+        @Override public void displayImage(Context context, Object path, ImageView imageView) {
+            Glide.with(context.getApplicationContext()).load(path).into(imageView);
         }
     }
 
@@ -180,5 +241,10 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
         setMargin(binding.dynamicContentViewPublishTime, 0, 13,
                 20, 20, true);
         setTextSize(binding.dynamicContentViewPublishTime, 14);
+
+        if (!dynamic.imageUrls.equals("")) setH(binding.banner, 200);
+        else{
+            binding.dynamicContentViewMainView.removeView(binding.banner);
+        }
     }
 }
