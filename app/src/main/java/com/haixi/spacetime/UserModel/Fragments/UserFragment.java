@@ -152,7 +152,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         if (end){
             FileInputStream fis = null;
             try {
-                fis = new FileInputStream(filePath + user.avatar);
+                fis = new FileInputStream(filePath + "Picture/" + user.avatar);
                 Bitmap bitmap  = BitmapFactory.decodeStream(fis);
                 image.setImageBitmap(bitmap);
                 fis.close();

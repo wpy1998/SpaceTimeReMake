@@ -15,7 +15,7 @@ public class Cookies {
     public static String accessKeySecret;
     public static String securityToken;
 
-    public static String filePath = "/storage/emulated/0/SpaceTime/Picture/";
+    public static String filePath = "/storage/emulated/0/SpaceTime/";
 
     public static final int resultCode = 1;
 

@@ -74,7 +74,7 @@ public class BasicActivity extends AppCompatActivity {
                     Manifest.permission.READ_EXTERNAL_STORAGE},1);
         }
 
-        File fileDir = new File(filePath);
+        File fileDir = new File(filePath + "Picture/");
         if (!fileDir.exists()) {
             fileDir.mkdir();
         }

@@ -98,14 +98,14 @@ public class FileOperation {
     }
 
     private void savePicture(String fileName, byte[] bytes){
-        File fileDir = new File(filePath);
+        File fileDir = new File(filePath + "Picture/");
         if (!fileDir.exists()) {
             if (!fileDir.mkdirs()) {
                 return;
             }
         }
 
-        File file = new File(filePath + fileName);
+        File file = new File(filePath + "Picture/" + fileName);
         RandomAccessFile raf = null;
         FileOutputStream out = null;
         try {
@@ -130,7 +130,7 @@ public class FileOperation {
     }
 
     public boolean isFileExist(String fileName){
-        File file = new File(filePath + fileName);
+        File file = new File(filePath + "Picture/" + fileName);
         if (!file.exists()) {
             return false;
         }else return true;
