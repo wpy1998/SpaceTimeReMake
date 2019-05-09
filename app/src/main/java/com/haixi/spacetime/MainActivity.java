@@ -93,7 +93,6 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainPersonal.setImageResource(R.drawable.person);
                 originFragment = circle;
                 switchFragment();
-                circle.refresh();
                 break;
             case R.id.main_personal:
                 fragmentName = "personal";
@@ -101,9 +100,7 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainBrowser.setImageResource(R.drawable.ic_earth);
                 binding.mainPersonal.setImageResource(R.drawable.person_lighting);
                 originFragment = personal;
-                personal.refresh();
                 switchFragment();
-//                okHttpAction.getUserMessage(phoneNumber, intentAction_getUserMessage, intentAction);
                 break;
             case R.id.main_browser:
                 fragmentName = "browser";
@@ -112,7 +109,6 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 binding.mainPersonal.setImageResource(R.drawable.person);
                 originFragment = browser;
                 switchFragment();
-                browser.refresh();
                 break;
             case R.id.main_b1:
                 binding.mainCircle.performClick();

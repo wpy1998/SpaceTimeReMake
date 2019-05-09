@@ -1,33 +1,21 @@
 package com.haixi.spacetime.DynamicModel.Components;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
-import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import static com.haixi.spacetime.Entity.BitmapUtils.getImage;
+import static com.haixi.spacetime.Entity.Cookies.filePath;
 import static com.haixi.spacetime.Entity.Settings.setH;
 import static com.haixi.spacetime.Entity.Settings.setMargin;
 import static com.haixi.spacetime.Entity.Settings.getPx;
@@ -35,33 +23,21 @@ import static com.haixi.spacetime.Entity.Settings.setHW;
 import static com.haixi.spacetime.Entity.Settings.setTextSize;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 
-public class DynamicComponent extends LinearLayout implements
-        View.OnClickListener,OnBannerListener {
+public class DynamicComponent extends LinearLayout implements View.OnClickListener{
     private DynamicContentViewBinding binding;
     private Context context;
     private LinearLayout titleView;
     public TextView userName, circleName;
     public ImageView userImage, setting;
-    private String intentAction = "com.haixi.spacetime.DynamicModel.Components.DynamicComponent";
-    private String intentActionImage = intentAction + ".image";
-    private IntentFilter intentFilter;
-    private UserInfoBroadcastReceiver userInfoBroadcastReceiver;
     private OkHttpAction okHttpAction;
-    private List<String> paths;
+    private String[] paths;
 
     public Dynamic dynamic;
     public TextView text;
 
-    private MyImageLoader mMyImageLoader;
-    private ArrayList<Integer> imagePath;
-    private ArrayList<String> imageTitle;
-
     public DynamicComponent(Context context, Dynamic dynamic, User user){
         super(context);
-        intentFilter = new IntentFilter();
-        userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
-        intentFilter.addAction(intentAction);
-        getContext().registerReceiver(userInfoBroadcastReceiver, intentFilter);
+        paths = dynamic.imageUrls.split(";");
 
         this.context = context;
         this.dynamic = dynamic;
@@ -79,46 +55,9 @@ public class DynamicComponent extends LinearLayout implements
         text = binding.dynamicContentViewText;
         drawView();
         refreshData();
-        paths = new ArrayList<>();
+        refreshPicture();
         binding.dynamicContentViewLike.setOnClickListener(this);
         binding.dynamicContentViewComment.setOnClickListener(this);
-        if (user != null && user.phoneNumber.equals(phoneNumber)){
-            binding.dynamicContentViewMainView.removeView(titleView);
-        }
-    }
-
-    private void initData() {
-        imagePath = new ArrayList<>();
-        imageTitle = new ArrayList<>();
-        imagePath.add(R.drawable.william);
-        imagePath.add(R.drawable.jack);
-        imagePath.add(R.drawable.daniel);
-        imageTitle.add("我是海鸟一号");
-        imageTitle.add("我是海鸟二号");
-        imageTitle.add("我是海鸟三号");
-    }
-
-    private void initView() {
-        mMyImageLoader = new MyImageLoader();
-        binding.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
-        binding.banner.setImageLoader(mMyImageLoader);
-        binding.banner.setBannerAnimation(Transformer.ZoomOutSlide);
-        binding.banner.setBannerTitles(imageTitle);
-        binding.banner.setDelayTime(3000);
-        binding.banner.isAutoPlay(true);
-        binding.banner.setImages(imagePath).setOnBannerListener(this).start();
-    }
-
-    @Override
-    public void OnBannerClick(int position) {
-        Toast.makeText(getContext(), "你点了第" + (position + 1) +
-                "张轮播图", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        getContext().unregisterReceiver(userInfoBroadcastReceiver);
-        super.onDetachedFromWindow();
     }
 
     private void refreshData(){
@@ -138,9 +77,12 @@ public class DynamicComponent extends LinearLayout implements
             binding.dynamicContentViewLike.
                     setImageResource(R.drawable.ic_like);
         }
+    }
+
+    private void refreshPicture(){
         if (!dynamic.imageUrls.equals("")){
-            initData();
-            initView();
+            binding.dynamicContentViewImage.setImageBitmap(getImage(filePath +
+                    "Picture/" + dynamic.imageUrls));
         }
     }
 
@@ -149,53 +91,18 @@ public class DynamicComponent extends LinearLayout implements
         switch (v.getId()){
             case R.id.dynamicContentView_like:
                 okHttpAction = new OkHttpAction(getContext());
-                okHttpAction.likeDynamic(dynamic.dynamicId, dynamic.dynamicId, intentAction);
+                okHttpAction.likeDynamic(dynamic.dynamicId, 0, "");
+                if (dynamic.liked){
+                    dynamic.liked = false;
+                    (dynamic.likeCount)--;
+                }else {
+                    dynamic.liked = true;
+                    (dynamic.likeCount)++;
+                }
+                refreshData();
                 break;
             default:
                 break;
-        }
-    }
-
-    private class ImageBroadcastReceiver extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-        }
-    }
-
-    private class MyImageLoader extends ImageLoader {
-        @Override public void displayImage(Context context, Object path, ImageView imageView) {
-            Glide.with(context.getApplicationContext()).load(path).into(imageView);
-        }
-    }
-
-    private class UserInfoBroadcastReceiver extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (!action.equals(intentAction)){
-                return;
-            }
-            int type = intent.getIntExtra("type", 0);
-            if (type != dynamic.dynamicId){
-                return;
-            }
-            try {
-                String data = intent.getStringExtra("data");
-                JSONObject jsonObject = new JSONObject(data);
-                String data1 = jsonObject.getString("data");
-                JSONObject object = new JSONObject(data1);
-                dynamic.liked = object.getBoolean("liked");
-
-                if (dynamic.liked){
-                    (dynamic.likeCount)++;
-                }else {
-                    (dynamic.likeCount)--;
-                }
-                refreshData();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
         }
     }
 
@@ -242,9 +149,10 @@ public class DynamicComponent extends LinearLayout implements
                 20, 20, true);
         setTextSize(binding.dynamicContentViewPublishTime, 14);
 
-        if (!dynamic.imageUrls.equals("")) setH(binding.banner, 200);
-        else{
-            binding.dynamicContentViewMainView.removeView(binding.banner);
+        if (dynamic.imageUrls.equals("")){
+            binding.dynamicContentViewMainView.removeView(binding.dynamicContentViewView);
+        }else {
+            setHW(binding.dynamicContentViewImage, 300, 375);
         }
     }
 }

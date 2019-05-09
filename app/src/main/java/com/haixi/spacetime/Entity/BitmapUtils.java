@@ -19,7 +19,6 @@ public class BitmapUtils {
      * @return
      */
     private static Bitmap compressImage(Bitmap image) {
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         int options = 100;
@@ -62,7 +61,8 @@ public class BitmapUtils {
         newOpts.inSampleSize = be;// 设置缩放比例
         // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
-        return compressImage(bitmap);// 压缩好比例大小后再进行质量压缩
+        //return compressImage(bitmap);// 压缩好比例大小后再进行质量压缩
+        return bitmap;
     }
 
     /**

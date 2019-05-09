@@ -20,7 +20,7 @@ import static com.haixi.spacetime.Entity.Settings.setTextSize;
 public class TagComponent extends LinearLayout{
     private Context context;
     private ComponentTagBinding binding;
-    private boolean isChoosen;
+    private boolean isChosen;
     private String intentAction;
     private int intentAction_Type;
     private IntentFilter intentFilter;
@@ -39,7 +39,7 @@ public class TagComponent extends LinearLayout{
         this.circle = circle;
         binding.tagViewName.setText(circle.name);
 
-        isChoosen = true;
+        isChosen = true;
         refresh();
     }
 
@@ -82,11 +82,11 @@ public class TagComponent extends LinearLayout{
     }
 
     public void refresh(){
-        if (isChoosen){
-            isChoosen = false;
+        if (isChosen){
+            isChosen = false;
             binding.tagViewMainView.setBackgroundResource(R.drawable.background_circle_gray);
         }else {
-            isChoosen = true;
+            isChosen = true;
             binding.tagViewMainView.setBackgroundResource(R.drawable.background_circle_blue);
         }
     }
@@ -99,9 +99,9 @@ public class TagComponent extends LinearLayout{
                 String data = intent.getStringExtra("name");
                 int circleId = intent.getIntExtra("circleId", -1);
                 if (circle.name.equals(data) && circleId == circle.id){
-                    if (!isChoosen) refresh();
+                    if (!isChosen) refresh();
                 }else {
-                    if (isChoosen) refresh();
+                    if (isChosen) refresh();
                 }
             }
         }

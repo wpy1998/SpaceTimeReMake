@@ -11,9 +11,9 @@ public class Cookies {
     public static User owner = new User();
     public static String phoneNumber;
     public static String newPassword = null;
-    public static String accessKeyId;
-    public static String accessKeySecret;
-    public static String securityToken;
+    public static String accessKeyId = "";
+    public static String accessKeySecret = "";
+    public static String securityToken = "";
 
     public static String filePath = "/storage/emulated/0/SpaceTime/";
 

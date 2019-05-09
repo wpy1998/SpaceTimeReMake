@@ -172,7 +172,7 @@ public class OkHttpAction {
 
     //get获取访问图片的授权信息
     public void getImageToken(final int type, final String intentAction){
-        if (securityToken != null && accessKeyId != null && accessKeySecret != null){
+        if (!securityToken.equals("") && !accessKeyId.equals("") && accessKeySecret.equals("")){
             return;
         }
         new Thread(new Runnable() {
@@ -392,6 +392,29 @@ public class OkHttpAction {
                             sendBroadcast(action, type, intentAction);
                         }
                     });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //post在某个圈子中发布动态
+    public void addDynamicToCircle(final int socialCircleId, final String content, final int type,
+                                   final String intentAction){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder()
+                            .add("content", content).build();
+                    Request request = new Request.Builder().url(web + "/circles/" + socialCircleId
+                            + "/activities")
+                            .addHeader("Authorization", token).post(body).build();
+                    Response response = client.newCall(request).execute();
+                    String action = response.body().string();
+                    sendBroadcast(action, type, intentAction);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

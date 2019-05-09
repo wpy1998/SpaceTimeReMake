@@ -15,10 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <com.youth.banner.Banner
-            android:id="@+id/banner"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/dynamicContentView_View"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
+            <ImageView
+                android:id="@+id/dynamicContentView_image"
+                android:src="@drawable/ic_picture"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"

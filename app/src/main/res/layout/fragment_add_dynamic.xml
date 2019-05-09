@@ -5,7 +5,7 @@
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackGround">
+        android:background="@color/colorWhite">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -20,68 +20,17 @@
                 android:background="@drawable/background_circle_white"
                 android:padding="5dp"/>
             <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/fragmentAddDynamic_Image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/fragmentAddDynamic_L1"
-                    android:orientation="horizontal"
+                android:orientation="horizontal"
+                android:id="@+id/fragmentAddDynamic_View"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/linearlayout_style_black">
+                <ImageView
+                    android:id="@+id/fragmentAddDynamic_p1"
+                    android:src="@drawable/ic_picture"
+                    android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.haixi.spacetime.PictureComponent
-                        android:id="@+id/fragmentAddDynamic_p1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <com.haixi.spacetime.PictureComponent
-                        android:id="@+id/fragmentAddDynamic_p2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <com.haixi.spacetime.PictureComponent
-                        android:id="@+id/fragmentAddDynamic_p3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/fragmentAddDynamic_L2"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.haixi.spacetime.PictureComponent
-                        android:id="@+id/fragmentAddDynamic_p4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <com.haixi.spacetime.PictureComponent
-                        android:id="@+id/fragmentAddDynamic_p5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <com.haixi.spacetime.PictureComponent
-                        android:id="@+id/fragmentAddDynamic_p6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/fragmentAddDynamic_L3"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.haixi.spacetime.PictureComponent
-                        android:id="@+id/fragmentAddDynamic_p7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <com.haixi.spacetime.PictureComponent
-                        android:id="@+id/fragmentAddDynamic_p8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <com.haixi.spacetime.PictureComponent
-                        android:id="@+id/fragmentAddDynamic_p9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <TextView

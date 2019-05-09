@@ -125,11 +125,15 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        okHttpAction.getUserMessage(user.phoneNumber, intentAction_getUserMessage, intentAction);
+        refresh();
     }
 
     @Override
     public void refresh() {
+        okHttpAction.getUserMessage(user.phoneNumber, intentAction_getUserMessage, intentAction);
+    }
+
+    private void refreshData(){
         binding.fragmentUserSwipeRefreshLayout.setRefreshing(false);
         if (user.phoneNumber.equals(phoneNumber)){
             setting.setText("用户设置");
@@ -146,18 +150,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
             isFollow = false;
         }
 
-        boolean end = fileOperation.isFileExist(user.avatar);
-        if (end){
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(filePath + "Picture/" + user.avatar);
-                Bitmap bitmap  = BitmapFactory.decodeStream(fis);
-                image.setImageBitmap(bitmap);
-                fis.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        downLoadImage();
     }
 
     private void switchFragment(BasicFragment fragment){
@@ -178,6 +171,20 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
             transaction.hide(userDynamic).show(userMessage);
         }
         transaction.commitAllowingStateLoss();
+    }
+
+    public void downLoadImage(){
+        boolean end = fileOperation.isFileExist(user.avatar);
+        if (owner.avatar.equals("")){
+            return;
+        }else if (!owner.avatar.equals("") && end == false){
+            fileOperation.downloadPicture(accessKeyId, accessKeySecret, securityToken,
+                    owner.avatar, intentAction_setImage, intentAction);
+        }else {
+            Intent intent1 = new Intent(intentAction);
+            intent1.putExtra("type", intentAction_setImage);
+            getContext().sendBroadcast(intent1);
+        }
     }
 
     @Override
@@ -207,7 +214,6 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         }
     }
 
-    private Bitmap bitmap;
     private class UserInfoBroadcastReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, final Intent intent) {
@@ -237,7 +243,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                                     intentAction_isFollowing, intentAction);
                             return;
                         }
-                        refresh();
+                        refreshData();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -248,7 +254,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                     try {
                         JSONObject jsonObject = new JSONObject(data);
                         user.isFollowing = jsonObject.getBoolean("data");
-                        refresh();
+                        refreshData();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -261,7 +267,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                         String data1 = jsonObject.getString("data");
                         JSONObject object = new JSONObject(data1);
                         user.isFollowing = object.getBoolean("followed");
-                        refresh();
+                        refreshData();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -270,23 +276,19 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                 case intentAction_getImageToken:
                     data = intent.getStringExtra("data");
                     setImageToken(data);
-                    boolean end = fileOperation.isFileExist(user.avatar);
-                    if (owner.avatar != "" && end == false){
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                fileOperation.downloadPicture(accessKeyId, accessKeySecret, securityToken,
-                                        owner.avatar);
-                                Intent intent1 = new Intent(intentAction);
-                                intent1.putExtra("type", intentAction_setImage);
-                                getContext().sendBroadcast(intent1);
-                            }
-                        }).start();
-                    }
+                    downLoadImage();
                     break;
 
                 case intentAction_setImage:
-                    refresh();
+                    FileInputStream fis = null;
+                    try {
+                        fis = new FileInputStream(filePath + "Picture/" + user.avatar);
+                        Bitmap bitmap  = BitmapFactory.decodeStream(fis);
+                        image.setImageBitmap(bitmap);
+                        fis.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
 
                 default:

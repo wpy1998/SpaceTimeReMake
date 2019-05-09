@@ -1,6 +1,7 @@
 package com.haixi.spacetime.Entity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -32,69 +33,77 @@ import static com.haixi.spacetime.Entity.Cookies.filePath;
 
 public class FileOperation {
     Context context;
-    public static byte[] bytes;
-    private static int i = 0;
+    private byte[] bytes;
+    private int i = 0;
     public FileOperation(Context context){
         this.context = context;
     }
 
-    public void downloadPicture(String accessKeyId, String secretKeyId, String securityToken,
-                                final String fileName){
-        bytes = new byte[1024 * 1024];
-        i = 0;
-        String endpoint = "http://oss-cn-beijing.aliyuncs.com";
-        OSSCredentialProvider credentialProvider =
-                new OSSStsTokenCredentialProvider(accessKeyId, secretKeyId, securityToken);
-
-        OSS oss = new OSSClient(context.getApplicationContext(), endpoint, credentialProvider);
-
-        final GetObjectRequest get = new GetObjectRequest("spacetime-images", fileName);
-
-        OSSAsyncTask task = oss.asyncGetObject(get, new OSSCompletedCallback<GetObjectRequest,
-                GetObjectResult>() {
+    public void downloadPicture(final String accessKeyId, final String secretKeyId, final String securityToken,
+                                final String fileName, final int type, final String intentAction){
+        new Thread(new Runnable() {
             @Override
-            public void onSuccess(GetObjectRequest request, GetObjectResult result) {
-                // 请求成功。
-                Log.d("asyncGetObject", "DownloadSuccess");
-                Log.d("Content-Length", "" + result.getContentLength());
+            public void run() {
+                bytes = new byte[1024 * 1024];
+                i = 0;
+                String endpoint = "http://oss-cn-beijing.aliyuncs.com";
+                OSSCredentialProvider credentialProvider =
+                        new OSSStsTokenCredentialProvider(accessKeyId, secretKeyId, securityToken);
 
-                InputStream inputStream = result.getObjectContent();
-                byte[] buffer = new byte[2048];
-                int len;
+                OSS oss = new OSSClient(context.getApplicationContext(), endpoint, credentialProvider);
 
-                try {
-                    while ((len = inputStream.read(buffer)) != -1) {
-                        // 您可以在此处编写代码来处理下载的数据。
-                        for (int j = 0; j < len; j++){
-                            bytes[i] = buffer[j];
-                            i++;
+                final GetObjectRequest get = new GetObjectRequest("spacetime-images", fileName);
+
+                OSSAsyncTask task = oss.asyncGetObject(get, new OSSCompletedCallback<GetObjectRequest,
+                        GetObjectResult>() {
+                    @Override
+                    public void onSuccess(GetObjectRequest request, GetObjectResult result) {
+                        // 请求成功。
+                        Log.d("asyncGetObject", "DownloadSuccess");
+                        Log.d("Content-Length", "" + result.getContentLength());
+
+                        InputStream inputStream = result.getObjectContent();
+                        byte[] buffer = new byte[2048];
+                        int len;
+
+                        try {
+                            while ((len = inputStream.read(buffer)) != -1) {
+                                // 您可以在此处编写代码来处理下载的数据。
+                                for (int j = 0; j < len; j++){
+                                    bytes[i] = buffer[j];
+                                    i++;
+                                }
+                            }
+                            savePicture(fileName, bytes);
+                            System.out.println("下载完毕**************************************");
+
+                            Intent intent1 = new Intent(intentAction);
+                            intent1.putExtra("type", type);
+                            context.sendBroadcast(intent1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
-                    savePicture(fileName, bytes);
-                    System.out.println("下载完毕**************************************");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            // GetObject请求成功，将返回GetObjectResult，其持有一个输入流的实例。返回的输入流，请自行处理。
-            public void onFailure(GetObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
-                // 请求异常。
-                if (clientExcepion != null) {
-                    // 本地异常，如网络异常等。
-                    clientExcepion.printStackTrace();
-                }
-                if (serviceException != null) {
-                    // 服务异常。
-                    Log.e("ErrorCode", serviceException.getErrorCode());
-                    Log.e("RequestId", serviceException.getRequestId());
-                    Log.e("HostId", serviceException.getHostId());
-                    Log.e("RawMessage", serviceException.getRawMessage());
-                }
+                    @Override
+                    // GetObject请求成功，将返回GetObjectResult，其持有一个输入流的实例。返回的输入流，请自行处理。
+                    public void onFailure(GetObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                        // 请求异常。
+                        if (clientExcepion != null) {
+                            // 本地异常，如网络异常等。
+                            clientExcepion.printStackTrace();
+                        }
+                        if (serviceException != null) {
+                            // 服务异常。
+                            Log.e("ErrorCode", serviceException.getErrorCode());
+                            Log.e("RequestId", serviceException.getRequestId());
+                            Log.e("HostId", serviceException.getHostId());
+                            Log.e("RawMessage", serviceException.getRawMessage());
+                        }
+                    }
+                });
             }
-        });
-
+        }).start();
     }
 
     private void savePicture(String fileName, byte[] bytes){
@@ -129,10 +138,13 @@ public class FileOperation {
         }
     }
 
-    public boolean isFileExist(String fileName){
+    public synchronized boolean isFileExist(String fileName){
         File file = new File(filePath + "Picture/" + fileName);
         if (!file.exists()) {
+            savePicture(fileName, new byte[0]);
             return false;
-        }else return true;
+        }else {
+            return true;
+        }
     }
 }

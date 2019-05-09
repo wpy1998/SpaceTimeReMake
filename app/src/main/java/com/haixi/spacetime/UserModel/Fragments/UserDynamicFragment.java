@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.haixi.spacetime.Entity.BasicFragment;
+import com.haixi.spacetime.Entity.FileOperation;
 import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.DynamicModel.Components.DynamicComponent;
 import com.haixi.spacetime.Entity.Circle;
@@ -28,6 +29,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.haixi.spacetime.Entity.Cookies.accessKeyId;
+import static com.haixi.spacetime.Entity.Cookies.accessKeySecret;
+import static com.haixi.spacetime.Entity.Cookies.securityToken;
+import static com.haixi.spacetime.Entity.Cookies.setImageToken;
 import static com.haixi.spacetime.Entity.Settings.setW;
 import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 import static com.haixi.spacetime.Entity.Cookies.token;
@@ -38,10 +43,13 @@ public class UserDynamicFragment extends BasicFragment {
     private FragmentUserDynamicBinding binding;
     private String intentAction = "com.haixi.spacetime.DynamicModel" +
             ".Fragments.UserDynamicFragment";
-    private final int intentAction_getDynamic = 1, intentAction_getCircle = 2;
+    private final int intentAction_getDynamic = 1, intentAction_getCircle = 2,
+            intentAction_downLoad = 3, intentAction_getImageToken = 4;
     private User user;
     private List<Dynamic> dynamics;
     private List<Circle> tags;
+    private int number = 0, count = 0;
+    private List<String> names;
 
     public UserDynamicFragment(User user){
         this.user = user;
@@ -62,17 +70,22 @@ public class UserDynamicFragment extends BasicFragment {
         drawFragment();
         dynamics = new ArrayList<>();
         tags = new ArrayList<>();
+        names = new ArrayList<>();
         refresh();
         return binding.getRoot();
     }
 
     @Override
     public void refresh() {
-        if (token.equals(null)){
+        if (token.equals("")){
             return;
         }
+        number = 0;
+        count = 0;
         okHttpAction = new OkHttpAction(getContext());
-        if (user.phoneNumber.equals(phoneNumber)){
+        if (accessKeyId.equals("") || accessKeySecret.equals("") || securityToken.equals("")){
+            okHttpAction.getImageToken(intentAction_getImageToken, intentAction);
+        }else if (user.phoneNumber.equals(phoneNumber)){
             okHttpAction.getUserCircles(phoneNumber, intentAction_getCircle, intentAction);
             okHttpAction.getUserDynamic(phoneNumber, intentAction_getDynamic, intentAction);
         }else {
@@ -83,7 +96,7 @@ public class UserDynamicFragment extends BasicFragment {
 
     private void refreshDynamic(){
         binding.fragmentUserDynamicMainView.removeAllViews();
-        for (int i = dynamics.size() - 1; i >= 0; i--){
+        for (int i = 0; i < dynamics.size(); i++){
             Dynamic dynamic = dynamics.get(i);
             DynamicComponent dynamicComponent = new DynamicComponent(getContext(),dynamic, user);
             binding.fragmentUserDynamicMainView.addView(dynamicComponent);
@@ -102,7 +115,17 @@ public class UserDynamicFragment extends BasicFragment {
                 }
             }
         }
-        refreshDynamic();
+        for (String name: names){
+            FileOperation fileOperation = new FileOperation(getContext());
+            if (!fileOperation.isFileExist(name)){
+                fileOperation.downloadPicture(accessKeyId, accessKeySecret, securityToken, name
+                        , intentAction_downLoad, intentAction);
+            }else {
+                Intent intent1 = new Intent(intentAction);
+                intent1.putExtra("type", intentAction_downLoad);
+                getContext().sendBroadcast(intent1);
+            }
+        }
     }
 
     private class ControlBroadcastReceiver extends BroadcastReceiver {
@@ -125,6 +148,10 @@ public class UserDynamicFragment extends BasicFragment {
                             JSONObject object = array.getJSONObject(i);
                             Dynamic dynamic = new Dynamic();
                             setDynamic(dynamic, object);
+                            if (!dynamic.imageUrls.equals("")){
+                                count++;
+                                names.add(dynamic.imageUrls);
+                            }
                             dynamics.add(dynamic);
                         }
                         synTagAndDynamic();
@@ -155,6 +182,19 @@ public class UserDynamicFragment extends BasicFragment {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                    break;
+
+                case intentAction_downLoad:
+                    number++;
+                    if (number == count){
+                        refreshDynamic();
+                    }
+                    break;
+
+                case intentAction_getImageToken:
+                    data = intent.getStringExtra("data");
+                    setImageToken(data);
+                    refresh();
                     break;
 
                 default:

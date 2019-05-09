@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class SocialFragment extends BasicFragment{
         this.dynamics = dynamics;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
@@ -44,6 +46,21 @@ public class SocialFragment extends BasicFragment{
                 null, false);
         refreshDynamic();
         drawFragment();
+        binding.fragmentSocialSwipeRefreshLayout
+                .setProgressBackgroundColorSchemeColor(R.color.colorWhite);
+        binding.fragmentSocialSwipeRefreshLayout.setColorSchemeResources(R.color.colorBackGround,
+                R.color.colorBlue, R.color.colorWhite);
+        binding.fragmentSocialSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout
+                .OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent("com.haixi.spacetime.DynamicModel" +
+                        ".Fragments.DynamicFragment");
+                intent.putExtra("type", 6);
+                getActivity().sendBroadcast(intent);
+                binding.fragmentSocialSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
         return binding.getRoot();
     }
 

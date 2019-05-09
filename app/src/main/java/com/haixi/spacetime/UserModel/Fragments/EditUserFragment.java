@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haixi.spacetime.Entity.BasicFragment;
+import com.haixi.spacetime.Entity.FileOperation;
 import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.UserModel.Components.EditUserComponent;
@@ -27,6 +30,13 @@ import com.haixi.spacetime.databinding.FragmentEditUserBinding;
 
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+
+import static com.haixi.spacetime.Entity.Cookies.accessKeyId;
+import static com.haixi.spacetime.Entity.Cookies.accessKeySecret;
+import static com.haixi.spacetime.Entity.Cookies.filePath;
+import static com.haixi.spacetime.Entity.Cookies.securityToken;
+import static com.haixi.spacetime.Entity.Cookies.setImageToken;
 import static com.haixi.spacetime.Entity.Settings.setH;
 import static com.haixi.spacetime.Entity.Settings.setMargin;
 import static com.haixi.spacetime.Entity.Settings.getPx;
@@ -44,7 +54,9 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
     private ImageView back;
     private EditUserComponent userImage, userName, userAge, userArea, userSign;
     private final String intentAction = "com.haixi.spacetime.UserModel.Fragments.EditUserFragment";
-    private final int intentAction_changeUserMessage = 1, intentAction_setAvatar = 2;
+    private final int intentAction_changeUserMessage = 1, intentAction_setAvatar = 2,
+            intentAction_getImageToken = 3, intentAction_setImage = 4;
+    private FileOperation fileOperation;
 
     @Nullable
     @Override
@@ -52,6 +64,8 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
             container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_user,
                 null, false);
+        fileOperation = new FileOperation(getContext());
+        okHttpAction = new OkHttpAction(getContext());
         intentFilter = new IntentFilter();
         userInfoBroadcastReceiver = new UserInfoBroadcastReceiver();
         intentFilter.addAction(intentAction);
@@ -139,6 +153,11 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
         userAge.setContent(owner.birthday);
         userArea.setContent(owner.comeFrom);
         userSign.setContent(owner.signature);
+        if (accessKeyId.equals("") || accessKeySecret.equals("") || securityToken.equals("")){
+            okHttpAction.getImageToken(intentAction_getImageToken, intentAction);
+        }else {
+            downLoadImage();
+        }
     }
 
     @Override
@@ -157,6 +176,21 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
                 break;
             default:
                 break;
+        }
+    }
+
+    public void downLoadImage(){
+        if (owner.avatar.equals("")){
+            return;
+        }
+        boolean end = fileOperation.isFileExist(owner.avatar);
+        if (!end){
+            fileOperation.downloadPicture(accessKeyId, accessKeySecret, securityToken,
+                    owner.avatar, intentAction_setImage, intentAction);
+        }else {
+            Intent intent1 = new Intent(intentAction);
+            intent1.putExtra("type", intentAction_setImage);
+            getContext().sendBroadcast(intent1);
         }
     }
 
@@ -184,6 +218,23 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
                 case intentAction_setAvatar:
                     data = intent.getStringExtra("data");
                     Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
+                    break;
+                case intentAction_getImageToken:
+                    data = intent.getStringExtra("data");
+                    setImageToken(data);
+                    downLoadImage();
+                    break;
+
+                case intentAction_setImage:
+                    FileInputStream fis = null;
+                    try {
+                        fis = new FileInputStream(filePath + "Picture/" + owner.avatar);
+                        Bitmap bitmap  = BitmapFactory.decodeStream(fis);
+                        userImage.setImage(bitmap);
+                        fis.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     break;

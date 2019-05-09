@@ -3,6 +3,11 @@ package com.haixi.spacetime.Entity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.haixi.spacetime.Entity.Cookies.accessKeyId;
+import static com.haixi.spacetime.Entity.Cookies.accessKeySecret;
+import static com.haixi.spacetime.Entity.Cookies.owner;
+import static com.haixi.spacetime.Entity.Cookies.securityToken;
+
 public class Dynamic{
     public int imageId = -1;
     public String imageUrls;
@@ -39,6 +44,10 @@ public class Dynamic{
         dynamic.user.userName = jsonObject.getString("publisherUsername");
         dynamic.liked = jsonObject.getBoolean("liked");
         dynamic.imageUrls = jsonObject.getString("imageUrls");
+        if (!dynamic.imageUrls.equals("")){
+            String[] names = dynamic.imageUrls.split(";");
+            dynamic.imageUrls = names[0];
+        }
     }
 
     public String getJSONString(){

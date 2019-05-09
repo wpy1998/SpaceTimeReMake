@@ -40,12 +40,24 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/fragmentDynamic_frameLayout"
-            android:orientation="vertical"
+        <HorizontalScrollView
+            android:id="@+id/fragmentDynamic_ScrollView"
+            android:scrollbars="none"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBackGround">
-        </FrameLayout>
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/fragmentDynamic_tagView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragmentDynamic_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v4.view.ViewPager>
     </LinearLayout>
 </layout>

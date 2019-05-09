@@ -42,9 +42,7 @@ public class FollowFragment extends BasicFragment {
             ".Fragments.FollowFragment";
     private List<Dynamic> dynamics;
     private final int intentAction_getDynamic = 1, intentAction_getCircle = 2;
-    private Circle currentCircle;
     private List<Circle> tags;
-    private List<TagComponent> tagComponents;
 
     @SuppressLint("ResourceAsColor")
     @Nullable
