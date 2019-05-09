@@ -213,7 +213,6 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
             binding.fragmentDynamicTagView.addView(tagComponent);
             tagComponents.add(tagComponent);
         }
-        tagComponents.get(0).performClick();
     }
 
     private synchronized void synTagAndDynamic(){
@@ -316,6 +315,11 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
                     if (number == count){
                         refreshViewPager();
                         refreshTag();
+                        Intent intent1 = new Intent(intentAction);
+                        intent1.putExtra("type", intentAction_selectTag);
+                        intent1.putExtra("circleId", -1);
+                        intent1.putExtra("name", "全部");
+                        getActivity().sendBroadcast(intent1);
                     }
                     break;
 

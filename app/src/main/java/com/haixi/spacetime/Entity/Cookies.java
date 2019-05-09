@@ -3,6 +3,8 @@ package com.haixi.spacetime.Entity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.haixi.spacetime.Service.DownloadPictureService;
+
 import org.json.JSONObject;
 
 public class Cookies {
@@ -18,6 +20,7 @@ public class Cookies {
     public static String filePath = "/storage/emulated/0/SpaceTime/";
 
     public static final int resultCode = 1;
+    public static DownloadPictureService downloadPictureService = new DownloadPictureService();
 
     public static Bitmap bitmap;
 

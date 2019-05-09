@@ -33,9 +33,6 @@ public class CommentFragment extends BasicFragment {
                 null, false);
         DynamicComponent dynamicComponent = new DynamicComponent(getContext(), dynamic, null);
         binding.fragmentCommentMainView.addView(dynamicComponent);
-        TextView textView = new TextView(getContext());
-        textView.setText(message);
-        binding.fragmentCommentMainView.addView(textView);
         return binding.getRoot();
     }
 }

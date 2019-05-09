@@ -123,12 +123,6 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        refresh();
-    }
-
-    @Override
     public void refresh() {
         okHttpAction.getUserMessage(user.phoneNumber, intentAction_getUserMessage, intentAction);
     }
@@ -174,10 +168,11 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     }
 
     public void downLoadImage(){
+        fileOperation = new FileOperation(getContext());
         boolean end = fileOperation.isFileExist(user.avatar);
         if (owner.avatar.equals("")){
             return;
-        }else if (!owner.avatar.equals("") && end == false){
+        }else if (!end){
             fileOperation.downloadPicture(accessKeyId, accessKeySecret, securityToken,
                     owner.avatar, intentAction_setImage, intentAction);
         }else {
