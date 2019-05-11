@@ -60,7 +60,6 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
     private CircleImageView image;
 
     private UserDynamicFragment userDynamic;
-    private MessageFragment userMessage;
     public User user;
     private boolean isFollow;
     private String intentAction = "com.haixi.spacetime.UserModel.Fragments.UserFragment";
@@ -93,7 +92,6 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
 
         setting = binding.getRoot().findViewById(R.id.fragment_user_setting);
         dynamic = binding.getRoot().findViewById(R.id.fragment_user_dynamic);
-        message = binding.getRoot().findViewById(R.id.fragment_user_message);
         name = binding.getRoot().findViewById(R.id.fragment_user_name);
         ageLocation = binding.getRoot().findViewById(R.id.
                 fragment_user_age_and_loaction);
@@ -102,11 +100,13 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         image = binding.getRoot().findViewById(R.id.fragment_user_image);
         gender = binding.getRoot().findViewById(R.id.fragment_user_gender);
 
+        userDynamic = new UserDynamicFragment(user);
+        replaceFragment(R.id.fragment_user_mainView);
         drawFragment();
         setting.setOnClickListener(this);
-        dynamic.setOnClickListener(this);
-        message.setOnClickListener(this);
-        dynamic.performClick();
+//        dynamic.setOnClickListener(this);
+//        message.setOnClickListener(this);
+//        dynamic.performClick();
 
         binding.fragmentUserSwipeRefreshLayout
                 .setProgressBackgroundColorSchemeColor(R.color.colorWhite);
@@ -119,6 +119,9 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                 refresh();
             }
         });
+
+        dynamic.setText("历史动态");
+        chooseView.removeView(message);
         return binding.getRoot();
     }
 
@@ -147,34 +150,41 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         downLoadImage();
     }
 
-    private void switchFragment(BasicFragment fragment){
-        if (fragment == null){
-            return;
-        }
+    protected void replaceFragment(int id){
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        if (!userMessage.isAdded()){
-            transaction.add(R.id.fragment_user_mainView, userMessage);
-        }
-        if (!userDynamic.isAdded()){
-            transaction.add(R.id.fragment_user_mainView, userDynamic);
-        }
-        if (fragment == userDynamic){
-            transaction.hide(userMessage).show(userDynamic);
-        }else {
-            transaction.hide(userDynamic).show(userMessage);
-        }
-        transaction.commitAllowingStateLoss();
+        transaction.replace(id ,userDynamic);
+        transaction.commit();
     }
+
+//    private void switchFragment(BasicFragment fragment){
+//        if (fragment == null){
+//            return;
+//        }
+//        FragmentManager manager = getActivity().getSupportFragmentManager();
+//        FragmentTransaction transaction = manager.beginTransaction();
+//        if (!userMessage.isAdded()){
+//            transaction.add(R.id.fragment_user_mainView, userMessage);
+//        }
+//        if (!userDynamic.isAdded()){
+//            transaction.add(R.id.fragment_user_mainView, userDynamic);
+//        }
+//        if (fragment == userDynamic){
+//            transaction.hide(userMessage).show(userDynamic);
+//        }else {
+//            transaction.hide(userDynamic).show(userMessage);
+//        }
+//        transaction.commitAllowingStateLoss();
+//    }
 
     public void downLoadImage(){
         fileOperation = new FileOperation(getContext());
         boolean end = fileOperation.isFileExist(user.avatar);
-        if (owner.avatar.equals("")){
+        if (user.avatar.equals("")){
             return;
         }else if (!end){
             fileOperation.downloadPicture(accessKeyId, accessKeySecret, securityToken,
-                    owner.avatar, intentAction_setImage, intentAction);
+                    user.avatar, intentAction_setImage, intentAction);
         }else {
             Intent intent1 = new Intent(intentAction);
             intent1.putExtra("type", intentAction_setImage);
@@ -194,16 +204,16 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                     okHttpAction.followUser(user.phoneNumber, intentAction_followed, intentAction);
                 }
                 break;
-            case R.id.fragment_user_dynamic:
-                dynamic.setTextColor(getResources().getColor(R.color.colorBlue));
-                message.setTextColor(getResources().getColor(R.color.colorBlack));
-                switchFragment(userDynamic);
-                break;
-            case R.id.fragment_user_message:
-                dynamic.setTextColor(getResources().getColor(R.color.colorBlack));
-                message.setTextColor(getResources().getColor(R.color.colorBlue));
-                switchFragment(userMessage);
-                break;
+//            case R.id.fragment_user_dynamic:
+//                dynamic.setTextColor(getResources().getColor(R.color.colorBlue));
+//                message.setTextColor(getResources().getColor(R.color.colorBlack));
+//                switchFragment(userDynamic);
+//                break;
+//            case R.id.fragment_user_message:
+//                dynamic.setTextColor(getResources().getColor(R.color.colorBlack));
+//                message.setTextColor(getResources().getColor(R.color.colorBlue));
+//                switchFragment(userMessage);
+//                break;
             default:
                 break;
         }
@@ -230,9 +240,7 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                             setMessage(data1, user);
                         }
                         userDynamic = new UserDynamicFragment(user);
-                        userMessage = new MessageFragment(user);
-                        binding.fragmentUserMainView.removeAllViews();
-                        dynamic.performClick();
+                        replaceFragment(R.id.fragment_user_mainView);
                         if (!user.phoneNumber.equals(owner.phoneNumber)){
                             okHttpAction.isFollowingUser(user.phoneNumber,
                                     intentAction_isFollowing, intentAction);

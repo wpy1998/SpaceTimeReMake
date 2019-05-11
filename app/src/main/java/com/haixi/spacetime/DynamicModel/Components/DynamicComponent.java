@@ -2,13 +2,14 @@ package com.haixi.spacetime.DynamicModel.Components;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.view.KeyEvent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.haixi.spacetime.Entity.FileOperation;
 import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.Entity.Dynamic;
 import com.haixi.spacetime.Entity.User;
@@ -22,7 +23,6 @@ import static com.haixi.spacetime.Entity.Settings.setMargin;
 import static com.haixi.spacetime.Entity.Settings.getPx;
 import static com.haixi.spacetime.Entity.Settings.setHW;
 import static com.haixi.spacetime.Entity.Settings.setTextSize;
-import static com.haixi.spacetime.Entity.Cookies.phoneNumber;
 
 public class DynamicComponent extends LinearLayout implements View.OnClickListener{
     private DynamicContentViewBinding binding;
@@ -73,17 +73,20 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
         binding.dynamicContentViewPublishTime.setText(dynamic.publishTime);
         if (dynamic.liked){
             binding.dynamicContentViewLike.
-                    setImageResource(R.drawable.ic_like_lighting);
+                    setImageResource(R.drawable.ic_likelight);
         }else {
             binding.dynamicContentViewLike.
                     setImageResource(R.drawable.ic_like);
         }
+        binding.fragmentDynamicOther.removeView(binding.dynamicContentViewComment);
+        binding.fragmentDynamicOther.removeView(binding.dynamicContentViewCommentNumber);
     }
 
     private void refreshPicture(){
         if (!dynamic.imageUrls.equals("")){
-            binding.dynamicContentViewImage.setImageBitmap(getImage(filePath +
-                    "Picture/" + dynamic.imageUrls));
+            Bitmap bitmap = getImage(filePath + "Picture/" + dynamic.imageUrls);
+            FileOperation fileOperation = new FileOperation(getContext());
+            binding.dynamicContentViewImage.setImageBitmap(fileOperation.cutBitmap(bitmap));
         }
     }
 
@@ -110,19 +113,19 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
     private void drawView() {
         titleView.getLayoutParams().height = getPx(60);
 
-        setHW(userImage, 50, 50);
+        setHW(userImage, 45, 45);
         setMargin(userImage, 12, 10, 9, 0, false);
 
-        userName.getLayoutParams().height = getPx(22);
+//        userName.getLayoutParams().height = getPx(22);
         setMargin(userName, 0, 10, 0, 8, false);
         setTextSize(userName, 16);
 
-        circleName.getLayoutParams().height = getPx(20);
+//        circleName.getLayoutParams().height = getPx(20);
         setTextSize(circleName, 14);
 
         setMargin(setting, 0, 0, 20, 0, false);
 
-        setMargin(binding.dynamicContentViewText, 16, 19, 16,
+        setMargin(binding.dynamicContentViewText, 16, 10, 16,
                 7, true);
 
         setHW(binding.dynamicContentViewLike, 24, 24);
@@ -153,7 +156,8 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
         if (dynamic.imageUrls.equals("")){
             binding.dynamicContentViewMainView.removeView(binding.dynamicContentViewView);
         }else {
-            setHW(binding.dynamicContentViewImage, 300, 375);
+            setHW(binding.dynamicContentViewImage, 375, 375);
+            setMargin(binding.dynamicContentViewImage, 0, 10, 0, 0, false);
         }
     }
 }

@@ -5,15 +5,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:layout_marginTop="4.5dp"
-        android:layout_marginBottom="4.5dp">
+        android:background="@color/colorWhite">
         <include layout="@layout/title_dynamic_content_view"/>
-
-        <TextView
-            android:id="@+id/dynamicContentView_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -29,8 +22,15 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/dynamicContentView_text"
+            android:textColor="#545454"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             android:orientation="horizontal"
+            android:id="@+id/fragmentDynamic_other"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView

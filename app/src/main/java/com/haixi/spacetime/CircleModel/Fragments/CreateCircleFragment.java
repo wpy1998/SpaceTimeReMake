@@ -117,16 +117,12 @@ public class CreateCircleFragment extends BasicFragment implements View.OnClickL
 
         setMargin(mainView, 15, 0, 15, 0, false);
 
-        setH(binding.createCircleTag, 40);
-        setMargin(binding.createCircleTag, 0, 15, 0, 0, true);
-        setTextSize(binding.createCircleTag, 24);
-
         setW(binding.createCircleName, 303);
-        setMargin(binding.createCircleName, 36, 60, 36, 0, false);
+        setMargin(binding.createCircleName, 36, 100, 36, 0, false);
         setTextSize(binding.createCircleName, 24);
 
         setHW(binding.createCircleSave, 47, 284);
-        setMargin(binding.createCircleSave, 44, 40, 47, 0, false);
+        setMargin(binding.createCircleSave, 44, 150, 47, 0, false);
         setTextSize(binding.createCircleSave, 20);
     }
 }

@@ -159,9 +159,9 @@ public class CircleFragment extends BasicFragment implements View.OnClickListene
                 10, false);
         setTextSize(binding.fragmentCircleTitle, 24);
 
-        setHW(binding.fragmentCircleAdd, 30, 30);
-        setMargin(binding.fragmentCircleAdd, 0, 15, 25,
-                15, false);
+        setHW(binding.fragmentCircleAdd, 24, 24);
+        setMargin(binding.fragmentCircleAdd, 0, 20, 25,
+                16, false);
 
         setMargin(binding.getRoot().findViewById(R.id.titleSecondCircle_container),
                 15, 0, 15, 0, false);

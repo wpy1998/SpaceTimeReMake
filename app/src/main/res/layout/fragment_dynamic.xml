@@ -36,6 +36,7 @@
             <ImageView
                 android:src="@drawable/ic_add"
                 android:id="@+id/fragmentDynamic_add"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -44,7 +45,8 @@
             android:id="@+id/fragmentDynamic_ScrollView"
             android:scrollbars="none"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
             <LinearLayout
                 android:orientation="horizontal"
                 android:id="@+id/fragmentDynamic_tagView"

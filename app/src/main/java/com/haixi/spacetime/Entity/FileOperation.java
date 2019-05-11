@@ -138,6 +138,38 @@ public class FileOperation {
         }
     }
 
+    public static void saveCode(String fileName, byte[] bytes){
+        File fileDir = new File(filePath + "Save/");
+        if (!fileDir.exists()) {
+            if (!fileDir.mkdirs()) {
+                return;
+            }
+        }
+
+        File file = new File(filePath + "Picture/" + fileName);
+        RandomAccessFile raf = null;
+        FileOutputStream out = null;
+        try {
+            //如果为追加则在原来的基础上继续写文件
+            raf = new RandomAccessFile(file, "rw");
+            raf.seek(file.length());
+            raf.write(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (raf != null) {
+                    raf.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public synchronized boolean isFileExist(String fileName){
         File file = new File(filePath + "Picture/" + fileName);
         if (!file.exists()) {
@@ -146,5 +178,20 @@ public class FileOperation {
         }else {
             return true;
         }
+    }
+
+    public Bitmap cutBitmap(Bitmap bitmap){
+        if (bitmap == null) return null;
+        int h = bitmap.getHeight();
+        int w = bitmap.getWidth(), min = 0;
+        if (h > w){
+            min = w;
+        }else {
+            min = h;
+        }
+        int cenx = w / 2, ceny = h / 2, mid = min / 2;
+        Bitmap bitmap1 = Bitmap.createBitmap(bitmap, cenx - mid, ceny - mid,
+                min, min, null, false);
+        return bitmap1;
     }
 }

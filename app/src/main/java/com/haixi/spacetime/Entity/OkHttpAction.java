@@ -474,7 +474,7 @@ public class OkHttpAction {
                     OkHttpClient client = new OkHttpClient();
                     RequestBody body = new FormBody.Builder().build();
                     Request request = new Request.Builder().url(web + "/circles/activities/" + id
-                            + "/like")
+                            + "/like_lighting")
                             .addHeader("Authorization", token).post(body).build();
                     Response response = client.newCall(request).execute();
                     String action = response.body().string();

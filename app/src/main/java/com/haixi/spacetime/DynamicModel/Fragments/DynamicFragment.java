@@ -94,6 +94,7 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
         binding.fragmentDynamicAdd.setOnClickListener(this);
         binding.fragmentDynamicSocialCircle.performClick();
         refresh();
+        binding.fragmentDynamicTitle.removeView(binding.getRoot().findViewById(R.id.fragmentDynamic_follow));
         return binding.getRoot();
     }
 
@@ -341,15 +342,15 @@ public class DynamicFragment extends BasicFragment implements View.OnClickListen
 
     private void drawFragment(){
         setH(binding.fragmentDynamicSocialCircle, 41);
-        setTextSize(binding.fragmentDynamicSocialCircle, 20);
-        setMargin(binding.fragmentDynamicSocialCircle, 18, 0, 19,
-                2, false);
+        setMargin(binding.fragmentDynamicSocialCircle, 9, 0, 0,
+                0, false);
+        setTextSize(binding.fragmentDynamicSocialCircle, 24);
 
-        setH(binding.fragmentDynamicFollow, 41);
-        setTextSize(binding.fragmentDynamicFollow, 20);
-        setMargin(binding.fragmentDynamicFollow, 0, 0, 0, 2, false);
+//        setH(binding.fragmentDynamicFollow, 41);
+//        setTextSize(binding.fragmentDynamicFollow, 26);
+//        setMargin(binding.fragmentDynamicFollow, 0, 0, 0, 2, false);
 
-        setHW(binding.fragmentDynamicAdd, 25, 25);
-        setMargin(binding.fragmentDynamicAdd, 8, 8, 8, 8, true);
+        setHW(binding.fragmentDynamicAdd, 30, 30);
+        setMargin(binding.fragmentDynamicAdd, 8, 10, 8, 10, true);
     }
 }

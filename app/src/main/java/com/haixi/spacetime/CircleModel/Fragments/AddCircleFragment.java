@@ -33,7 +33,7 @@ public class AddCircleFragment extends BasicFragment{
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_circle,
                 null, false);
         mainView = binding.getRoot().findViewById(R.id.titleSecondCircle_container);
-        addCircleID = new CircleComponent(getContext(), new Circle("圈子ID添加"));
+        addCircleID = new CircleComponent(getContext(), new Circle("扫码添加"));
         createCircle = new CircleComponent(getContext(), new Circle("创建圈子"));
         mainView.addView(addCircleID);
         mainView.addView(createCircle);

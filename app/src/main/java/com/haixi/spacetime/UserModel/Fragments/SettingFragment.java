@@ -112,14 +112,14 @@ public class SettingFragment extends BasicFragment implements
             }
         });
 
-        aboutUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance()
-                        .build("/spaceTime/forbidden")
-                        .navigation();
-            }
-        });
+//        aboutUs.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ARouter.getInstance()
+//                        .build("/spaceTime/forbidden")
+//                        .navigation();
+//            }
+//        });
         return binding.getRoot();
     }
 

@@ -23,19 +23,19 @@
                 android:orientation="horizontal"
                 android:id="@+id/fragmentAddDynamic_View"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/linearlayout_style_black">
+                android:layout_height="100dp">
                 <ImageView
                     android:id="@+id/fragmentAddDynamic_p1"
                     android:src="@drawable/ic_picture"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/fragmentAddDynamic_choose"
                 android:textColor="#000000"
+                android:textStyle="bold"
                 android:text="选择发送到哪个圈子"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

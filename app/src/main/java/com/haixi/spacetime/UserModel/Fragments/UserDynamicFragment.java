@@ -45,7 +45,7 @@ public class UserDynamicFragment extends BasicFragment {
             ".Fragments.UserDynamicFragment";
     private final int intentAction_getDynamic = 1, intentAction_getCircle = 2,
             intentAction_downLoad = 3, intentAction_getImageToken = 4;
-    private User user;
+    public User user;
     private List<Dynamic> dynamics;
     private List<Circle> tags;
     private int number = 0, count = 0;

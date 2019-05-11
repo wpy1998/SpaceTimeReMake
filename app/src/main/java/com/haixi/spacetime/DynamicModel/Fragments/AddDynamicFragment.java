@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.haixi.spacetime.Entity.BasicFragment;
 import com.haixi.spacetime.Entity.BitmapUtils;
+import com.haixi.spacetime.Entity.FileOperation;
 import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.DynamicModel.Components.TagComponent;
 import com.haixi.spacetime.Entity.Circle;
@@ -82,9 +84,11 @@ public class AddDynamicFragment extends BasicFragment implements View.OnClickLis
                 List<String> pathList = Album.parseResult(data);
                 picturePaths = pathList;
                 imageNumber = pathList.size();
+                FileOperation fileOperation = new FileOperation(getContext());
+                Bitmap bitmap = fileOperation.cutBitmap(BitmapUtils.getImage(pathList.get(0)));
                 if (imageNumber >= 1)
                     binding.fragmentAddDynamicP1
-                        .setImageBitmap(BitmapUtils.getImage(pathList.get(0)));
+                            .setImageBitmap(bitmap);
                 else binding.fragmentAddDynamicP1.setImageResource(R.drawable.ic_picture);
                 setHW(binding.fragmentAddDynamicView, 345, 345);
             }
@@ -187,10 +191,11 @@ public class AddDynamicFragment extends BasicFragment implements View.OnClickLis
                 15, 10, false);
 
         binding.fragmentAddDynamicChoose.getLayoutParams().height = getPx(22);
-        setMargin(binding.fragmentAddDynamicChoose, 15, 0, 0,
+        setMargin(binding.fragmentAddDynamicChoose, 15, 20, 0,
                 0, false);
+        setTextSize(binding.fragmentAddDynamicChoose, 16);
 
-        setMargin(binding.fragmentAddDynamicScroll, 15, 0,
+        setMargin(binding.fragmentAddDynamicScroll, 10, 0,
                 15, 0, false);
     }
 }

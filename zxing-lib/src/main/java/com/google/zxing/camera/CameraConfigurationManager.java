@@ -62,7 +62,7 @@ final class CameraConfigurationManager {
         Point screenResolutionForCamera = new Point();
         screenResolutionForCamera.x = screenResolution.x;
         screenResolutionForCamera.y = screenResolution.y;
-        // preview size is always something like 480*320, other 320*480
+        // preview size is always something like_lighting 480*320, other 320*480
         if (screenResolution.x < screenResolution.y) {
             screenResolutionForCamera.x = screenResolution.y;
             screenResolutionForCamera.y = screenResolution.x;
@@ -259,13 +259,13 @@ final class CameraConfigurationManager {
         }
 
         // Set zoom. This helps encourage the user to pull back.
-        // Some devices like the Behold have a zoom parameter
+        // Some devices like_lighting the Behold have a zoom parameter
         if (maxZoomString != null || motZoomValuesString != null) {
             parameters.set("zoom", String.valueOf(tenDesiredZoom / 10.0));
         }
 
-        // Most devices, like the Hero, appear to expose this zoom parameter.
-        // It takes on values like "27" which appears to mean 2.7x zoom
+        // Most devices, like_lighting the Hero, appear to expose this zoom parameter.
+        // It takes on values like_lighting "27" which appears to mean 2.7x zoom
         if (takingPictureZoomMaxString != null) {
             parameters.set("taking-picture-zoom", tenDesiredZoom);
         }
