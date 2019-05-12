@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,7 +32,6 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
-import static com.haixi.spacetime.Entity.Cookies.bitmap;
 import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Entity.Cookies.setBitmap;
 import static com.haixi.spacetime.Entity.User.setMessage;
@@ -141,7 +141,7 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
             String picturePath = cursor.getString(columnIndex);
             System.out.println("picturePath = " + picturePath);
             cursor.close();
-            setBitmap(picturePath);
+            Bitmap bitmap = setBitmap(picturePath);
             binding.fragmentCompleteMessageImage.setImageBitmap(bitmap);
         }
     }
@@ -169,9 +169,5 @@ public class CompleteMessageFragment extends BasicFragment implements View.OnCli
                     break;
             }
         }
-    }
-
-    private void drawFragment(){
-
     }
 }

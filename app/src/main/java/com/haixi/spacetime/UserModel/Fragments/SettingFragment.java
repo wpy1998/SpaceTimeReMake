@@ -41,7 +41,7 @@ public class SettingFragment extends BasicFragment implements
     private FragmentSettingBinding binding;
     private TextView title;
     private ImageView back;
-    private TurnComponent editUserMessage, accountAndSafety, feedback, aboutUs;
+    private TurnComponent editUserMessage, feedback, aboutUs;
     private ChooseComponent openNotification;
 
     private final String intentAction = "com.example.spacetime.UserModel.Fragments.SettingFragment";
@@ -61,12 +61,10 @@ public class SettingFragment extends BasicFragment implements
         back = binding.getRoot().findViewById(R.id.fragment_setting_back);
 
         editUserMessage = new TurnComponent(getContext(), "修改个人资料");
-        accountAndSafety = new TurnComponent(getContext(), "账号与安全");
         openNotification = new ChooseComponent(getContext(), "开启推送");
         feedback = new TurnComponent(getContext(), "意见反馈");
         aboutUs = new TurnComponent(getContext(), "关于我们");
         binding.fragmentSettingMainView.addView(editUserMessage);
-        binding.fragmentSettingMainView.addView(accountAndSafety);
         binding.fragmentSettingMainView.addView(openNotification);
         binding.fragmentSettingMainView.addView(feedback);
         binding.fragmentSettingMainView.addView(aboutUs);
@@ -84,19 +82,17 @@ public class SettingFragment extends BasicFragment implements
             }
         });
 
-        accountAndSafety.setOnClickListener(this);
-
         openNotification.binding.optionLayoutChooseGetNotification.
                 setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (openNotification.isAllowed){
                             openNotification.isAllowed = false;
-                            Toast.makeText(getContext(), "推送已开启",
+                            Toast.makeText(getContext(), "推送已关闭",
                                     Toast.LENGTH_SHORT).show();
                         }else {
                             openNotification.isAllowed = true;
-                            Toast.makeText(getContext(), "推送已关闭",
+                            Toast.makeText(getContext(), "推送已开启",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -184,7 +180,7 @@ public class SettingFragment extends BasicFragment implements
         setMargin(back, 13, 10, 0, 0, false);
 
         setHW(title, 52, 61);
-        setMargin(title, 20, 0, 0, 3, false);
+        setMargin(title, 20, 10, 0, 3, false);
 
         setHW(binding.fragmentSettingExit, 50, 160);
         setMargin(binding.fragmentSettingExit, 0, 50, 0, 0, true);
@@ -197,7 +193,6 @@ public class SettingFragment extends BasicFragment implements
         aboutUs.drawView();
         openNotification.drawView();
         feedback.drawView();
-        accountAndSafety.drawView();
 
         TextView theme = title.findViewById(R.id.fragment_setting_title);
         setTextSize(theme, 30);

@@ -54,14 +54,14 @@ import static com.haixi.spacetime.Entity.User.setMessage;
 @SuppressLint("ValidFragment")
 public class UserFragment extends BasicFragment implements View.OnClickListener {
     private FragmentUserBinding binding;
-    private TextView dynamic, message, name, ageLocation, setting;
+    private TextView dynamic, message, name, setting;
     private LinearLayout userView, chooseView;
     private ImageView gender;
     private CircleImageView image;
 
     private UserDynamicFragment userDynamic;
     public User user;
-    private boolean isFollow;
+//    private boolean isFollow;
     private String intentAction = "com.haixi.spacetime.UserModel.Fragments.UserFragment";
     private final int intentAction_getUserMessage = 1, intentAction_isFollowing = 2,
         intentAction_followed = 3, intentAction_getImageToken = 4, intentAction_setImage = 5;
@@ -93,8 +93,6 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         setting = binding.getRoot().findViewById(R.id.fragment_user_setting);
         dynamic = binding.getRoot().findViewById(R.id.fragment_user_dynamic);
         name = binding.getRoot().findViewById(R.id.fragment_user_name);
-        ageLocation = binding.getRoot().findViewById(R.id.
-                fragment_user_age_and_loaction);
         userView = binding.getRoot().findViewById(R.id.fragment_user_userView);
         chooseView = binding.getRoot().findViewById(R.id.fragment_user_choose);
         image = binding.getRoot().findViewById(R.id.fragment_user_image);
@@ -135,16 +133,10 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         if (user.phoneNumber.equals(phoneNumber)){
             setting.setText("用户设置");
             name.setText(owner.userName);
-            ageLocation.setText(owner.comeFrom);
         }else {
-            if (user.isFollowing){
-                setting.setText("已关注");
-            }else {
-                setting.setText("未关注");
-            }
+            setting.setText("私信");
             name.setText(user.userName);
-            ageLocation.setText(user.comeFrom);
-            isFollow = false;
+//            isFollow = false;
         }
 
         downLoadImage();
@@ -241,11 +233,11 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
                         }
                         userDynamic = new UserDynamicFragment(user);
                         replaceFragment(R.id.fragment_user_mainView);
-                        if (!user.phoneNumber.equals(owner.phoneNumber)){
-                            okHttpAction.isFollowingUser(user.phoneNumber,
-                                    intentAction_isFollowing, intentAction);
-                            return;
-                        }
+//                        if (!user.phoneNumber.equals(owner.phoneNumber)){
+//                            okHttpAction.isFollowingUser(user.phoneNumber,
+//                                    intentAction_isFollowing, intentAction);
+//                            return;
+//                        }
                         refreshData();
                     }catch (Exception e){
                         e.printStackTrace();
@@ -307,16 +299,11 @@ public class UserFragment extends BasicFragment implements View.OnClickListener 
         setHW(image, 70, 70);
         setMargin(image, 20, 17, 21, 0, false);
 
-        name.getLayoutParams().height = getPx(41);
-        setTextSize(name, 24);
+        setTextSize(name, 22);
         setMargin(name, 0, 17, 6, 7, false);
 
         setHW(gender, 24, 24);
-        setMargin(gender, 0, 25, 0, 69, false);
-
-        setH(ageLocation, 22);
-        setMargin(ageLocation, 0, 0, 0, 31, false);
-        setTextSize(ageLocation, 16);
+        setMargin(gender, 0, 0, 0, 0, false);
 
         setting.getLayoutParams().height = getPx(33);
         setMargin(setting, 0, 21, 22, 3, false);

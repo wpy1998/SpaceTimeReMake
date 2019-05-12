@@ -33,23 +33,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
+
             <TextView
                 android:id="@+id/edit_name_save"
-                android:text="保存"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="保存"
+                android:textColor="@color/colorBlue"
+                android:textSize="20dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <EditText
             android:hint="请输入内容"
             android:background="@drawable/fragment_add_dynamic_editviewstyle"
             android:id="@+id/edit_name_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

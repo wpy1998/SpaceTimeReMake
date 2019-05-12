@@ -28,7 +28,6 @@
                 android:layout_height="wrap_content"/>
             <com.haixi.spacetime.CircleImageView
                 android:id="@+id/componentEditUser_image"
-                android:src="@drawable/jack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <ImageView

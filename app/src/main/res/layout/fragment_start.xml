@@ -2,26 +2,30 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
+        <ImageView
+            android:id="@+id/fragmentStart_logo"
+            android:src="@drawable/ic_welcome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </LinearLayout>
+            android:layout_height="wrap_content" />
 
         <TextView
-            android:text="SpaceTime"
-            android:textColor="@color/colorBlue"
-            android:textSize="60dp"
+            android:id="@+id/fragmentStart_t1"
+            android:text="Spacetime时空"
+            android:textColor="#101010"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
-            android:text="时空APP"
-            android:textSize="40dp"
-            android:layout_gravity="center"
+            android:id="@+id/fragmentStart_t2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="开启圈层社交新时代"
+            android:textSize="40dp" />
 
         <LinearLayout
             android:layout_weight="2"
@@ -35,6 +39,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="立即注册"
+                android:textStyle="bold"
                 android:id="@+id/start_register"
                 android:textColor="@color/colorWhite"
                 android:layout_width="match_parent"
@@ -48,6 +53,7 @@
                 android:gravity="center"/>
             <TextView
                 android:text="登录"
+                android:textStyle="bold"
                 android:id="@+id/start_login"
                 android:textColor="@color/colorBlue"
                 android:textSize="17dp"

@@ -16,6 +16,9 @@ import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.DynamicContentViewBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.haixi.spacetime.Entity.BitmapUtils.getImage;
 import static com.haixi.spacetime.Entity.Cookies.filePath;
 import static com.haixi.spacetime.Entity.Settings.setH;
@@ -32,13 +35,16 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
     public ImageView userImage, setting;
     private OkHttpAction okHttpAction;
     private String[] paths;
-
+    public List<String > popupMenuItemList;
     public Dynamic dynamic;
     public TextView text;
 
     public DynamicComponent(Context context, Dynamic dynamic, User user){
         super(context);
         paths = dynamic.imageUrls.split(";");
+       popupMenuItemList = new ArrayList<>();
+        popupMenuItemList.add("选项");
+        popupMenuItemList.add("删除");
 
         this.context = context;
         this.dynamic = dynamic;
@@ -117,7 +123,7 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
         setMargin(userImage, 12, 10, 9, 0, false);
 
 //        userName.getLayoutParams().height = getPx(22);
-        setMargin(userName, 0, 10, 0, 8, false);
+        setMargin(userName, 0, 10, 0, 5, false);
         setTextSize(userName, 16);
 
 //        circleName.getLayoutParams().height = getPx(20);
@@ -127,9 +133,10 @@ public class DynamicComponent extends LinearLayout implements View.OnClickListen
 
         setMargin(binding.dynamicContentViewText, 16, 10, 16,
                 7, true);
+        setTextSize(binding.dynamicContentViewText, 18);
 
         setHW(binding.dynamicContentViewLike, 24, 24);
-        setMargin(binding.dynamicContentViewLike, 20, 9, 7,
+        setMargin(binding.dynamicContentViewLike, 16, 9, 7,
                 20, true);
 
         binding.dynamicContentViewLikeNumber.getLayoutParams().

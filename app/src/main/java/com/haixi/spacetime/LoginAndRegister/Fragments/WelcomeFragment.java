@@ -28,24 +28,31 @@ public class WelcomeFragment extends BasicFragment implements View.OnClickListen
                 null, false);
         drawFragment();
 
-        binding.welcomeLogin.setOnClickListener(this);
+        binding.welcomeT1.setOnClickListener(this);
+        binding.welcomeT2.setOnClickListener(this);
         return binding.getRoot();
     }
 
     private void drawFragment(){
-        setH(binding.welcomeLogo, 130);
-        setMargin(binding.welcomeLogo, 0, 246, 0, 0, true);
-        setTextSize(binding.welcomeLogo, 32);
+        setHW(binding.fragmentWelcomeLogo, 151, 151);
+        setMargin(binding.fragmentWelcomeLogo, 110, 151, 110, 0, true);
 
-        setHW(binding.welcomeLogin, 50, 222);
-        setMargin(binding.welcomeLogin, 77, 0, 76,32, true);
-        setTextSize(binding.welcomeLogin, 16);
+        setTextSize(binding.welcomeT1, 30);
+
+        setMargin(binding.welcomeT2, 0, 0, 0, 20, true);
+        setTextSize(binding.welcomeT2, 20);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.welcome_login:
+            case R.id.welcome_t1:
+                ARouter.getInstance()
+                        .build("/spaceTime/start")
+                        .withInt("type", 1)
+                        .navigation();
+                break;
+            case R.id.welcome_t2:
                 ARouter.getInstance()
                         .build("/spaceTime/start")
                         .withInt("type", 1)

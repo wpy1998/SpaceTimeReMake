@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.haixi.spacetime.Entity.BasicActivity;
 import com.haixi.spacetime.Entity.User;
 import com.haixi.spacetime.R;
+import com.haixi.spacetime.UserModel.Fragments.EditImageFragment;
 import com.haixi.spacetime.UserModel.Fragments.FeedbackFragment;
 import com.haixi.spacetime.UserModel.Fragments.EditNameFragment;
 import com.haixi.spacetime.UserModel.Fragments.EditSignFragment;
@@ -51,6 +52,12 @@ public class UserActivity extends BasicActivity {
             case "setting":
                 setStatusBarColor(this, R.color.colorWhite, true);
                 originFragment = new SettingFragment();
+                replaceFragment(R.id.user_frameLayout);
+                break;
+            case "editImage":
+                String picturePath = intent.getStringExtra("picturePath");
+                setStatusBarColor(this, R.color.colorWhite, true);
+                originFragment = new EditImageFragment(picturePath);
                 replaceFragment(R.id.user_frameLayout);
                 break;
             case "editName":

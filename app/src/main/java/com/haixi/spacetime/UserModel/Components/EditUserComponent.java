@@ -37,6 +37,7 @@ public class EditUserComponent extends LinearLayout {
     }
 
     public void setImage(Bitmap bitmap){
+        binding.componentEditUserImage.setImageDrawable(null);
         binding.componentEditUserImage.setImageBitmap(bitmap);
         isSetImage = true;
     }
@@ -61,8 +62,8 @@ public class EditUserComponent extends LinearLayout {
 
         if (isSetImage){
             setHW(binding.componentEditUserImage, 60, 60);
-            setMargin(binding.componentEditUserImage, 0, 10, 0,
-                    10, true);
+            setMargin(binding.componentEditUserImage, 0, 3, 0,
+                    3, true);
         }else {
             binding.componentEditUserMainView.removeView(binding.componentEditUserImage);
         }

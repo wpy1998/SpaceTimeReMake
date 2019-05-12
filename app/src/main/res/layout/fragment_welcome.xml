@@ -3,12 +3,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/welcome_logo"
-            android:text="时空APP\n开启场景社交新时代"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
+        <ImageView
+            android:id="@+id/fragmentWelcome_logo"
+            android:src="@drawable/ic_welcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -16,18 +13,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </LinearLayout>
-        <Button
-            android:text="立即开启"
-            android:id="@+id/welcome_login"
-            android:textColor="@color/colorWhite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_circle_blue"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+        <TextView
+            android:id="@+id/welcome_t1"
+            android:text="Spacetime时空"
+            android:textStyle="bold"
             android:layout_gravity="center"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/welcome_t2"
+            android:layout_gravity="center"
+            android:text="开启圈层社交新时代"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </layout>

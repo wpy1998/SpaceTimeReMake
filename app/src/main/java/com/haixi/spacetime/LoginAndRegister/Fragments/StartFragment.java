@@ -56,6 +56,14 @@ public class StartFragment extends BasicFragment implements View.OnClickListener
     }
 
     private void drawFragment(){
+        setHW(binding.fragmentStartLogo, 151, 151);
+        setMargin(binding.fragmentStartLogo, 110, 100, 110, 0, true);
+
+        setTextSize(binding.fragmentStartT1, 30);
+
+        setMargin(binding.fragmentStartT2, 0, 10, 0, 20, true);
+        setTextSize(binding.fragmentStartT2, 20);
+
         setHW(binding.startRegister, 50, 278);
         setMargin(binding.startRegister, 49, 0, 48, 0, true);
         setTextSize(binding.startRegister, 16);

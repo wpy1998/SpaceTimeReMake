@@ -48,7 +48,7 @@
         <EditText
             android:hint="请输入内容"
             android:background="@drawable/fragment_add_dynamic_editviewstyle"
-            android:padding="5dp"
+            android:padding="10dp"
             android:id="@+id/edit_sign_content"
             android:textSize="20dp"
             android:layout_width="match_parent"

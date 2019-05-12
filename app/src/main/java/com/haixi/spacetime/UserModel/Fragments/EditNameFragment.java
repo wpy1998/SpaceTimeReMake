@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.haixi.spacetime.Entity.BasicFragment;
+import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentEditNameBinding;
 
@@ -47,12 +48,13 @@ public class EditNameFragment extends BasicFragment implements View.OnClickListe
         setTextSize(binding.editNameTitle, 20);
 
         setHW(binding.editNameSave,29, 37);
-        setMargin(binding.editNameSave, 0, 8, 28, 21,
+        setMargin(binding.editNameSave, 0, 8, 10, 21,
                 false);
         setTextSize(binding.editNameSave, 18);
 
-        setMargin(binding.editNameContent, 20, 0, 20, 0,
+        setMargin(binding.editNameContent, 10, 0, 10, 0,
                 false);
+        setTextSize(binding.editNameContent, 16);
     }
 
     @Override
@@ -63,9 +65,15 @@ public class EditNameFragment extends BasicFragment implements View.OnClickListe
                 break;
             case R.id.edit_name_save:
                 String message = binding.editNameContent.getText().toString();
+                if (message.length() > 6){
+                    Toast.makeText(getContext(), "名字不能大于6个字符", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 owner.userName = message;
-                Toast.makeText(getContext(), "已保存到本地, 提交后即可保存",
-                        Toast.LENGTH_SHORT).show();
+                okHttpAction = new OkHttpAction(getContext());
+                okHttpAction.changeUserMessage(0, "");
+                Toast.makeText(getContext(), "已保存", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
                 break;
             default:
                 break;

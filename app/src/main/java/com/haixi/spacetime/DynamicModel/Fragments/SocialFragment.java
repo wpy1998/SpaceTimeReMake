@@ -108,8 +108,7 @@ public class SocialFragment extends BasicFragment{
         dynamicComponent.setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "waiting for coming true",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "waiting for coming true", Toast.LENGTH_SHORT).show();
             }
         });
     }

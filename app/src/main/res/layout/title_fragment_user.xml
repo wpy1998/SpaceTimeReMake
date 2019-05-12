@@ -20,35 +20,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:text="聂海东"
-                        android:textSize="24dp"
-                        android:textColor="#ffffff"
-                        android:id="@+id/fragment_user_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="bottom"/>
-                    <ImageView
-                        android:id="@+id/fragment_user_gender"
-                        android:src="@drawable/ic_man"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="bottom" />
-                </LinearLayout>
                 <TextView
-                    android:text="21岁-北京"
-                    android:textSize="16dp"
+                    android:text="聂海东"
+                    android:textSize="24dp"
                     android:textColor="#ffffff"
-                    android:id="@+id/fragment_user_age_and_loaction"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="top"/>
+                    android:id="@+id/fragment_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/fragment_user_gender"
+                    android:src="@drawable/ic_man"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
             <TextView
                 android:text="设置"

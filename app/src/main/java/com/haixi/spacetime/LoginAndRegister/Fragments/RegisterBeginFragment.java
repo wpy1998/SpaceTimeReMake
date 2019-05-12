@@ -10,6 +10,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,6 +147,10 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
             int type = intent.getIntExtra("type", 0);
             switch (type){
                 case intentAction_CheckExistence:
+                    String text = binding.registerBeginGetSmsCode.getText().toString();
+                    if (text.equals("已发送")){
+                        return;
+                    }
                     data = intent.getStringExtra("data");
                     Toast.makeText(getContext(), "data=" + data, Toast.LENGTH_SHORT).show();
                     try {
@@ -162,6 +167,7 @@ public class RegisterBeginFragment extends BasicFragment implements View.OnClick
 
                         Toast.makeText(getContext(), "验证码已发送",
                                 Toast.LENGTH_SHORT).show();
+                        binding.registerBeginGetSmsCode.setText("已发送");
                         okHttpAction.getSmsCode(0, intentAction);
                     }catch (Exception e){
                         e.printStackTrace();

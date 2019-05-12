@@ -110,8 +110,8 @@ public class TagComponent extends LinearLayout{
     private void drawLinearLayout(){
         setMargin(binding.tagViewMainView, 6, 10, 6, 10, false);
 
-        setH(binding.tagViewName, 40);
+        setH(binding.tagViewName, 35);
         setMargin(binding.tagViewName, 0, 0, 0, 0, true);
-        setTextSize(binding.tagViewName, 16);
+        setTextSize(binding.tagViewName, 18);
     }
 }

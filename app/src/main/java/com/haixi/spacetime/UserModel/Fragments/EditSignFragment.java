@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.haixi.spacetime.Entity.BasicFragment;
+import com.haixi.spacetime.Entity.OkHttpAction;
 import com.haixi.spacetime.R;
 import com.haixi.spacetime.databinding.FragmentEditSignBinding;
 
@@ -47,12 +48,13 @@ public class EditSignFragment extends BasicFragment implements View.OnClickListe
         setTextSize(binding.editSignTitle, 20);
 
         setHW(binding.editSignSave,29, 37);
-        setMargin(binding.editSignSave, 0, 8, 28, 21,
+        setMargin(binding.editSignSave, 0, 8, 10, 21,
                 false);
         setTextSize(binding.editSignSave, 18);
 
-        setMargin(binding.editSignContent, 20, 0, 20, 0,
+        setMargin(binding.editSignContent, 10, 0, 10, 0,
                 false);
+        setTextSize(binding.editSignContent, 16);
     }
 
     @Override
@@ -64,8 +66,10 @@ public class EditSignFragment extends BasicFragment implements View.OnClickListe
             case R.id.edit_sign_save:
                 String message = binding.editSignContent.getText().toString();
                 owner.signature = message;
-                Toast.makeText(getContext(), "已保存到本地, 提交后即可保存",
-                        Toast.LENGTH_SHORT).show();
+                okHttpAction = new OkHttpAction(getContext());
+                okHttpAction.changeUserMessage(0, "");
+                Toast.makeText(getContext(), "已保存", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
                 break;
             default:
                 break;

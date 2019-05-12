@@ -22,10 +22,8 @@ public class Cookies {
     public static final int resultCode = 1;
     public static DownloadPictureService downloadPictureService = new DownloadPictureService();
 
-    public static Bitmap bitmap;
-
-    public static void setBitmap(String path){
-        bitmap = BitmapFactory.decodeFile(path);
+    public static Bitmap setBitmap(String path){
+        return BitmapFactory.decodeFile(path);
     }
 
 

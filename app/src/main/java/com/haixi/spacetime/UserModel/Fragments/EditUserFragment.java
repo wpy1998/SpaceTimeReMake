@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.haixi.spacetime.Entity.BasicFragment;
 import com.haixi.spacetime.Entity.FileOperation;
 import com.haixi.spacetime.Entity.OkHttpAction;
@@ -42,7 +43,6 @@ import static com.haixi.spacetime.Entity.Settings.setMargin;
 import static com.haixi.spacetime.Entity.Settings.getPx;
 import static com.haixi.spacetime.Entity.Settings.setHW;
 import static com.haixi.spacetime.Entity.Settings.setTextSize;
-import static com.haixi.spacetime.Entity.Cookies.bitmap;
 import static com.haixi.spacetime.Entity.Cookies.owner;
 import static com.haixi.spacetime.Entity.Cookies.resultCode;
 import static com.haixi.spacetime.Entity.Cookies.setBitmap;
@@ -52,7 +52,7 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
     private FragmentEditUserBinding binding;
     private TextView save, title;
     private ImageView back;
-    private EditUserComponent userImage, userName, userAge, userArea, userSign;
+    private EditUserComponent userImage, userName, userSign;
     private final String intentAction = "com.haixi.spacetime.UserModel.Fragments.EditUserFragment";
     private final int intentAction_changeUserMessage = 1, intentAction_setAvatar = 2,
             intentAction_getImageToken = 3, intentAction_setImage = 4;
@@ -73,23 +73,24 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
 
         title = binding.getRoot().findViewById(R.id.fragmentEditUser_title);
         save = binding.getRoot().findViewById(R.id.fragmentEditUser_save);
+        save.setText("");
         back = binding.getRoot().findViewById(R.id.fragmentEditUser_back);
         userImage = new EditUserComponent(getContext());
         userName = new EditUserComponent(getContext());
-        userAge = new EditUserComponent(getContext());
-        userArea = new EditUserComponent(getContext());
+//        userAge = new EditUserComponent(getContext());
+//        userArea = new EditUserComponent(getContext());
         userSign = new EditUserComponent(getContext());
         binding.fragmentEditUserMainView.addView(userImage);
         binding.fragmentEditUserMainView.addView(userName);
-        binding.fragmentEditUserMainView.addView(userAge);
-        binding.fragmentEditUserMainView.addView(userArea);
+//        binding.fragmentEditUserMainView.addView(userAge);
+//        binding.fragmentEditUserMainView.addView(userArea);
         binding.fragmentEditUserMainView.addView(userSign);
         drawView();
 
         binding.getRoot().findViewById(R.id.fragmentEditUser_back)
                 .setOnClickListener(this);
-        binding.getRoot().findViewById(R.id.fragmentEditUser_save)
-                .setOnClickListener(this);
+//        binding.getRoot().findViewById(R.id.fragmentEditUser_save)
+//                .setOnClickListener(this);
         userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +122,8 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
             }
         });
 
+
+
         refresh();
         return binding.getRoot();
     }
@@ -141,7 +144,12 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
             picturePath = cursor.getString(columnIndex);
             System.out.println("picturePath = " + picturePath);
             cursor.close();
-            setBitmap(picturePath);
+            ARouter.getInstance()
+                    .build("/spaceTime/user")
+                    .withString("path", "editImage")
+                    .withString("picturePath", picturePath)
+                    .navigation();
+            Bitmap bitmap = setBitmap(picturePath);
             userImage.setImage(bitmap);
         }
         refresh();
@@ -150,8 +158,8 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
     @Override
     public void refresh() {
         userName.setContent(owner.userName);
-        userAge.setContent(owner.birthday);
-        userArea.setContent(owner.comeFrom);
+//        userAge.setContent(owner.birthday);
+//        userArea.setContent(owner.comeFrom);
         userSign.setContent(owner.signature);
         if (accessKeyId.equals("") || accessKeySecret.equals("") || securityToken.equals("")){
             okHttpAction.getImageToken(intentAction_getImageToken, intentAction);
@@ -166,14 +174,14 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
             case R.id.fragmentEditUser_back:
                 getActivity().finish();
                 break;
-            case R.id.fragmentEditUser_save:
-                okHttpAction = new OkHttpAction(getContext());
-                okHttpAction.changeUserMessage(intentAction_changeUserMessage, intentAction);
-                if (picturePath != null){
-                    okHttpAction.setAvatar(picturePath, intentAction_setAvatar, intentAction);
-                    picturePath = null;
-                }
-                break;
+//            case R.id.fragmentEditUser_save:
+//                okHttpAction = new OkHttpAction(getContext());
+//                okHttpAction.changeUserMessage(intentAction_changeUserMessage, intentAction);
+//                if (picturePath != null){
+//                    okHttpAction.setAvatar(picturePath, intentAction_setAvatar, intentAction);
+//                    picturePath = null;
+//                }
+//                break;
             default:
                 break;
         }
@@ -264,13 +272,13 @@ public class EditUserFragment extends BasicFragment implements View.OnClickListe
         userName.setContent("Hayton");
         userName.drawComponent();
 
-        userAge.setTitle("年龄");
-        userAge.setContent("21岁");
-        userAge.drawComponent();
-
-        userArea.setTitle("地区");
-        userArea.setContent("北京");
-        userArea.drawComponent();
+//        userAge.setTitle("年龄");
+//        userAge.setContent("21岁");
+//        userAge.drawComponent();
+//
+//        userArea.setTitle("地区");
+//        userArea.setContent("北京");
+//        userArea.drawComponent();
 
         userSign.setTitle("签名");
         userSign.setContent("我就是我是不一样的烟火");
